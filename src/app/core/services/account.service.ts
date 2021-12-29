@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { User } from './user';
+import { User } from '../../shared/domain/user';
 import { environment } from 'src/environments/environment';
+import { School } from 'src/app/shared/domain/school';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,10 @@ export class AccountService {
 
   resetPassword(email: string): Observable<any> {
     return this.http.get<any>(`${environment.baseUrl}/auth/reset-password/${email}`);
+  }
+
+  getSchoolsByUserId(): Observable<School[]> {
+    return this.http.get<School[]>(`${environment.baseUrl}/users/schools`);
   }
 
   async isAuth(): Promise<boolean> {

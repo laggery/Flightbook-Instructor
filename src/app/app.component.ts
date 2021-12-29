@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { AccountService } from './account/account.service';
+import { AccountService } from './core/services/account.service';
 
 @Component({
   selector: 'app-root',
