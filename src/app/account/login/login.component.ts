@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
-import { AccountService } from '../account.service';
+import { AccountService } from '../../core/services/account.service';
 
 @Component({
   selector: 'app-login',
@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   async login(loginForm: any) {
     if (loginForm.valid) {
-      console.log(this.loginData);
 
       this.accountService.login(this.loginData).pipe(takeUntil(this.unsubscribe$)).subscribe(async resp => {
         localStorage.setItem('access_token', resp.access_token);

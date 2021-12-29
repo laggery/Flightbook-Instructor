@@ -9,8 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatMenuModule } from '@angular/material/menu';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpAuthInterceptor } from './commons/interceptor/auth.interceptor';
-import { HttpErrorInterceptor } from './commons/interceptor/error.interceptor';
+import { HttpAuthInterceptor } from './core/interceptor/auth.interceptor';
+import { HttpErrorInterceptor } from './core/interceptor/error.interceptor';
 
 @NgModule({
   declarations: [

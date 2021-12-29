@@ -1,5 +1,8 @@
 <mat-tab-group>
-    <mat-tab label="First"> Content 1 </mat-tab>
-    <mat-tab label="Second"> Content 2 </mat-tab>
-    <mat-tab label="Third"> Content 3 </mat-tab>
-  </mat-tab-group>
+    <mat-tab *ngFor="let school of schools" label="{{ school.name }}">
+      <ng-template matTabContent>
+        <fb-students [school]="school" (selectStudentEvent)="selectStudent($event)"></fb-students>
+        <fb-student-detail [student]="selectedStudent"></fb-student-detail>
+      </ng-template>
+    </mat-tab>
+</mat-tab-group>

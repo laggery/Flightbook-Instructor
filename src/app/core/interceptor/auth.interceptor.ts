@@ -5,7 +5,7 @@ import {
     HttpEvent
 } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
-import { AccountService } from '../../account/account.service';
+import { AccountService } from '../services/account.service';
 import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 
