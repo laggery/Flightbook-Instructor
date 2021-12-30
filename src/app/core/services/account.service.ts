@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, Subject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../../shared/domain/user';
 import { environment } from 'src/environments/environment';
@@ -11,9 +11,18 @@ import { School } from 'src/app/shared/domain/school';
 })
 export class AccountService {
   private jwtHelper: JwtHelperService;
+  private currentSelectedSchool: Subject<School> = new Subject<School>();
 
   constructor(private http: HttpClient) {
     this.jwtHelper = new JwtHelperService();
+  }
+
+  get currentSelectedSchool$(){
+    return this.currentSelectedSchool.asObservable();
+  }
+
+  setCurrentSchool(school: School) {
+    this.currentSelectedSchool.next(school);
   }
 
   refresh(refreshToken: string): Observable<any> {

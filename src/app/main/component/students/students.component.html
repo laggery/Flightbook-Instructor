@@ -1,0 +1,18 @@
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened>
+        <mat-list class="student-list">
+            <mat-list-item><button class="student-list-button" mat-raised-button color="primary" (click)=printStudentList()>Teilnehmerliste</button></mat-list-item>
+            <mat-list-item *ngFor='let student of students' (click)=studentDetail(student)>
+                <mat-checkbox (change)=checkboxChange($event,student)></mat-checkbox>
+                <p matLine>{{ student.user?.firstname }} {{ student.user?.lastname }}</p>
+                <p matLine>Letzter Flug: {{ student.lastFlight?.date | date:'dd.MM.YYYY' }}</p>
+                <p matLine>Anzahl Flüge: {{ student.statistic?.nbFlights }}</p>
+                <p matLine>Gleitschirm: {{ student.lastFlight?.glider?.brand }} {{ student.lastFlight?.glider?.name }}</p>
+            </mat-list-item>
+        </mat-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <fb-student-detail [student]="selectedStudent"></fb-student-detail>
+    </mat-sidenav-content>
+</mat-sidenav-container>

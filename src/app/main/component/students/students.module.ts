@@ -1,31 +1,33 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { SchoolRoutingModule } from './school-routing.module';
-import { SchoolComponent } from './school.component';
+import { StudentsComponent } from './students.component';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
-import { StudentsComponent } from './component/students/students.component';
-import { StudentDetailComponent } from './component/student-detail/student-detail.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { StudentsRoutingModule } from './students-routing.module';
+import { StudentDetailComponent } from '../student-detail/student-detail.component';
+import { MatButtonModule } from '@angular/material/button';
+
 
 
 @NgModule({
   declarations: [
-    SchoolComponent,
     StudentsComponent,
     StudentDetailComponent
   ],
   imports: [
     CommonModule,
-    SchoolRoutingModule,
+    StudentsRoutingModule,
     MatTabsModule,
     MatListModule,
     MatCheckboxModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    MatSidenavModule,
+    MatButtonModule
   ]
 })
-export class SchoolModule { }
+export class StudentsModule { }

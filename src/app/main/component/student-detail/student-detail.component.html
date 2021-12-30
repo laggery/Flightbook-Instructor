@@ -1,6 +1,6 @@
 <div class='data' *ngIf='student; else noStudentSelected'>
     <h2>{{ student.user?.firstname }} {{ student.user?.lastname }}</h2>
-    <mat-card *ngIf='student; else noStudentSelected'>
+    <mat-card class='flights-card' *ngIf='student; else noStudentSelected'>
         <mat-card-title>Flüge</mat-card-title>
         <mat-card-content>
             <table #table mat-table [dataSource]="flights">
@@ -58,4 +58,4 @@
         </mat-card-content>
     </mat-card>
 </div>
-<ng-template #noStudentSelected>Kein Schüler wurde ausgewählt.</ng-template>
+<ng-template #noStudentSelected><p class="no-student-selcted">Kein Schüler wurde ausgewählt.</p></ng-template>

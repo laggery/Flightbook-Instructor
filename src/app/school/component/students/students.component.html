@@ -1,8 +1,0 @@
-<mat-list class="student-list">
-    <mat-list-item *ngFor='let student of students' (click)=studentDetail(student)>
-        <mat-checkbox></mat-checkbox>
-        <p matLine>{{ student.user?.firstname }} {{ student.user?.lastname }}</p>
-        <p matLine>Letzter Flug: {{ student.lastFlight?.date | date:'dd.MM.YYYY' }}</p>
-        <p matLine>Anzahl Flüge: {{ student.statistic?.nbFlights }}</p>
-    </mat-list-item>
-</mat-list>

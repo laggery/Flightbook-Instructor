@@ -24,7 +24,6 @@ export class StudentDetailComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges){
-    console.log(changes['student'].currentValue);
     if (changes['student'].currentValue) {
       this.studentService.getFlightsByStudentId(changes['student'].currentValue.user.id).subscribe((flights: Flight[]) => {
         this.flights = flights;
