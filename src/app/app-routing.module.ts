@@ -5,7 +5,7 @@ import { AuthGuardService } from './core/services/auth-guard.service';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./school/school.module').then(m => m.SchoolModule),
+    loadChildren: () => import('./main/main.module').then(m => m.MainModule),
     canActivate: [AuthGuardService]
   },
   {
