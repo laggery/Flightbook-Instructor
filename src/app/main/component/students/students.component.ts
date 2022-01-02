@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { AccountService } from 'src/app/core/services/account.service';
 import { SchoolService } from 'src/app/core/services/school.service';
+import { StudentListPDFService } from 'src/app/core/services/student-list-pdf.service';
 import { School } from 'src/app/shared/domain/school';
 import { Student } from 'src/app/shared/domain/student';
 
@@ -19,13 +20,15 @@ export class StudentsComponent implements OnInit {
 
   constructor(
     private schoolService: SchoolService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private studentListPDFService: StudentListPDFService
   ) {
     this.studentList = [];
    }
 
   ngOnInit(): void {
     this.accountService.currentSelectedSchool$.subscribe((school: School) => {
+      this.school = school;
       this.selectedStudent = undefined;
       this.studentList = [];
       if (school?.id) {
@@ -41,8 +44,11 @@ export class StudentsComponent implements OnInit {
   }
 
   printStudentList() {
-    console.log("PDF export");
-    console.log(this.studentList);
+    if (!this.school) {
+      return;
+    }
+
+    this.studentListPDFService.generatePdf(this.studentList, this.school);
   }
 
   checkboxChange(changeEvent: MatCheckboxChange, student: Student) {
