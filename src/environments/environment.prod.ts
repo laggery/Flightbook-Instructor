@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl : 'http://localhost:8282'
+  baseUrl : 'https://api.flightbook.ch'
 };
