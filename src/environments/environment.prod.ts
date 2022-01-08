@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  baseUrl : 'https://api.flightbook.ch'
+  baseUrl : 'REPLACE_API_URL'
 };

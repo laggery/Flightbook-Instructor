@@ -13,4 +13,9 @@ FROM nginx:stable-alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /usr/src/app/dist/flightbook-instructor-app /usr/share/nginx/html
 
-EXPOSE 80
+## Copy the EntryPoint
+COPY ./entryPoint.sh /
+RUN chmod +x entryPoint.sh
+
+ENTRYPOINT ["/entryPoint.sh"]
+CMD ["nginx", "-g", "daemon off;"]
