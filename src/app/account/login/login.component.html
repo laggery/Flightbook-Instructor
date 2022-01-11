@@ -1,6 +1,23 @@
-<p>login</p>
-<form id="loginForm" #form="ngForm" (ngSubmit)="login(form)">
-    <input type="text" [(ngModel)]="loginData.email" placeholder="email" name="email" type="email">
-    <input type="text" [(ngModel)]="loginData.password" placeholder="password" name="password" type="password">
-    <button type="submit">Login</button>
-</form>
+<mat-card>
+    <mat-card-title>Log In</mat-card-title>
+    <mat-card-content>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <mat-error class="loginError" *ngIf="loginInvalid">
+                Der Benutzername und das Passwort wurden nicht erkannt
+            </mat-error>
+            <mat-form-field class="full-width-input">
+                <input matInput placeholder="Email" formControlName="email" required>
+                <mat-error>
+                    Bitte geben Sie eine gültige E-Mail Adresse an
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field class="full-width-input">
+                <input matInput type="password" placeholder="Password" formControlName="password" required>
+                <mat-error>
+                    Bitte geben Sie ein gültiges Passwort ein
+                </mat-error>
+            </mat-form-field>
+            <button mat-raised-button color="primary">Login</button>
+        </form>
+    </mat-card-content>
+</mat-card>

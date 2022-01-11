@@ -7,7 +7,6 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { StudentsModule } from './component/students/students.module';
 
 
 
@@ -18,7 +17,6 @@ import { StudentsModule } from './component/students/students.module';
   imports: [
     CommonModule,
     MainRoutingModule,
-    // StudentsModule,
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
