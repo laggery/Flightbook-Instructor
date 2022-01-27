@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Schüler hinzufügen</h1>
+<mat-dialog-content [formGroup]="form">
+    <mat-form-field>
+        <mat-label>E-Mail</mat-label>
+        <input matInput placeholder="E-Mail" formControlName="email" required>
+        <mat-error>
+            Bitte geben Sie eine gültige E-Mail Adresse an
+        </mat-error>
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-button (click)="onCancel()">Abbrechen</button>
+    <button mat-button (click)="onSend()" cdkFocusInitial>Senden</button>
+</mat-dialog-actions>

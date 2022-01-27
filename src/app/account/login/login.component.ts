@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, Output, EventEmitter, SimpleChanges } from '@angular/core';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
@@ -6,11 +6,16 @@ import { AccountService } from '../../core/services/account.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-login',
+  selector: 'fb-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit, OnDestroy {
+  @Input() loginPageRedirect: boolean = true;
+  @Input() email: string | undefined;
+
+  @Output() loginEvent = new EventEmitter<boolean>();
+
   unsubscribe$ = new Subject<void>();
 
   form: FormGroup;
@@ -22,9 +27,16 @@ export class LoginComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
   ) {
     this.form = this.fb.group({
-      email: ['', Validators.email],
+      email: [this.email, Validators.email],
       password: ['', Validators.required]
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    this.form.setValue({email: this.email, password: ''})
+    if (this.email) {
+      this.form.controls["email"].disable();
+    }
   }
 
   ngOnInit(): void {
@@ -36,10 +48,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   async onSubmit(): Promise<void> {
-    console.log("onSubmit");
     this.loginInvalid = false;
     if (this.form.valid) {
-      console.log("valid");
       const loginData = {
         email: this.form.get('email')?.value,
         password: this.form.get('password')?.value
@@ -49,12 +59,16 @@ export class LoginComponent implements OnInit, OnDestroy {
         next: async resp => {
           localStorage.setItem('access_token', resp.access_token);
           localStorage.setItem('refresh_token', resp.refresh_token);
-          this.router.navigate(['']);
+          if (this.loginPageRedirect) {
+            this.router.navigate(['']);
+          }
+          this.loginEvent.emit(true);
         },
         error: async (error: any) => {
           if (error.status === 401) {
             this.loginInvalid = true;
           }
+          this.loginEvent.emit(false);
         }
       })
     }
