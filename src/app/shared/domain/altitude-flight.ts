@@ -1,0 +1,34 @@
+export class AltitudeFlight {
+  public id: number | undefined;
+  public tandem: boolean | undefined;
+  public notlandung: boolean | undefined;
+  public startplatzwahl: boolean | undefined;
+  public aufziehen: boolean | undefined;
+  public kreise: boolean | undefined;
+  public richtungswechsel: boolean | undefined;
+  public acht: boolean | undefined;
+  public engekreise: boolean | undefined;
+  public sackflug: boolean | undefined;
+  public geschwBereich: boolean | undefined;
+  public beschlunigung: boolean | undefined;
+  public negativsteuerung: boolean | undefined;
+  public gewichtsverlagerung: boolean | undefined;
+  public traggurten: boolean | undefined;
+  public pendeln: boolean | undefined;
+  public rollen: boolean | undefined;
+  public klappen: boolean | undefined;
+  public ohren: boolean | undefined;
+  public bStall: boolean | undefined;
+  public spirale: boolean | undefined;
+  public instrumente: boolean | undefined;
+  public soaring: boolean | undefined;
+  public thermik: boolean | undefined;
+  public landevolte: boolean | undefined;
+  public punktlandung: boolean | undefined;
+  public rueckenwindlandung: boolean | undefined;
+  public traggurtenLandung: boolean | undefined;
+  public hanglandung: boolean | undefined;
+  public touchAndGo: boolean | undefined;
+  public examProgramme: boolean | undefined;
+  [key: string]: boolean | number | undefined;
+}

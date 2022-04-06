@@ -8,7 +8,7 @@
                 <button class="student-list-button" mat-raised-button color="primary" (click)=printStudentList()>Teilnehmerliste</button>
             </mat-list-item>
             <mat-list-item *ngFor='let student of students' (click)=studentDetail(student)>
-                <mat-checkbox (change)=checkboxChange($event,student)></mat-checkbox>
+                <mat-checkbox (change)=checkboxChange($event,student) color="primary"></mat-checkbox>
                 <p matLine>{{ student.user?.firstname }} {{ student.user?.lastname }}</p>
                 <p matLine>Letzter Flug: {{ student.lastFlight?.date | date:'dd.MM.YYYY' }}</p>
                 <p matLine>Anzahl Flüge: {{ student.statistic?.nbFlights }}</p>

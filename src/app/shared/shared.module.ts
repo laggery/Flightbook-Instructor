@@ -15,11 +15,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { HoursFormatPipe } from './pipes/hours-format/hours-format.pipe';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    HoursFormatPipe
+  ],
   imports: [
     CommonModule,
     MatListModule,
@@ -36,9 +40,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatToolbarModule,
     MatIconModule,
     MatStepperModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatExpansionModule
   ],
   exports: [
+    HoursFormatPipe,
     MatListModule,
     MatCheckboxModule,
     MatCardModule,
@@ -53,7 +59,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatToolbarModule,
     MatIconModule,
     MatStepperModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatExpansionModule
   ]
 })
-export class MaterialModule { }
+export class SharedModule { }
