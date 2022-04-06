@@ -1,7 +1,9 @@
 <mat-toolbar color="primary">
-    <span class="fill-remaining-space">
+    <span>Instructor App</span>
+    <span class="menu-spacer"></span>
+    <span>
         <button mat-icon-button [matMenuTriggerFor]="menu">
-            <mat-icon>menu</mat-icon>
+            <mat-icon>account_circle</mat-icon>
         </button>
         <mat-menu #menu="matMenu" [overlapTrigger]="false">
             <button (click)=logout() mat-menu-item>
@@ -16,6 +18,5 @@
             </ng-container>
         </mat-menu>
     </span>
-    <span class="fill-remaining-space">Instructor App</span>
 </mat-toolbar>
 <router-outlet></router-outlet>

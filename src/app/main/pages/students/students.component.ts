@@ -41,6 +41,7 @@ export class StudentsComponent implements OnInit {
       if (school?.id) {
         this.schoolService.getStudentsBySchoolId(school.id).subscribe((students: Student[]) => {
           this.students = students;
+          this.studentDetail(this.students[0]);
         })
       }
     });

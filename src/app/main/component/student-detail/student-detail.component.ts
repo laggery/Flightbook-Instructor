@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 import { StudentService } from 'src/app/core/services/student.service';
+import { ControlSheet } from 'src/app/shared/domain/control-sheet';
 import { Flight } from 'src/app/shared/domain/flight';
 import { Student } from 'src/app/shared/domain/student';
 
@@ -14,6 +15,8 @@ export class StudentDetailComponent implements OnInit, OnChanges {
 
   flights: Flight[];
   displayedColumns: string[] = ['nb', 'date', 'start', 'landing', 'glider', 'time', 'km', 'description'];
+
+  controlSheet: any;
   @ViewChild('table', {read: ElementRef}) table: ElementRef | undefined;
 
   constructor(private studentService: StudentService) { 
@@ -28,7 +31,20 @@ export class StudentDetailComponent implements OnInit, OnChanges {
       this.studentService.getFlightsByStudentId(changes['student'].currentValue.user.id).subscribe((flights: Flight[]) => {
         this.flights = flights;
       });
+
+      this.studentService.getControlSheetByStudentId(changes['student'].currentValue.user.id).subscribe((controlSheet: ControlSheet) => {
+        this.controlSheet = controlSheet;
+      });
     }
+  }
+
+  saveControlSheet(controlSheet: any) {
+    if (!this.student?.user?.id) {
+      return;
+    }
+    this.studentService.postControlSheetByStudentId(this.student?.user?.id, controlSheet).subscribe((controlSheet: ControlSheet) => {
+      this.controlSheet = controlSheet;
+    });
   }
 
 }

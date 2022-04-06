@@ -1,0 +1,22 @@
+{
+    "flightbook": "Carnet de vols",
+    "language": {
+        "fr": "Français",
+        "de": "Allemand",
+        "en": "Anglais",
+        "it": "Italien"
+    },
+    "login": {
+        "email": "E-Mail",
+        "password": "Mot de passe",
+        "oldpassword": "Ancien mot de passe",
+        "newpassword": "Nouveau mot de passe",
+        "confirmpassword": "Confirmez mot de passe",
+        "passwordlost": "Mot de passe oublié ?"
+    },
+    "controlSheet": {
+        "trainingHill": "Entrainement",
+        "theory": "Theorie",
+        "altitudeFlight": "Grand vols"
+    }
+}

@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserRegisterComponent } from './user-register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from 'src/app/material/material.module';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 
@@ -14,7 +14,7 @@ import { MaterialModule } from 'src/app/material/material.module';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    MaterialModule
+    SharedModule
   ],
   exports: [
     UserRegisterComponent
