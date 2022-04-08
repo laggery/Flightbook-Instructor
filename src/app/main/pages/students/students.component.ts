@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AccountService } from 'src/app/core/services/account.service';
@@ -10,16 +10,21 @@ import { Student } from 'src/app/shared/domain/student';
 import {MatDialog} from '@angular/material/dialog';
 import { EmailDialogComponent } from '../../component/email-dialog/email-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
+import { DeviceSizeService } from 'src/app/core/services/device-size.service';
+import { MatSidenav } from '@angular/material/sidenav';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'fb-students',
   templateUrl: './students.component.html',
   styleUrls: ['./students.component.scss']
 })
-export class StudentsComponent implements OnInit {
+export class StudentsComponent implements OnInit, OnDestroy {
   school: School | undefined;
   selectedStudent: Student | undefined;
   studentList: Student[];
+  @ViewChild(MatSidenav) sidenav: MatSidenav | undefined;
+  unsubscribe$ = new Subject<void>();
 
   students: Student[];
 
@@ -29,28 +34,47 @@ export class StudentsComponent implements OnInit {
     private accountService: AccountService,
     private studentListPDFService: StudentListPDFService,
     private snackBar: MatSnackBar,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private deviceSize: DeviceSizeService
   ) {
     this.studentList = [];
     this.students = [];
   }
 
   ngOnInit(): void {
-    this.accountService.currentSelectedSchool$.subscribe((school: School) => {
+    this.deviceSize.isMobile.pipe(takeUntil(this.unsubscribe$)).subscribe((mobile: boolean) => {
+      if (!mobile) {
+        this.sidenav?.open();
+      }
+    });
+
+    this.accountService.currentSelectedSchool$.pipe(takeUntil(this.unsubscribe$)).subscribe((school: School) => {
       this.school = school;
       this.selectedStudent = undefined;
       this.studentList = [];
       if (school?.id) {
-        this.schoolService.getStudentsBySchoolId(school.id).subscribe((students: Student[]) => {
+        this.schoolService.getStudentsBySchoolId(school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((students: Student[]) => {
           this.students = students;
-          this.studentDetail(this.students[0]);
+          this.selectedStudent = this.students[0];
         })
       }
     });
   }
 
+  ngOnDestroy() {
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
+  }
+
   studentDetail(student: Student) {
+    if (this.deviceSize.isMobile.getValue()) {
+      this.sidenav?.close();
+    }
     this.selectedStudent = student;
+  }
+
+  backButton() {
+    this.sidenav?.open();
   }
 
   printStudentList() {
@@ -96,7 +120,7 @@ export class StudentsComponent implements OnInit {
       return;
     }
 
-    this.schoolService.postStudentsEnrollment(this.school?.id, email).subscribe(() => {
+    this.schoolService.postStudentsEnrollment(this.school?.id, email).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
       this.snackBar.open(this.translate.instant('formMessage.requestSent'), this.translate.instant('buttons.done'), {
         duration: 2000,
         horizontalPosition: 'center',

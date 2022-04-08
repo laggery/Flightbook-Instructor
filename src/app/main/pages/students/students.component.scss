@@ -3,7 +3,6 @@
 }
 
 .mat-sidenav {
-    width: 20%;
     min-width: 300px;
 }
 
@@ -12,8 +11,8 @@
     display:block;
 }
 
-// @media only screen and (max-width: 768px) {
-//     .mat-sidenav {
-//         width: 100%;
-//     }
-//   }
+@media only screen and (max-width: 768px) {
+    .mat-sidenav {
+        width: 100%;
+    }
+}

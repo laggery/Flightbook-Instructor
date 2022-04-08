@@ -22,7 +22,7 @@ export class MainComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.accountService.getSchoolsByUserId().subscribe((schools: School[]) => {
+    this.accountService.getSchoolsByUserId().pipe(takeUntil(this.unsubscribe$)).subscribe((schools: School[]) => {
       this.schools = schools;
       this.selectedSchool = schools[0];
       this.accountService.setCurrentSchool(this.selectedSchool);

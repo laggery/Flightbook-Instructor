@@ -7,8 +7,8 @@
             <mat-list-item>
                 <button class="student-list-button" mat-raised-button color="primary" (click)=printStudentList()>{{ 'student.list'| translate }}</button>
             </mat-list-item>
-            <mat-list-item *ngFor='let student of students' (click)=studentDetail(student)>
-                <mat-checkbox (change)=checkboxChange($event,student) color="primary"></mat-checkbox>
+            <mat-list-item class="student-list" *ngFor='let student of students' (click)=studentDetail(student)>
+                <mat-checkbox (change)=checkboxChange($event,student) (click)=$event.stopPropagation() color="primary"></mat-checkbox>
                 <p matLine>{{ student.user?.firstname }} {{ student.user?.lastname }}</p>
                 <p matLine>{{ 'student.lastflight'| translate }}: {{ student.lastFlight?.date | date:'dd.MM.YYYY' }}</p>
                 <p matLine>{{ 'student.amountofflights'| translate }}: {{ student.statistic?.nbFlights }}</p>
@@ -18,6 +18,6 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <fb-student-detail [student]="selectedStudent"></fb-student-detail>
+        <fb-student-detail [student]="selectedStudent" (backButtonClick)=backButton()></fb-student-detail>
     </mat-sidenav-content>
 </mat-sidenav-container>
