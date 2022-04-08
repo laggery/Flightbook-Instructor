@@ -9,6 +9,7 @@ import { Student } from 'src/app/shared/domain/student';
 
 import {MatDialog} from '@angular/material/dialog';
 import { EmailDialogComponent } from '../../component/email-dialog/email-dialog.component';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'fb-students',
@@ -23,6 +24,7 @@ export class StudentsComponent implements OnInit {
   students: Student[];
 
   constructor(
+    private translate: TranslateService,
     private schoolService: SchoolService,
     private accountService: AccountService,
     private studentListPDFService: StudentListPDFService,
@@ -83,7 +85,7 @@ export class StudentsComponent implements OnInit {
   addStudent(email: string) {
     const student = this.students.find((student: Student) => student.user?.email?.toLowerCase() == email);
     if (student) {
-      this.snackBar.open('Diese E-Mail Adresse wurde bereits hinzugefügt', 'Ok', {
+      this.snackBar.open(this.translate.instant('formMessage.emailAlreadyAdded'), this.translate.instant('buttons.done'), {
         horizontalPosition: 'center',
         verticalPosition: 'top',
       });
@@ -95,7 +97,7 @@ export class StudentsComponent implements OnInit {
     }
 
     this.schoolService.postStudentsEnrollment(this.school?.id, email).subscribe(() => {
-      this.snackBar.open('Die anfrage wurde gesendet', 'Ok', {
+      this.snackBar.open(this.translate.instant('formMessage.requestSent'), this.translate.instant('buttons.done'), {
         duration: 2000,
         horizontalPosition: 'center',
         verticalPosition: 'top',

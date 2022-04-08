@@ -1,23 +1,23 @@
 <mat-card>
-    <mat-card-title>Log In</mat-card-title>
+    <mat-card-title>{{ 'login.title'| translate }}</mat-card-title>
     <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <mat-error class="loginError" *ngIf="loginInvalid">
-                Der Benutzername und das Passwort wurden nicht erkannt
+                {{ 'formMessage.emailpwdnotcorrect'| translate }}
             </mat-error>
             <mat-form-field class="full-width-input">
-                <input matInput placeholder="E-Mail" formControlName="email" required>
+                <input matInput placeholder="{{ 'login.email'| translate }}" formControlName="email" required>
                 <mat-error>
-                    Bitte geben Sie eine gültige E-Mail Adresse an
+                    {{ 'formMessage.invalidEmail'| translate }}
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width-input">
-                <input matInput type="password" placeholder="Password" formControlName="password" required>
+                <input matInput type="password" placeholder="{{ 'login.password'| translate }}" formControlName="password" required>
                 <mat-error>
-                    Bitte geben Sie ein gültiges Passwort ein
+                    {{ 'formMessage.invalidPassword'| translate }}
                 </mat-error>
             </mat-form-field>
-            <button mat-raised-button color="primary">Login</button>
+            <button mat-raised-button color="primary">{{ 'buttons.login'| translate }}</button>
         </form>
     </mat-card-content>
 </mat-card>

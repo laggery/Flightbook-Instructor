@@ -2,43 +2,43 @@
 
 <ng-container *ngIf="!loading">
     <mat-card *ngIf="enrollment; else noValidEnrollment">
-        <mat-card-title>Einschreibung</mat-card-title>
+        <mat-card-title>{{ 'enrollment.title'| translate }}</mat-card-title>
         <mat-card-content>
             <mat-stepper #stepper>
                 <mat-step *ngIf="enrollment.isUser">
-                    <ng-template matStepLabel>Login</ng-template>
+                    <ng-template matStepLabel>{{ 'login.title'| translate }}</ng-template>
                     <fb-login [loginPageRedirect]="false" [email]="enrollment.email"
                         (loginEvent)="loginEvent($event, stepper)"></fb-login>
                 </mat-step>
                 <mat-step *ngIf="!enrollment.isUser">
-                    <ng-template matStepLabel>Account erstellen</ng-template>
+                    <ng-template matStepLabel>{{ 'account.register'| translate }}</ng-template>
                     <fb-user-register [email]="enrollment.email" (loginEvent)="loginEvent($event, stepper)"></fb-user-register>
                 </mat-step>
                 <mat-step>
-                    <ng-template matStepLabel>Akzeptieren</ng-template>
+                    <ng-template matStepLabel>{{ 'enrollment.accept'| translate }}</ng-template>
                     <mat-card *ngIf="enrollment.type == 'STUDENT'" class="mat-card-stepper">
-                        <mat-card-title>Flugbuch teilen</mat-card-title>
+                        <mat-card-title>{{ 'enrollment.shareFlightbook'| translate }}</mat-card-title>
                         <mat-card-content>
-                            <p>{{ enrollment.school?.name }} möche Zugriff auf dein Flugbuch haben.</p>
-                            <p>Bist du damit einverstanden?</p>
-                            <button mat-raised-button color="primary" (click)="validate(stepper)">Zustimmen</button>
+                            <p>{{ enrollment.school?.name }} {{ 'enrollment.accessFlightbook'| translate }}</p>
+                            <p>{{ 'enrollment.acceptQuestion'| translate }}</p>
+                            <button mat-raised-button color="primary" (click)="validate(stepper)">{{ 'enrollment.accept'| translate }}</button>
                         </mat-card-content>
                     </mat-card>
                     <mat-card *ngIf="enrollment.type == 'TEAM_MEMBER'" class="mat-card-stepper">
                         <mat-card-title>Team</mat-card-title>
                         <mat-card-content>
-                            <p>{{ enrollment.school?.name }} möchte dich als Team Mitglieder haben.</p>
-                            <p>Bist du damit einverstanden?</p>
-                            <button mat-raised-button color="primary" (click)="validate(stepper)">Zustimmen</button>
+                            <p>{{ enrollment.school?.name }} {{ 'enrollment.addTeam'| translate }}</p>
+                            <p>{{ 'enrollment.acceptQuestion'| translate }}</p>
+                            <button mat-raised-button color="primary" (click)="validate(stepper)">{{ 'enrollment.accept'| translate }}</button>
                         </mat-card-content>
                     </mat-card>
                 </mat-step>
                 <mat-step>
-                    <ng-template matStepLabel>Bestätigung</ng-template>
+                    <ng-template matStepLabel>{{ 'enrollment.confirmation'| translate }}</ng-template>
                     <mat-card class="mat-card-stepper">
                         <mat-card-content>
-                            <p *ngIf="enrollment.type == 'STUDENT'">{{ enrollment.school?.name }} hat nun Einsicht in dein Flugbuch</p>
-                            <p *ngIf="enrollment.type == 'TEAM_MEMBER'">Du bist nun im Team von {{ enrollment.school?.name }}.</p>
+                            <p *ngIf="enrollment.type == 'STUDENT'">{{ enrollment.school?.name }} {{ 'enrollment.hasAccess'| translate }}</p>
+                            <p *ngIf="enrollment.type == 'TEAM_MEMBER'">{{ 'enrollment.inTeam'| translate }} {{ enrollment.school?.name }}.</p>
                             <mat-icon class="check-icon">check_circle</mat-icon>
                         </mat-card-content>
                     </mat-card>
@@ -50,9 +50,9 @@
 
 <ng-template #noValidEnrollment>
     <mat-card class="mat-card-stepper">
-        <mat-card-title>Fehler</mat-card-title>
+        <mat-card-title>{{ 'error.title'| translate }}</mat-card-title>
         <mat-card-content>
-            <p>Dieses token gibt es nicht oder ist ungültig</p>
+            <p>{{ 'enrollment.wrongToken'| translate }}</p>
             <mat-icon class="error-icon">error</mat-icon>
         </mat-card-content>
     </mat-card>
