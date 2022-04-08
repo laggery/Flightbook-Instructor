@@ -5,6 +5,7 @@ import { EnrollmentRoutingModule } from './enrollment-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { LoginModule } from '../account/login/login.module';
 import { UserRegisterModule } from '../account/user-register/user-register.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -15,6 +16,7 @@ import { UserRegisterModule } from '../account/user-register/user-register.modul
   imports: [
     CommonModule,
     EnrollmentRoutingModule,
+    TranslateModule.forChild(),
     SharedModule,
     LoginModule,
     UserRegisterModule

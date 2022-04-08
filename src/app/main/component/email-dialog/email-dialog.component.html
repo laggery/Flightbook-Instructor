@@ -1,15 +1,15 @@
-<h1 mat-dialog-title>Schüler hinzufügen</h1>
+<h1 mat-dialog-title>{{ 'student.addStudent'| translate }}</h1>
 <mat-dialog-content [formGroup]="form">
     <mat-form-field>
-        <mat-label>E-Mail</mat-label>
-        <input matInput placeholder="E-Mail" formControlName="email" required>
+        <mat-label>{{ 'login.email'| translate }}</mat-label>
+        <input matInput placeholder="{{ 'login.email'| translate }}" formControlName="email" required>
         <mat-error>
-            Bitte geben Sie eine gültige E-Mail Adresse an
+            {{ 'formMessage.invalidEmail'| translate }}
         </mat-error>
     </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
-    <button mat-button (click)="onCancel()">Abbrechen</button>
-    <button mat-button (click)="onSend()" cdkFocusInitial>Senden</button>
+    <button mat-raised-button (click)="onCancel()">{{ 'buttons.cancel'| translate }}</button>
+    <button mat-raised-button color="primary" (click)="onSend()" cdkFocusInitial>{{ 'buttons.send'| translate }}</button>
 </mat-dialog-actions>

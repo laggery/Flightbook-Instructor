@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-    <span>Instructor App</span>
+    <span>{{ 'title'| translate }}</span>
     <span class="menu-spacer"></span>
     <span>
         <button mat-icon-button [matMenuTriggerFor]="menu">
@@ -8,7 +8,7 @@
         <mat-menu #menu="matMenu" [overlapTrigger]="false">
             <button (click)=logout() mat-menu-item>
                 <mat-icon>exit_to_app</mat-icon>
-                <span>Logout</span>
+                <span>{{ 'buttons.logout'| translate }}</span>
             </button>
             <ng-container *ngFor='let school of schools'>
                 <button *ngIf='school.id != selectedSchool?.id' (click)=switchSchool(school) mat-menu-item>

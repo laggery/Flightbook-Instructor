@@ -2,17 +2,17 @@
     <mat-sidenav #sidenav mode="side" opened>
         <mat-list class="student-list">
             <mat-list-item>
-                <button class="student-list-button" mat-raised-button color="primary" (click)=openEmailDialog()>Schüler hinzufügen</button>
+                <button class="student-list-button" mat-raised-button color="primary" (click)=openEmailDialog()>{{ 'student.addStudent'| translate }}</button>
             </mat-list-item>
             <mat-list-item>
-                <button class="student-list-button" mat-raised-button color="primary" (click)=printStudentList()>Teilnehmerliste</button>
+                <button class="student-list-button" mat-raised-button color="primary" (click)=printStudentList()>{{ 'student.list'| translate }}</button>
             </mat-list-item>
             <mat-list-item *ngFor='let student of students' (click)=studentDetail(student)>
                 <mat-checkbox (change)=checkboxChange($event,student) color="primary"></mat-checkbox>
                 <p matLine>{{ student.user?.firstname }} {{ student.user?.lastname }}</p>
-                <p matLine>Letzter Flug: {{ student.lastFlight?.date | date:'dd.MM.YYYY' }}</p>
-                <p matLine>Anzahl Flüge: {{ student.statistic?.nbFlights }}</p>
-                <p matLine>Gleitschirm: {{ student.lastFlight?.glider?.brand }} {{ student.lastFlight?.glider?.name }}</p>
+                <p matLine>{{ 'student.lastflight'| translate }}: {{ student.lastFlight?.date | date:'dd.MM.YYYY' }}</p>
+                <p matLine>{{ 'student.amountofflights'| translate }}: {{ student.statistic?.nbFlights }}</p>
+                <p matLine>{{ 'student.flight.glider'| translate }}: {{ student.lastFlight?.glider?.brand }} {{ student.lastFlight?.glider?.name }}</p>
             </mat-list-item>
         </mat-list>
     </mat-sidenav>

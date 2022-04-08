@@ -1,5 +1,5 @@
 {
-    "flightbook": "Flugbuch",
+    "title": "Instructor App",
     "language": {
         "fr": "Franz.",
         "de": "Deutsch",
@@ -7,14 +7,54 @@
 		"it": "Italienisch"
     },
     "login": {
+        "title": "Log In",
         "email": "E-Mail",
-        "password": "Passwort",
-        "oldpassword": "Altes Passwort",
-        "newpassword": "Neues Passwort",
-        "confirmpassword": "Passwort bestätigen",
-        "passwordlost": "Passwort vergessen?"
+        "password": "Passwort"
+    },
+    "account": {
+        "title": "Konto",
+        "register": "Account erstellen",
+        "firstname": "Vorname",
+        "lastname": "Nachname"
+    },
+    "enrollment": {
+        "title": "Einschreibung",
+        "accept": "Akzeptieren",
+        "shareFlightbook": "Flugbuch teilen",
+        "accessFlightbook": "möche Zugriff auf dein Flugbuch haben.",
+        "hasAccess": "hat nun Einsicht in dein Flugbuch",
+        "addTeam": "möchte dich als Team Mitglieder haben.",
+        "inTeam": "Du bist nun im Team von",
+        "acceptQuestion": "Bist du damit einverstanden?",
+        "confirmation": "Bestätigung",
+        "wrongToken": "Dieses token gibt es nicht oder ist ungültig"
+    },
+    "error": {
+        "title": "Fehler"
+    },
+    "student": {
+        "information": "Informationen",
+        "addStudent": "Schüler hinzufügen",
+        "amountofflights": "Anzahl Flüge",
+        "lastflight": "Letzter Flug",
+        "flighthour": "Flugstunden",
+        "average": "Durchschnittszeit",
+        "list": "Teilnehmerliste",
+        "noStudentSelected": "Kein Schüler wurde ausgewählt.",
+        "flights": "Flüge",
+        "flight": {
+            "number": "Nr",
+            "glider": "Gleitschirm",
+            "date": "Datum",
+            "start": "Start",
+            "landing": "Landung",
+            "time": "Flugdauer",
+            "km": "Km",
+            "description": "Beschreibung"
+        }
     },
     "controlSheet": {
+        "title": "Kontrollblatt",
         "trainingHill": {
             "title": "Übungshang",
             "auslegen": "Auslegen",
@@ -77,5 +117,25 @@
             "touchAndGo": "Touch and go (fak.)",
             "examProgramme": "Prüfungsprogramme"
         }
+    },
+    "formMessage": {
+        "emailExist": "Diese E-Mail-Adresse wird bereits verwendet!",
+        "emailAlreadyAdded": "Diese E-Mail Adresse wurde bereits hinzugefügt",
+        "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
+        "invalidPassword": "Bitte geben Sie ein gültiges Passwort ein.",
+        "emailpwdnotcorrect": "E-Mail oder Password ist nicht korrekt!",
+        "firstnameRequired": "Vorname ist erforderlich",
+        "lastnameRequired": "Nachname ist erforderlich",
+        "requestSent": "Die anfrage wurde gesendet"
+    },
+    "buttons": {
+        "login": "Anmelden",
+        "save": "Speichern",
+        "done": "Ok",
+        "logout": "Abmelden",
+        "createAccount": "Registrieren",
+        "addControlSheet": "Ausbildungskontrollblatt hinzufügen",
+        "cancel": "Abbrechen",
+        "send": "Senden"
     }
 }

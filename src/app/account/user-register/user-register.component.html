@@ -1,35 +1,35 @@
 <mat-card>
-    <mat-card-title>Account</mat-card-title>
+    <mat-card-title>{{ 'account.title' | translate }}</mat-card-title>
     <mat-card-content>
         <form [formGroup]="form" (ngSubmit)="onSubmit()">
             <mat-error class="registerationError" *ngIf="registerInvalid">
-                Diese E-Mail-Adresse wird bereits verwendet!
+                {{ 'formMessage.emailExist' | translate }}
             </mat-error>
             <mat-form-field class="full-width-input">
-                <input matInput placeholder="E-Mail" formControlName="email" required>
+                <input matInput placeholder="{{ 'login.email' | translate }}" formControlName="email" required>
                 <mat-error>
-                    Bitte geben Sie eine gültige E-Mail Adresse an
+                    {{ 'formMessage.invalidEmail'| translate }}
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width-input">
-                <input matInput placeholder="Vorname" formControlName="firstname" required>
+                <input matInput placeholder="{{ 'account.firstname' | translate }}" formControlName="firstname" required>
                 <mat-error>
-                    Vorname ist erforderlich
+                    {{ 'formMessage.firstnameRequired'| translate }}
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width-input">
-                <input matInput placeholder="Nachname" formControlName="lastname" required>
+                <input matInput placeholder="{{ 'account.lastname' | translate }}" formControlName="lastname" required>
                 <mat-error>
-                    Nachname ist erforderlich
+                    {{ 'formMessage.lastnameRequired'| translate }}
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width-input">
-                <input matInput type="password" placeholder="Password" formControlName="password" required>
+                <input matInput type="password" placeholder="{{ 'login.password' | translate }}" formControlName="password" required>
                 <mat-error>
-                    Bitte geben Sie ein gültiges Passwort ein
+                    {{ 'formMessage.invalidPassword'| translate }}
                 </mat-error>
             </mat-form-field>
-            <button mat-raised-button color="primary">Registrieren</button>
+            <button mat-raised-button color="primary">{{ 'buttons.createAccount' | translate }}</button>
         </form>
     </mat-card-content>
 </mat-card>
