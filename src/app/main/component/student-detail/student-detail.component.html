@@ -1,4 +1,7 @@
 <div class='data' *ngIf='student; else noStudentSelected'>
+    <button class="menu-button" *ngIf="isMobile" mat-mini-fab color="primary" (click)=backButton()>
+        <mat-icon>menu</mat-icon>
+    </button>
     <h2>{{ student.user?.firstname }} {{ student.user?.lastname }}</h2>
 
     <mat-expansion-panel class='card' hideToggle expanded>
