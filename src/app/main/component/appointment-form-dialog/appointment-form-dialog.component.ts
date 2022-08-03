@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Appointment } from 'src/app/shared/domain/appointment';
 import { State } from 'src/app/shared/domain/state';
@@ -12,12 +12,12 @@ import { AppointmentsComponent } from '../../pages/appointments/appointments.com
 })
 export class AppointmentFormDialogComponent implements OnInit {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   states = Object.keys(State);
   private appointment: Appointment;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     public dialogRef: MatDialogRef<AppointmentsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {

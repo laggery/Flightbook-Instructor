@@ -3,7 +3,7 @@ import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { AccountService } from '../../core/services/account.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'fb-login',
@@ -18,11 +18,11 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   unsubscribe$ = new Subject<void>();
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   loginInvalid = false;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private router: Router,
     private accountService: AccountService,
   ) {
