@@ -1,0 +1,48 @@
+<h1 mat-dialog-title>Termin</h1>
+<mat-dialog-content [formGroup]="form">
+    <mat-form-field appearance="fill">
+        <mat-label>{{ 'appointment.state'| translate }}</mat-label>
+        <mat-select cdkFocusInitial required formControlName="state">
+            <mat-option *ngFor="let state of states" [value]="state">
+                {{ 'appointment.stateValue.' + state| translate }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>{{ 'appointment.date'| translate }}</mat-label>
+        <input matInput placeholder="{{ 'appointment.date'| translate }}" type="datetime" formControlName="date" required>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>{{ 'appointment.meetingPoint'| translate }}</mat-label>
+        <input matInput placeholder="Treffpunkt" formControlName="meetingPoint" required>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>{{ 'appointment.instructor'| translate }}</mat-label>
+        <mat-select required formControlName="instructor">
+            <mat-option *ngFor="let teamMember of data.teamMembers" [value]="teamMember.email">
+                {{teamMember.firstname}} {{teamMember.lastname}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>{{ 'appointment.takeOffCoordinator'| translate }}</mat-label>
+        <mat-select formControlName="takeOffCoordinator">
+            <mat-option *ngFor="let teamMember of data.teamMembers" [value]="teamMember.email">
+                {{teamMember.firstname}} {{teamMember.lastname}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>{{ 'appointment.maxPeople'| translate }}</mat-label>
+        <input matInput placeholder="{{ 'appointment.maxPeople'| translate }}" type="number" formControlName="maxPeople">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>{{ 'appointment.description'| translate }}</mat-label>
+        <textarea matInput placeholder="{{ 'appointment.description'| translate }}" type="number" formControlName="description"></textarea>
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button (click)="onCancel()">{{ 'buttons.cancel'| translate }}</button>
+    <button mat-raised-button color="primary" (click)="onSave()" [disabled]="form.invalid">{{ 'buttons.save'| translate }}</button>
+</mat-dialog-actions>

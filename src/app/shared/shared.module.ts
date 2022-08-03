@@ -16,7 +16,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatChipsModule } from '@angular/material/chips'
 import { HoursFormatPipe } from './pipes/hours-format/hours-format.pipe';
+import { MatOptionModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 
 
@@ -41,7 +44,10 @@ import { HoursFormatPipe } from './pipes/hours-format/hours-format.pipe';
     MatIconModule,
     MatStepperModule,
     MatProgressSpinnerModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatChipsModule,
+    MatOptionModule,
+    MatSelectModule
   ],
   exports: [
     HoursFormatPipe,
@@ -60,7 +66,10 @@ import { HoursFormatPipe } from './pipes/hours-format/hours-format.pipe';
     MatIconModule,
     MatStepperModule,
     MatProgressSpinnerModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatChipsModule,
+    MatOptionModule,
+    MatSelectModule
   ]
 })
 export class SharedModule { }
