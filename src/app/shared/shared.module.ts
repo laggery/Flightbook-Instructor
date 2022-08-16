@@ -20,8 +20,24 @@ import { MatChipsModule } from '@angular/material/chips'
 import { HoursFormatPipe } from './pipes/hours-format/hours-format.pipe';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { NgxMatDateFormats, NgxMatDatetimePickerModule, NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker';
+import { NgxMatMomentModule, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular-material-components/moment-adapter';
 
+export const MOMENT_DATETIME_FORMAT = 'DD.MM.YYYY HH:mm';
 
+const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
+  parse: {
+    dateInput: MOMENT_DATETIME_FORMAT,
+  },
+  display: {
+    dateInput: MOMENT_DATETIME_FORMAT,
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+    
 
 @NgModule({
   declarations: [
@@ -47,7 +63,10 @@ import { MatSelectModule } from '@angular/material/select';
     MatExpansionModule,
     MatChipsModule,
     MatOptionModule,
-    MatSelectModule
+    MatSelectModule,
+    MatDatepickerModule,
+
+    NgxMatDatetimePickerModule
   ],
   exports: [
     HoursFormatPipe,
@@ -69,7 +88,16 @@ import { MatSelectModule } from '@angular/material/select';
     MatExpansionModule,
     MatChipsModule,
     MatOptionModule,
-    MatSelectModule
-  ]
+    MatSelectModule,
+    MatDatepickerModule,
+
+    NgxMatDatetimePickerModule,
+    NgxMatMomentModule
+  ],
+  providers: [
+    // values
+    {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_MOMENT_FORMATS},
+    {provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}},
+  ],
 })
 export class SharedModule { }
