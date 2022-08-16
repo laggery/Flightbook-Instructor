@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
 import { Subject, takeUntil } from 'rxjs';
 import { AccountService } from 'src/app/core/services/account.service';
 import { SchoolService } from 'src/app/core/services/school.service';
@@ -18,7 +19,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
 
   unsubscribe$ = new Subject<void>();
   school: School | undefined;
-  appointments: Appointment[] = [];
+  appointments: MatTableDataSource<Appointment> = new MatTableDataSource();
   teamMembers: User[] = [];
   displayedColumns: string[] = ['action', 'scheduling', 'meetingPoint', 'instructor', 'takeOffCoordinator', 'maxPeople', 'state'];
 
@@ -31,9 +32,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     this.accountService.currentSelectedSchool$.pipe(takeUntil(this.unsubscribe$)).subscribe((school: School) => {
       this.school = school;
       if (school?.id) {
-        this.schoolService.getAppointmentsBySchoolId(school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((appointments: Appointment[]) => {
-          this.appointments = appointments;
-        })
+        this.loadAppointments(school.id);
 
         this.schoolService.getTeamMembers(school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((users: User[]) => {
           this.teamMembers = users;
@@ -47,13 +46,24 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
+  loadAppointments(schoolId: number) {
+    this.schoolService.getAppointmentsBySchoolId(schoolId).pipe(takeUntil(this.unsubscribe$)).subscribe((appointments: Appointment[]) => {
+      this.appointments.data = appointments;
+    })
+  }
+
   showDetail(appointment: Appointment) {
     console.log(appointment);
+    this.handleAppointmentDialog(appointment);
   }
 
   addAppointment() {
     const appointment = new Appointment();
     appointment.state = State.ANNOUNCED;
+    this.handleAppointmentDialog(appointment);
+  }
+
+  handleAppointmentDialog(appointment: Appointment) {
     const dialogRef = this.dialog.open(AppointmentFormDialogComponent, {
       width: "500px",
       data: {
@@ -64,12 +74,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(response => {
       if (response?.event === "save" && this.school?.id){
-        this.schoolService.postAppointment(this.school.id, response.appointment).pipe(takeUntil(this.unsubscribe$)).subscribe((appointment: Appointment) => {})
-        this.schoolService.getAppointmentsBySchoolId(this.school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((appointments: Appointment[]) => {
-          this.appointments = appointments;
+        const schoolId = this.school.id;
+        this.schoolService.postAppointment(schoolId, response.appointment).pipe(takeUntil(this.unsubscribe$)).subscribe((appointment: Appointment) => {
+          this.loadAppointments(schoolId);
         })
-        // Save appoointment
-        console.log(response.appointment);
       }
     });
   }

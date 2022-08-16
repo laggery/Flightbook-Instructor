@@ -143,7 +143,7 @@
         "send": "Senden"
     },
     "appointment": {
-        "date": "Datum",
+        "dateTime": "Datum und Zeit",
         "meetingPoint": "Treffpunkt",
         "maxPeople": "Max Teilnehmer",
         "state": "Status",
@@ -154,6 +154,7 @@
             "ANNOUNCED": "Angesagt",
             "CONFIRMED": "Bestätigt",
             "CANCELED": "Abgesagt"
-        }
+        },
+        "passed": "Vergangene Termine"
     }
 }

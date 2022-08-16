@@ -3,9 +3,10 @@
     <button class="add-button" mat-raised-button color="primary" (click)="addAppointment()"><mat-icon>add_circle</mat-icon> Neuer Termin</button>
     <mat-card-content>
         <mat-chip-list>
-            <mat-chip>Announced</mat-chip>
-            <mat-chip>Confirmed</mat-chip>
-            <mat-chip>Canceled</mat-chip>
+            <mat-chip>{{ 'appointment.stateValue.ANNOUNCED'| translate }}</mat-chip>
+            <mat-chip>{{ 'appointment.stateValue.CONFIRMED'| translate }}</mat-chip>
+            <mat-chip>{{ 'appointment.stateValue.CANCELED'| translate }}</mat-chip>
+            <mat-chip>{{ 'appointment.passed'| translate }}</mat-chip>
         </mat-chip-list>
     </mat-card-content>
 
@@ -18,8 +19,8 @@
 
         <!-- Date Column -->
         <ng-container matColumnDef="scheduling">
-            <th mat-header-cell *matHeaderCellDef>{{ 'appointment.date' | translate }}</th>
-            <td mat-cell *matCellDef="let element"> {{element.scheduling | date:'dd.MM.yyyy hh:mm'}} </td>
+            <th mat-header-cell *matHeaderCellDef>{{ 'appointment.dateTime'| translate }}</th>
+            <td mat-cell *matCellDef="let element"> {{element.scheduling | date:'dd.MM.yyyy HH:mm'}} </td>
         </ng-container>
 
         <!-- MeetingPoint Column -->
