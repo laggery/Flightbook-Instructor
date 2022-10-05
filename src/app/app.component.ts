@@ -11,6 +11,7 @@ export class AppComponent {
 
   constructor(private translate: TranslateService, private devicesSizeService: DeviceSizeService) {
     this.translate.setDefaultLang('de');
+    localStorage.setItem('language', 'de');
     this.translate.use(localStorage.getItem('language') || navigator.language.split('-')[0]);
   }
 
