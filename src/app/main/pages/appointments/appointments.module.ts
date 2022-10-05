@@ -6,13 +6,15 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AppointmentsRoutingModule } from './appointments-routing.module';
 import { AppointmentFormDialogComponent } from '../../component/appointment-form-dialog/appointment-form-dialog.component';
+import { SubscriptionsComponent } from '../../component/subscriptions/subscriptions.component';
 
 
 
 @NgModule({
   declarations: [
     AppointmentsComponent,
-    AppointmentFormDialogComponent
+    AppointmentFormDialogComponent,
+    SubscriptionsComponent
   ],
   imports: [
     CommonModule,

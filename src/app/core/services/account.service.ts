@@ -58,7 +58,7 @@ export class AccountService {
   }
 
   getSchoolsByUserId(): Observable<School[]> {
-    return this.http.get<School[]>(`${environment.baseUrl}/users/schools`);
+    return this.http.get<School[]>(`${environment.baseUrl}/instructor/schools`);
   }
 
   async isAuth(): Promise<boolean> {
