@@ -1,5 +1,6 @@
 import { School } from "./school";
 import { State } from "./state";
+import { Subscription } from "./subscription";
 import { User } from "./user";
 
 export class Appointment {
@@ -12,4 +13,5 @@ export class Appointment {
     school: School | undefined;
     instructor: User | undefined;
     takeOffCoordinator: User | undefined;
+    subscriptions: Subscription[] = [];
 }

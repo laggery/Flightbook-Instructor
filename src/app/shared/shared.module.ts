@@ -23,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { NgxMatDateFormats, NgxMatDatetimePickerModule, NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentModule, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular-material-components/moment-adapter';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 export const MOMENT_DATETIME_FORMAT = 'DD.MM.YYYY HH:mm';
 
@@ -65,6 +66,7 @@ const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
     MatOptionModule,
     MatSelectModule,
     MatDatepickerModule,
+    MatPaginatorModule,
 
     NgxMatDatetimePickerModule
   ],
@@ -90,6 +92,7 @@ const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
     MatOptionModule,
     MatSelectModule,
     MatDatepickerModule,
+    MatPaginatorModule,
 
     NgxMatDatetimePickerModule,
     NgxMatMomentModule

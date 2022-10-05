@@ -1,14 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { Subject, takeUntil } from 'rxjs';
+import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { AccountService } from 'src/app/core/services/account.service';
 import { SchoolService } from 'src/app/core/services/school.service';
+import { StudentListPDFService } from 'src/app/core/services/student-list-pdf.service';
 import { Appointment } from 'src/app/shared/domain/appointment';
+import { AppointmentFilter } from 'src/app/shared/domain/appointment-filter';
+import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 import { School } from 'src/app/shared/domain/school';
 import { State } from 'src/app/shared/domain/state';
 import { User } from 'src/app/shared/domain/user';
 import { AppointmentFormDialogComponent } from '../../component/appointment-form-dialog/appointment-form-dialog.component';
+import { SubscriptionsComponent } from '../../component/subscriptions/subscriptions.component';
 
 @Component({
   selector: 'app-appointments',
@@ -21,12 +26,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   school: School | undefined;
   appointments: MatTableDataSource<Appointment> = new MatTableDataSource();
   teamMembers: User[] = [];
-  displayedColumns: string[] = ['action', 'scheduling', 'meetingPoint', 'instructor', 'takeOffCoordinator', 'maxPeople', 'state'];
+  displayedColumns: string[] = ['edit', 'subscription', 'list', 'scheduling', 'meetingPoint', 'instructor', 'takeOffCoordinator', 'maxPeople', 'state'];
+  pagerEntity = new PagerEntity<Appointment[]>;
+  states = State;
+  currentAppointmentFilter: AppointmentFilter;
+  @ViewChild('paginator') paginator: MatPaginator | undefined;
 
   constructor(
     private schoolService: SchoolService,
     private accountService: AccountService,
-    private dialog: MatDialog) { }
+    private studentListPDFService: StudentListPDFService,
+    private dialog: MatDialog) {
+      this.currentAppointmentFilter = this.schoolService.filter;
+    }
 
   ngOnInit(): void {
     this.accountService.currentSelectedSchool$.pipe(takeUntil(this.unsubscribe$)).subscribe((school: School) => {
@@ -46,26 +58,31 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  loadAppointments(schoolId: number) {
-    this.schoolService.getAppointmentsBySchoolId(schoolId).pipe(takeUntil(this.unsubscribe$)).subscribe((appointments: Appointment[]) => {
-      this.appointments.data = appointments;
+  loadAppointments(schoolId: number, offset: number | undefined = undefined, limit = this.schoolService.limit) {
+    if (!offset && this.paginator) {
+      this.paginator.pageIndex = 0;
+    }
+    this.schoolService.getAppointmentsBySchoolId({limit, offset}, schoolId).pipe(takeUntil(this.unsubscribe$)).subscribe((pagerEntity: PagerEntity<Appointment[]>) => {
+      this.pagerEntity = pagerEntity;
+      if (pagerEntity.entity) {
+        this.appointments.data = pagerEntity.entity;
+      }
     })
   }
 
-  showDetail(appointment: Appointment) {
-    console.log(appointment);
-    this.handleAppointmentDialog(appointment);
+  editAppointment(appointment: Appointment) {
+    this.handleAppointmentDialog(appointment, "update");
   }
 
   addAppointment() {
     const appointment = new Appointment();
     appointment.state = State.ANNOUNCED;
-    this.handleAppointmentDialog(appointment);
+    this.handleAppointmentDialog(appointment, "add");
   }
 
-  handleAppointmentDialog(appointment: Appointment) {
+  handleAppointmentDialog(appointment: Appointment, type: string) {
     const dialogRef = this.dialog.open(AppointmentFormDialogComponent, {
-      width: "500px",
+      width: "700px",
       data: {
         teamMembers: this.teamMembers,
         appointment: appointment
@@ -73,14 +90,57 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(response => {
-      if (response?.event === "save" && this.school?.id){
+      if (response?.event === "save" && this.school?.id && type == "add"){
         const schoolId = this.school.id;
         this.schoolService.postAppointment(schoolId, response.appointment).pipe(takeUntil(this.unsubscribe$)).subscribe((appointment: Appointment) => {
+          this.loadAppointments(schoolId);
+        })
+      } else if (response?.event === "save" && this.school?.id && type == "update") {
+        const schoolId = this.school.id;
+        this.schoolService.putAppointment(schoolId, response.appointment).pipe(takeUntil(this.unsubscribe$)).subscribe((appointment: Appointment) => {
           this.loadAppointments(schoolId);
         })
       }
     });
   }
 
+  subscriptionDetail(appointment: Appointment) {
+    const dialogRef = this.dialog.open(SubscriptionsComponent, {
+      width: "700px",
+      data: {
+        appointment: appointment
+      }
+    });
+  }
 
+  async printStudentList(appointment: Appointment) {
+    if (!this.school?.id || !appointment.id) {
+      return;
+    }
+
+    let students = await firstValueFrom(this.schoolService.getSubscriptionStudentDetail(this.school.id, appointment.id));
+    if (appointment.maxPeople) {
+      students.splice(appointment.maxPeople)
+    }
+    this.studentListPDFService.generatePdf(students, this.school); 
+  }
+
+  handlePage(event: any) {
+    let offset = event.pageIndex * event.pageSize;
+    if (this.school?.id) {
+      this.loadAppointments(this.school.id, offset, event.pageSize);
+    }
+  }
+
+  changeState(state: State) {
+    if (this.currentAppointmentFilter.state == state) {
+      this.currentAppointmentFilter.state = undefined;
+    } else {
+      this.currentAppointmentFilter.state = state;
+    }
+    this.schoolService.filter = this.currentAppointmentFilter;
+    if (this.school?.id) {
+      this.loadAppointments(this.school.id);
+    }
+  }
 }
