@@ -1,0 +1,83 @@
+<mat-card class="appointment-card">
+    <mat-card-title>Kalender</mat-card-title>
+    <button class="add-button" mat-raised-button color="primary" (click)="addAppointment()">
+        <mat-icon>add_circle</mat-icon> Neuer Termin
+    </button>
+    <mat-card-content>
+        <mat-chip-list>
+            <mat-chip [selected]="currentAppointmentFilter.state === states.ANNOUNCED" (click)="changeState(states.ANNOUNCED)">{{ 'appointment.stateValue.ANNOUNCED'| translate }}</mat-chip>
+            <mat-chip [selected]="currentAppointmentFilter.state === states.CONFIRMED" (click)="changeState(states.CONFIRMED)">{{ 'appointment.stateValue.CONFIRMED'| translate }}</mat-chip>
+            <mat-chip [selected]="currentAppointmentFilter.state === states.CANCELED" (click)="changeState(states.CANCELED)">{{ 'appointment.stateValue.CANCELED'| translate }}</mat-chip>
+        </mat-chip-list>
+    </mat-card-content>
+
+    <table #table mat-table [dataSource]="appointments">
+        <!-- Action Column -->
+        <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element" (click)="editAppointment(element)">
+                <mat-icon>edit</mat-icon>
+            </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="subscription">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element" (click)="subscriptionDetail(element)">
+                <mat-icon>list</mat-icon>
+            </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="list">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element" (click)="printStudentList(element)">
+                <mat-icon>list_alt</mat-icon>
+            </td>
+        </ng-container>
+
+        <!-- Date Column -->
+        <ng-container matColumnDef="scheduling">
+            <th mat-header-cell *matHeaderCellDef>{{ 'appointment.dateTime'| translate }}</th>
+            <td mat-cell *matCellDef="let element"> {{element.scheduling | date:'dd.MM.yyyy HH:mm'}} </td>
+        </ng-container>
+
+        <!-- MeetingPoint Column -->
+        <ng-container matColumnDef="meetingPoint">
+            <th mat-header-cell *matHeaderCellDef>{{ 'appointment.meetingPoint' | translate }}</th>
+            <td mat-cell *matCellDef="let element"> {{ element.meetingPoint }} </td>
+        </ng-container>
+
+        <!-- Instructor Column -->
+        <ng-container matColumnDef="instructor">
+            <th mat-header-cell *matHeaderCellDef>{{ 'appointment.instructor' | translate }}</th>
+            <td mat-cell *matCellDef="let element"> {{ element.instructor.firstname }} {{ element.instructor.lastname }}
+            </td>
+        </ng-container>
+
+        <!-- TakeOffCoordinator Column -->
+        <ng-container matColumnDef="takeOffCoordinator">
+            <th mat-header-cell *matHeaderCellDef>{{ 'appointment.takeOffCoordinator' | translate }}</th>
+            <td mat-cell *matCellDef="let element"> {{ element.takeOffCoordinator?.firstname || "-" }} {{
+                element.takeOffCoordinator?.lastname }} </td>
+        </ng-container>
+
+        <!-- MaxPeople Column -->
+        <ng-container matColumnDef="maxPeople">
+            <th mat-header-cell *matHeaderCellDef>{{ 'appointment.maxPeople' | translate }}</th>
+            <td mat-cell *matCellDef="let element"> {{ element.maxPeople || "-" }} </td>
+        </ng-container>
+
+        <!-- State Column -->
+        <ng-container matColumnDef="state">
+            <th mat-header-cell *matHeaderCellDef>{{ 'appointment.state' | translate }}</th>
+            <td mat-cell *matCellDef="let element"> {{ 'appointment.stateValue.' + element.state| translate }} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    <mat-paginator #paginator [length]="pagerEntity.totalItems" [pageSize]="pagerEntity.itemsPerPage"
+        [pageSizeOptions]="[10, 20, 50]" (page)="handlePage($event)">
+    </mat-paginator>
+</mat-card>

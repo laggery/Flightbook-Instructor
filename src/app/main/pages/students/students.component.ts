@@ -100,7 +100,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(response => {
-      if (response.event === "send"){
+      if (response?.event === "send"){
         this.addStudent(response.value);
       }
     }); 
