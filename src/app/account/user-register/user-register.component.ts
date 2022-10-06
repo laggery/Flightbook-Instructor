@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, SimpleChanges } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { AccountService } from 'src/app/core/services/account.service';
 import { User } from 'src/app/shared/domain/user';
@@ -16,11 +16,11 @@ export class UserRegisterComponent implements OnInit, OnDestroy {
 
   unsubscribe$ = new Subject<void>();
 
-  form: FormGroup;
+  form: UntypedFormGroup;
   registerInvalid = false;
 
   constructor(
-    private fb: FormBuilder,
+    private fb: UntypedFormBuilder,
     private accountService: AccountService
   ) {
     this.form = this.fb.group({

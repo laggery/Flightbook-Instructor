@@ -1,5 +1,9 @@
 <mat-toolbar color="primary">
     <span>{{ 'title'| translate }}</span>
+    <div fxShow="true" fxHide.lt-md="true">
+        <a mat-button [routerLink]="'/students'">{{ 'menu.students'| translate }}</a>
+        <a mat-button [routerLink]="'/appointments'">{{ 'menu.appointments'| translate }}</a>
+      </div>
     <span class="menu-spacer"></span>
     <span>
         <button mat-icon-button [matMenuTriggerFor]="menu">

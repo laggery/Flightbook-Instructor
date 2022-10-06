@@ -1,5 +1,9 @@
 {
     "title": "Instructor App",
+    "menu" : {
+        "students": "Schüller",
+        "appointments": "Termine"
+    },
     "language": {
         "fr": "Franz.",
         "de": "Deutsch",
@@ -137,5 +141,20 @@
         "addControlSheet": "Ausbildungskontrollblatt hinzufügen",
         "cancel": "Abbrechen",
         "send": "Senden"
+    },
+    "appointment": {
+        "dateTime": "Datum und Zeit",
+        "meetingPoint": "Treffpunkt",
+        "maxPeople": "Max Teilnehmer",
+        "state": "Status",
+        "instructor": "Fluglehrer",
+        "takeOffCoordinator": "Start Helfer",
+        "description": "Beschreibung",
+        "stateValue": {
+            "ANNOUNCED": "Angesagt",
+            "CONFIRMED": "Bestätigt",
+            "CANCELED": "Abgesagt"
+        },
+        "passed": "Vergangene Termine"
     }
 }

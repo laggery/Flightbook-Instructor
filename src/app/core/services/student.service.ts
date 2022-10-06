@@ -13,14 +13,14 @@ export class StudentService {
   constructor(private http: HttpClient) { }
 
   getFlightsByStudentId(id: number): Observable<Flight[]> {
-    return this.http.get<Flight[]>(`${environment.baseUrl}/students/${id}/flights`);
+    return this.http.get<Flight[]>(`${environment.baseUrl}/instructor/students/${id}/flights`);
   }
 
   getControlSheetByStudentId(id: number): Observable<ControlSheet> {
-    return this.http.get<ControlSheet>(`${environment.baseUrl}/students/${id}/control-sheet`);
+    return this.http.get<ControlSheet>(`${environment.baseUrl}/instructor/students/${id}/control-sheet`);
   }
 
   postControlSheetByStudentId(id: number, controlSheet: ControlSheet): Observable<ControlSheet> {
-    return this.http.post<ControlSheet>(`${environment.baseUrl}/students/${id}/control-sheet`, controlSheet);
+    return this.http.post<ControlSheet>(`${environment.baseUrl}/instructor/students/${id}/control-sheet`, controlSheet);
   }
 }
