@@ -17,11 +17,5 @@ COPY --from=build /usr/src/app/dist/flightbook-instructor-app /usr/share/nginx/h
 COPY ./entryPoint.sh /
 RUN chmod +x entryPoint.sh
 
-## set timezone
-RUN apk add tzdata
-RUN cp /usr/share/zoneinfo/Europe/Zurich /etc/localtime
-RUN echo "Europe/Zurich" >  /etc/timezone
-RUN apk del tzdata
-
 ENTRYPOINT ["/entryPoint.sh"]
 CMD ["nginx", "-g", "daemon off;"]
