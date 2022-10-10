@@ -2,7 +2,6 @@ import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import * as moment from 'moment';
 import { Appointment } from 'src/app/shared/domain/appointment';
 import { State } from 'src/app/shared/domain/state';
 import { User } from 'src/app/shared/domain/user';
@@ -38,7 +37,7 @@ export class AppointmentFormDialogComponent implements OnInit {
     this.appointment = data.appointment;
     this.form = this.fb.group({
       state: [this.appointment.state, Validators.required],
-      date: [moment(this.appointment.scheduling), Validators.required],
+      date: [this.appointment.scheduling, Validators.required],
       meetingPoint: [this.appointment.meetingPoint, Validators.required],
       maxPeople: [this.appointment.maxPeople, Validators.nullValidator],
       instructor: [this.appointment.instructor?.email, Validators.required],
