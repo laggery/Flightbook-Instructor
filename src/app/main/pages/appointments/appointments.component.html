@@ -39,7 +39,7 @@
         <!-- Date Column -->
         <ng-container matColumnDef="scheduling">
             <th mat-header-cell *matHeaderCellDef>{{ 'appointment.dateTime'| translate }}</th>
-            <td mat-cell *matCellDef="let element"> {{element.scheduling | date:'dd.MM.yyyy HH:mm'}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.scheduling | date:'dd.MM.yyyy HH:mm':'UTC'}} </td>
         </ng-container>
 
         <!-- MeetingPoint Column -->
