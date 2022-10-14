@@ -64,7 +64,7 @@ export class AppointmentFormDialogComponent implements OnInit {
 
     if (this.form.valid) {
       this.appointment.state = this.form.get("state")?.value;
-      this.appointment.scheduling = this.form.get("date")?.value.format('YYYY-MM-DDTHH:mm');
+      this.appointment.scheduling = this.form.get("date")?.value;
       this.appointment.instructor.email = this.form.get("instructor")?.value;
       this.appointment.takeOffCoordinator.email = this.form.get("takeOffCoordinator")?.value;
       this.appointment.maxPeople = this.form.get("maxPeople")?.value;
