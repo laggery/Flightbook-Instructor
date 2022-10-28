@@ -1,6 +1,8 @@
 import { Component, HostListener } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DeviceSizeService } from './core/services/device-size.service';
+import * as moment from 'moment';
+// import 'moment/locale/de'
  
 @Component({
   selector: 'app-root',
@@ -13,6 +15,11 @@ export class AppComponent {
     this.translate.setDefaultLang('de');
     localStorage.setItem('language', 'de');
     this.translate.use(localStorage.getItem('language') || navigator.language.split('-')[0]);
+    moment.updateLocale('en', {
+      week: {
+        dow: 1,
+      },
+    })
   }
 
   @HostListener('window:load', ['$event']) onLoad(event: any) {

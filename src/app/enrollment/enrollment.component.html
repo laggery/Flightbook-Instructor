@@ -37,9 +37,20 @@
                     <ng-template matStepLabel>{{ 'enrollment.confirmation'| translate }}</ng-template>
                     <mat-card class="mat-card-stepper">
                         <mat-card-content>
-                            <p *ngIf="enrollment.type == 'STUDENT'">{{ enrollment.school?.name }} {{ 'enrollment.hasAccess'| translate }}</p>
-                            <p *ngIf="enrollment.type == 'TEAM_MEMBER'">{{ 'enrollment.inTeam'| translate }} {{ enrollment.school?.name }}.</p>
-                            <mat-icon class="check-icon">check_circle</mat-icon>
+                            <div *ngIf="enrollment.type == 'STUDENT'">
+                                <p>{{ enrollment.school?.name }} {{ 'enrollment.hasAccess'| translate }}</p>
+                                <mat-icon class="check-icon">check_circle</mat-icon>
+                                <p><a color="primary" mat-raised-button target="_blank" href="https://m.flightbook.ch">
+                                    {{ 'login.title'| translate }}
+                                </a></p>
+                            </div>
+                            <div *ngIf="enrollment.type == 'TEAM_MEMBER'">
+                                <p>{{ 'enrollment.inTeam'| translate }} {{ enrollment.school?.name }}.</p>
+                                <mat-icon class="check-icon">check_circle</mat-icon>
+                                <p><a color="primary" mat-raised-button target="_blank" href="https://instructor.flightbook.ch">
+                                    {{ 'login.title'| translate }}
+                                </a></p>
+                            </div>
                         </mat-card-content>
                     </mat-card>
                 </mat-step>
