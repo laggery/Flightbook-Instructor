@@ -18,6 +18,6 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <fb-student-detail [student]="selectedStudent" (backButtonClick)=backButton()></fb-student-detail>
+        <fb-student-detail [student]="selectedStudent" [school]="school" (backButtonClick)=backButton() (removeUserButtonClick)=syncStudentList()></fb-student-detail>
     </mat-sidenav-content>
 </mat-sidenav-container>

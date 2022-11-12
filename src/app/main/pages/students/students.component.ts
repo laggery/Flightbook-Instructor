@@ -52,18 +52,22 @@ export class StudentsComponent implements OnInit, OnDestroy {
       this.school = school;
       this.selectedStudent = undefined;
       this.studentList = [];
-      if (school?.id) {
-        this.schoolService.getStudentsBySchoolId(school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((students: Student[]) => {
-          this.students = students;
-          this.selectedStudent = this.students[0];
-        })
-      }
+      this.syncStudentList();
     });
   }
 
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+  }
+
+  syncStudentList() {
+    if (this.school?.id) {
+      this.schoolService.getStudentsBySchoolId(this.school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((students: Student[]) => {
+        this.students = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
+        this.selectedStudent = this.students[0];
+      })
+    }
   }
 
   studentDetail(student: Student) {

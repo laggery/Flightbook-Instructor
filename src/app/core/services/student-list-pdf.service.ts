@@ -29,6 +29,8 @@ export class StudentListPDFService {
   async generatePdf(students: Student[], school: School): Promise<any> {
     await this.loadPdfMaker();
 
+    students = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
+
     let studentPdfData: any = [];
     const rowHeight = [10];
     students.forEach((student: Student) => {

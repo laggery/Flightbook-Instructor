@@ -2,7 +2,7 @@
     <button class="menu-button" *ngIf="isMobile" mat-mini-fab color="primary" (click)=backButton()>
         <mat-icon>menu</mat-icon>
     </button>
-    <h2>{{ student.user?.firstname }} {{ student.user?.lastname }}</h2>
+    <h2>{{ student.user?.firstname }} {{ student.user?.lastname }}<mat-icon class="remove-student" (click)="removeStudent()">delete_forever</mat-icon></h2>
 
     <mat-expansion-panel class='card' hideToggle expanded>
         <mat-expansion-panel-header>

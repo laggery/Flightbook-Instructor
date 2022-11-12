@@ -23,4 +23,8 @@ export class StudentService {
   postControlSheetByStudentId(id: number, controlSheet: ControlSheet): Observable<ControlSheet> {
     return this.http.post<ControlSheet>(`${environment.baseUrl}/instructor/students/${id}/control-sheet`, controlSheet);
   }
+
+  removeStudent(id: number, schoolId: number) {
+    return this.http.delete(`${environment.baseUrl}/instructor/schools/${schoolId}/students/${id}`);
+  }
 }

@@ -44,12 +44,35 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>{{ 'appointment.maxPeople'| translate }}</mat-label>
-        <input matInput placeholder="{{ 'appointment.maxPeople'| translate }}" type="number" formControlName="maxPeople">
+        <input matInput placeholder="{{ 'appointment.maxPeople'| translate }}" type="number"
+            formControlName="maxPeople">
     </mat-form-field>
     <mat-form-field>
         <mat-label>{{ 'appointment.description'| translate }}</mat-label>
-        <textarea matInput placeholder="{{ 'appointment.description'| translate }}" type="number" formControlName="description"></textarea>
+        <textarea matInput placeholder="{{ 'appointment.description'| translate }}" type="number"
+            formControlName="description"></textarea>
     </mat-form-field>
+    <ng-container class="subscriptions-control" formArrayName="subscriptions">
+        <button mat-mini-fab color="primary" (click)="addSubscription()">
+            <mat-icon>add</mat-icon>
+        </button>
+        <mat-label class="subscribe-student">{{ 'appointment.subscribeStudent'| translate }}</mat-label>
+        <div class="subscription-list" *ngFor="let subscription of subscriptions.controls; let i=index" [formGroupName]="i" #subscriptionFormList>
+            <button mat-icon-button color="warn" (click)="removeSubscription(i, selectStudent.value)">
+                <mat-icon>remove</mat-icon>
+            </button>
+            <mat-form-field class="subscription-form-field">
+                <mat-label>{{ 'appointment.student'| translate }}</mat-label>
+                <mat-select #selectStudent FormArrayName="subscriptions" formControlName="user" (selectionChange)="selected()">
+                    <ng-container *ngFor="let student of students" >
+                        <mat-option *ngIf="subscription.value.user === student.user?.email || !isSelected(student.user?.email)" [value]="student.user?.email">
+                            {{student.user?.firstname}} {{student.user?.lastname}}
+                        </mat-option>
+                    </ng-container>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </ng-container>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">

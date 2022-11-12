@@ -39,6 +39,7 @@
     "student": {
         "information": "Informationen",
         "addStudent": "Schüler hinzufügen",
+        "removeStudentMessage": "Möchtest du $REPLACE_NAME wirklich entfernen?",
         "amountofflights": "Anzahl Flüge",
         "lastflight": "Letzter Flug",
         "flighthour": "Flugstunden",
@@ -146,6 +147,7 @@
         "dateTime": "Datum und Zeit",
         "meetingPoint": "Treffpunkt",
         "maxPeople": "Max Teilnehmer",
+        "registrations": "Anmeldungen",
         "state": "Status",
         "instructor": "Fluglehrer",
         "takeOffCoordinator": "Starthelfer",
@@ -155,6 +157,10 @@
             "CONFIRMED": "Bestätigt",
             "CANCELED": "Abgesagt"
         },
-        "passed": "Vergangene Termine"
+        "passed": "Vergangene Termine",
+        "subscribeStudent": "Schüler anmelden",
+        "student": "Schüler",
+        "waitingList": "Warteliste",
+        "noSubscription": "Zurzeit hat es keine Anmeldungen"
     }
 }
