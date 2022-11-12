@@ -62,10 +62,16 @@
                 element.takeOffCoordinator?.lastname }} </td>
         </ng-container>
 
-        <!-- MaxPeople Column -->
-        <ng-container matColumnDef="maxPeople">
-            <th mat-header-cell *matHeaderCellDef>{{ 'appointment.maxPeople' | translate }}</th>
-            <td mat-cell *matCellDef="let element"> {{ element.maxPeople || "-" }} </td>
+        <!-- Registrations Column -->
+        <ng-container matColumnDef="countSubscription">
+            <th mat-header-cell *matHeaderCellDef>{{ 'appointment.registrations' | translate }}</th>
+            <td mat-cell *matCellDef="let element"> {{  (element.maxPeople && element.subscriptions.length > element.maxPeople) ? element.maxPeople : element.subscriptions.length}}<span *ngIf="element.maxPeople">/{{ element.maxPeople }}</span></td>
+        </ng-container>
+
+        <!-- Waitinglist Column -->
+        <ng-container matColumnDef="countWaitinglist">
+            <th mat-header-cell *matHeaderCellDef>{{ 'appointment.waitingList' | translate }}</th>
+            <td mat-cell *matCellDef="let element"> {{  (element.maxPeople && element.subscriptions.length > element.maxPeople) ?  element.subscriptions.length - element.maxPeople : "-"}}</td>
         </ng-container>
 
         <!-- State Column -->

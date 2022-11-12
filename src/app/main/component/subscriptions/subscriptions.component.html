@@ -1,4 +1,4 @@
-<p *ngIf="appointment?.subscriptions?.length == 0; else elseBlock">Zurzeit hat es keine Anmeldungen</p>
+<p *ngIf="appointment?.subscriptions?.length == 0; else elseBlock">{{ 'appointment.noSubscription' | translate }}</p>
 <ng-template #elseBlock>
     <mat-dialog-content>
         <h1 mat-dialog-title><span *ngIf="appointment.maxPeople">{{ subscribed.length }}/{{ appointment.maxPeople }} </span>Anmeldungen</h1>
@@ -8,7 +8,7 @@
             </span>
         </p>
         <div *ngIf="waitingList.length > 0">
-            <h1 mat-dialog-title class="waiting-list">Warteliste</h1>
+            <h1 mat-dialog-title class="waiting-list">{{ 'appointment.waitingList' | translate }}</h1>
             <p class="item-value subscriptions">
                 <span class="subscription-item" *ngFor="let subscription of waitingList">
                     {{ subscription.user?.firstname }} {{ subscription.user?.lastname }}

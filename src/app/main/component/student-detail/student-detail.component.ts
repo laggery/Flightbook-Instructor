@@ -1,9 +1,11 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { Subject, takeUntil } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
+import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { DeviceSizeService } from 'src/app/core/services/device-size.service';
 import { StudentService } from 'src/app/core/services/student.service';
 import { ControlSheet } from 'src/app/shared/domain/control-sheet';
 import { Flight } from 'src/app/shared/domain/flight';
+import { School } from 'src/app/shared/domain/school';
 import { Student } from 'src/app/shared/domain/student';
 
 @Component({
@@ -15,7 +17,12 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   student: Student | undefined;
 
+  @Input()
+  school: School | undefined;
+
   @Output() backButtonClick = new EventEmitter();
+
+  @Output() removeUserButtonClick = new EventEmitter();
 
   flights: Flight[];
   displayedColumns: string[] = ['nb', 'date', 'start', 'landing', 'glider', 'time', 'km', 'description'];
@@ -26,7 +33,11 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
 
   unsubscribe$ = new Subject<void>();
 
-  constructor(private studentService: StudentService, private deviceSize: DeviceSizeService) { 
+  constructor(
+    private studentService: StudentService,
+    private deviceSize: DeviceSizeService,
+    private translate: TranslateService
+  ) { 
     this.flights = [];
   }
 
@@ -42,7 +53,7 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges){
-    if (changes['student'].currentValue) {
+    if (changes['student'] && changes['student'].currentValue) {
       this.studentService.getFlightsByStudentId(changes['student'].currentValue.user.id).pipe(takeUntil(this.unsubscribe$)).subscribe((flights: Flight[]) => {
         this.flights = flights;
       });
@@ -64,6 +75,22 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
 
   backButton() {
     this.backButtonClick.emit();
+  }
+
+  async removeStudent() {
+    const confirmationMessage = this.translate.instant('student.removeStudentMessage').replace("$REPLACE_NAME", `${this.student?.user?.firstname} ${this.student?.user?.lastname}`); 
+    if(!confirm(confirmationMessage)) {
+      console.log("Cancel delete");
+      return;
+    }
+
+    if (!this.student?.user?.id || !this.school?.id) {
+      return;
+    }
+
+    await firstValueFrom(this.studentService.removeStudent(this.student?.user?.id, this.school.id));
+
+    this.removeUserButtonClick.emit("deleted");
   }
 
 }

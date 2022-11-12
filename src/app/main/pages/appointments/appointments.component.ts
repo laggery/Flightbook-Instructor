@@ -11,6 +11,7 @@ import { AppointmentFilter } from 'src/app/shared/domain/appointment-filter';
 import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 import { School } from 'src/app/shared/domain/school';
 import { State } from 'src/app/shared/domain/state';
+import { Student } from 'src/app/shared/domain/student';
 import { User } from 'src/app/shared/domain/user';
 import { AppointmentFormDialogComponent } from '../../component/appointment-form-dialog/appointment-form-dialog.component';
 import { SubscriptionsComponent } from '../../component/subscriptions/subscriptions.component';
@@ -26,7 +27,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   school: School | undefined;
   appointments: MatTableDataSource<Appointment> = new MatTableDataSource();
   teamMembers: User[] = [];
-  displayedColumns: string[] = ['edit', 'subscription', 'list', 'scheduling', 'meetingPoint', 'instructor', 'takeOffCoordinator', 'maxPeople', 'state'];
+  students: Student[] = [];
+  displayedColumns: string[] = ['edit', 'subscription', 'list', 'scheduling', 'meetingPoint', 'instructor', 'takeOffCoordinator', 'countSubscription', 'countWaitinglist', 'state'];
   pagerEntity = new PagerEntity<Appointment[]>;
   states = State;
   currentAppointmentFilter: AppointmentFilter;
@@ -48,6 +50,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
 
         this.schoolService.getTeamMembers(school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((users: User[]) => {
           this.teamMembers = users;
+        })
+
+        this.schoolService.getStudentsBySchoolId(school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((students: Student[]) => {
+          this.students = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
         })
       }
     });
@@ -85,6 +91,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
       width: "700px",
       data: {
         teamMembers: this.teamMembers,
+        students: this.students,
         appointment: appointment
       }
     });
