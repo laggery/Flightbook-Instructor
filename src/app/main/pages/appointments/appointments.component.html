@@ -1,7 +1,7 @@
 <mat-card class="appointment-card">
-    <mat-card-title>Kalender</mat-card-title>
+    <mat-card-title>{{ 'appointment.title'| translate }}</mat-card-title>
     <button class="add-button" mat-raised-button color="primary" (click)="addAppointment()">
-        <mat-icon>add_circle</mat-icon> Neuer Termin
+        <mat-icon>add_circle</mat-icon> {{ 'appointment.new'| translate }}
     </button>
     <mat-card-content>
         <mat-chip-list>

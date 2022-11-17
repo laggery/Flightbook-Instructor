@@ -80,7 +80,6 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   async removeStudent() {
     const confirmationMessage = this.translate.instant('student.removeStudentMessage').replace("$REPLACE_NAME", `${this.student?.user?.firstname} ${this.student?.user?.lastname}`); 
     if(!confirm(confirmationMessage)) {
-      console.log("Cancel delete");
       return;
     }
 
