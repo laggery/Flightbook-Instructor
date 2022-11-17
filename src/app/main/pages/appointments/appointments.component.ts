@@ -12,7 +12,7 @@ import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 import { School } from 'src/app/shared/domain/school';
 import { State } from 'src/app/shared/domain/state';
 import { Student } from 'src/app/shared/domain/student';
-import { User } from 'src/app/shared/domain/user';
+import { TeamMember } from 'src/app/shared/domain/team-member';
 import { AppointmentFormDialogComponent } from '../../component/appointment-form-dialog/appointment-form-dialog.component';
 import { SubscriptionsComponent } from '../../component/subscriptions/subscriptions.component';
 
@@ -26,7 +26,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject<void>();
   school: School | undefined;
   appointments: MatTableDataSource<Appointment> = new MatTableDataSource();
-  teamMembers: User[] = [];
+  teamMembers: TeamMember[] = [];
   students: Student[] = [];
   displayedColumns: string[] = ['edit', 'subscription', 'list', 'scheduling', 'meetingPoint', 'instructor', 'takeOffCoordinator', 'countSubscription', 'countWaitinglist', 'state'];
   pagerEntity = new PagerEntity<Appointment[]>;
@@ -48,8 +48,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
       if (school?.id) {
         this.loadAppointments(school.id);
 
-        this.schoolService.getTeamMembers(school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((users: User[]) => {
-          this.teamMembers = users;
+        this.schoolService.getTeamMembers(school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((teamMembers: TeamMember[]) => {
+          this.teamMembers = teamMembers;
         })
 
         this.schoolService.getStudentsBySchoolId(school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((students: Student[]) => {

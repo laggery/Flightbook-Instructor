@@ -2,7 +2,8 @@
     "title": "Instructor App",
     "menu" : {
         "students": "Schüler",
-        "appointments": "Termine"
+        "appointments": "Termine",
+        "team": "Team"
     },
     "language": {
         "fr": "Franz.",
@@ -19,7 +20,9 @@
         "title": "Konto",
         "register": "Account erstellen",
         "firstname": "Vorname",
-        "lastname": "Nachname"
+        "lastname": "Nachname",
+        "email": "E-Mail",
+        "delete": "Löschen"
     },
     "enrollment": {
         "title": "Einschreibung",
@@ -144,6 +147,8 @@
         "send": "Senden"
     },
     "appointment": {
+        "title": "Kalender",
+        "new": "Neuer Termin",
         "dateTime": "Datum und Zeit",
         "meetingPoint": "Treffpunkt",
         "maxPeople": "Max Teilnehmer",
@@ -162,5 +167,10 @@
         "student": "Schüler",
         "waitingList": "Warteliste",
         "noSubscription": "Zurzeit hat es keine Anmeldungen"
+    },
+    "team": {
+        "title": "Team",
+        "addMember": "Mitglied hinzufügen",
+        "removeMessage": "Möchtest du $REPLACE_NAME wirklich aus dem Team entfernen?"
     }
 }

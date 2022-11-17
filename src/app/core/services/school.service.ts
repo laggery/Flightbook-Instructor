@@ -6,10 +6,10 @@ import { Enrollment } from 'src/app/shared/domain/enrollment';
 import { environment } from 'src/environments/environment';
 import { Appointment } from 'src/app/shared/domain/appointment';
 import { Subscription } from 'src/app/shared/domain/subscription';
-import { User } from 'src/app/shared/domain/user';
 import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 import { AppointmentFilter } from 'src/app/shared/domain/appointment-filter';
 import * as moment from 'moment';
+import { TeamMember } from 'src/app/shared/domain/team-member';
 
 @Injectable({
   providedIn: 'root'
@@ -27,12 +27,20 @@ export class SchoolService {
     return this.http.get<Student[]>(`${environment.baseUrl}/instructor/schools/${id}/students`);
   }
 
-  getTeamMembers(id: number): Observable<User[]> {
-    return this.http.get<User[]>(`${environment.baseUrl}/instructor/schools/${id}/team-members`);
+  getTeamMembers(id: number): Observable<TeamMember[]> {
+    return this.http.get<TeamMember[]>(`${environment.baseUrl}/instructor/schools/${id}/team-members`);
   }
 
   postStudentsEnrollment(id: number, email: string) {
     return this.http.post<Enrollment>(`${environment.baseUrl}/instructor/schools/${id}/students/enrollment`, { email: email });
+  }
+
+  postTeamMemberEnrollment(id: number, email: string) {
+    return this.http.post<Enrollment>(`${environment.baseUrl}/instructor/schools/${id}/team-members/enrollment`, { email: email });
+  }
+
+  deleteTeamMember(id: number, teamMember: TeamMember) {
+    return this.http.delete<Enrollment>(`${environment.baseUrl}/instructor/schools/${id}/team-members/${teamMember.id}`);
   }
 
   getAppointmentsBySchoolId({ limit = undefined, offset = undefined}: { limit?: number, offset?: number} = {}, id: number): Observable<PagerEntity<Appointment[]>> {

@@ -29,16 +29,16 @@
     <mat-form-field appearance="fill">
         <mat-label>{{ 'appointment.instructor'| translate }}</mat-label>
         <mat-select required formControlName="instructor">
-            <mat-option *ngFor="let teamMember of data.teamMembers" [value]="teamMember.email">
-                {{teamMember.firstname}} {{teamMember.lastname}}
+            <mat-option *ngFor="let teamMember of data.teamMembers" [value]="teamMember.user.email">
+                {{teamMember.user.firstname}} {{teamMember.user.lastname}}
             </mat-option>
         </mat-select>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>{{ 'appointment.takeOffCoordinator'| translate }}</mat-label>
         <mat-select formControlName="takeOffCoordinator">
-            <mat-option *ngFor="let teamMember of data.teamMembers" [value]="teamMember.email">
-                {{teamMember.firstname}} {{teamMember.lastname}}
+            <mat-option *ngFor="let teamMember of data.teamMembers" [value]="teamMember.user.email">
+                {{teamMember.user.firstname}} {{teamMember.user.lastname}}
             </mat-option>
         </mat-select>
     </mat-form-field>

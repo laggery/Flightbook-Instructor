@@ -10,21 +10,23 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 export class EmailDialogComponent implements OnInit {
 
   form: UntypedFormGroup;
+  title: string
 
   constructor(
     private fb: UntypedFormBuilder,
     public dialogRef: MatDialogRef<EmailDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.form = this.fb.group({
-      email: ['', Validators.email]
-    });
+      this.title = data.title;
+      this.form = this.fb.group({
+        email: ['', Validators.email]
+      });
   }
 
   ngOnInit(): void {
   }
 
   onCancel(): void {
-    this.dialogRef.close({event: "cancel"});
+    this.dialogRef.close({ event: "cancel" });
   }
 
   onSend(): void {

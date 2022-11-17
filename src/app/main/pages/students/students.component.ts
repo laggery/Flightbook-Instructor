@@ -100,6 +100,9 @@ export class StudentsComponent implements OnInit, OnDestroy {
 
   openEmailDialog() {
     const dialogRef = this.dialog.open(EmailDialogComponent, {
+      data: {
+        title: this.translate.instant('student.addStudent')
+      },
       width: "500px"
     });
 
