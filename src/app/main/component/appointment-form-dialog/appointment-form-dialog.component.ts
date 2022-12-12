@@ -35,6 +35,7 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
   public stepMinute = 1;
   public stepSecond = 1;
   public color: ThemePalette = 'primary';
+  public defaultTime = [8, 0, 0] 
 
   constructor(
     private fb: UntypedFormBuilder,
