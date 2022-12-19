@@ -10,20 +10,14 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'students',
+    path: '',
     component: MainComponent,
-    loadChildren: () => import('./pages/students/students.module').then(m => m.StudentsModule)
-  },
-  {
-    path: 'appointments',
-    component: MainComponent,
-    loadChildren: () => import('./pages/appointments/appointments.module').then(m => m.AppointmentsModule)
-  },
-  {
-    path: 'team',
-    component: MainComponent,
-    loadChildren: () => import('./pages/team/team.module').then(m => m.TeamModule)
-  },
+    children: [
+      { path: 'students', loadChildren: () => import('./pages/students/students.module').then(m => m.StudentsModule) },
+      { path: 'appointments', pathMatch: 'full', loadChildren: () => import('./pages/appointments/appointments.module').then(m => m.AppointmentsModule) },
+      { path: 'team', pathMatch: 'full', loadChildren: () => import('./pages/team/team.module').then(m => m.TeamModule) }
+    ]
+  }
 ];
 
 @NgModule({

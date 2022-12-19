@@ -31,3 +31,26 @@ mat-spinner {
     transform: scale(3);
     color: #ff4961;
 }
+
+mat-spinner {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+}
+
+.overlay {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    position: absolute;
+    z-index: 2;
+    backdrop-filter: blur(1px);
+    background-color: rgb(1 1 1 / 60%);
+}
+
+.paymentResilation{
+    font-size: 11px;
+}

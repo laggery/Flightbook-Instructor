@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material/stepper';
 import { ActivatedRoute } from '@angular/router';
-import { Subject, takeUntil } from 'rxjs';
+import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { AccountService } from '../core/services/account.service';
 import { EnrollmentService } from '../core/services/enrollment.service';
 import { Enrollment } from '../shared/domain/enrollment';
@@ -16,6 +16,9 @@ export class EnrollmentComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject<void>();
   enrollment: Enrollment | undefined;
   loading = true;
+  init = false;
+  @ViewChild("stepper", { static: false })
+  stepper?: MatStepper
 
   private token: string | null;
 
@@ -25,15 +28,27 @@ export class EnrollmentComponent implements OnInit, OnDestroy {
     private accountService: AccountService
   ) {
     this.token = this.route.snapshot.paramMap.get('token');
+
     if (this.token) {
       this.enrollmentService.getEnrollmentByToken(this.token).pipe(takeUntil(this.unsubscribe$)).subscribe({
         next: (resp: Enrollment) => {
           this.loading = false;
+          this.init = true
           this.enrollment = resp;
+          const paymentStatus = this.route.snapshot.paramMap.get('payment');
+          if (paymentStatus == "success") {
+            setTimeout(() => {
+              this.stepper?.next();
+              this.stepper?.next();
+            }, 10);
+          } else if (paymentStatus == "cancel") {
+            setTimeout(() => {
+              this.stepper?.next();
+            }, 10);
+          }
         }
       });
     }
-
   }
 
   ngOnInit(): void {}
@@ -43,9 +58,15 @@ export class EnrollmentComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  loginEvent(loggedIn: boolean, stepper: MatStepper) {
+  async loginEvent(loggedIn: boolean, stepper: MatStepper) {
     if (loggedIn) {
+      this.loading = true;
+      const status = await firstValueFrom(this.accountService.getPaymentStatus());
       stepper.next();
+      this.loading = false;
+      if (status?.active && this.enrollment?.type == EnrollmentType.STUDENT) {
+        stepper.next();
+      }
     }
   }
 
@@ -61,5 +82,14 @@ export class EnrollmentComponent implements OnInit, OnDestroy {
         }
       });
     }
+  }
+
+  async getStripeSession() {
+    if (!this.token) {
+      return;
+    }
+    this.loading = true;
+    const session = await firstValueFrom(this.accountService.getStripeSession(this.token));
+    window.open(session.url, '_self');
   }
 }
