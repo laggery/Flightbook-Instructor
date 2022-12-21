@@ -5,24 +5,23 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../../shared/domain/user';
 import { environment } from 'src/environments/environment';
 import { School } from 'src/app/shared/domain/school';
+import { PaymentStatus } from 'src/app/shared/domain/payment-status';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AccountService {
   private jwtHelper: JwtHelperService;
-  private currentSelectedSchool: Subject<School> = new Subject<School>();
+  changeSelectedSchool$: Subject<School> = new Subject<School>();
+  currentSelectedSchool?: School;
 
   constructor(private http: HttpClient) {
     this.jwtHelper = new JwtHelperService();
   }
 
-  get currentSelectedSchool$(){
-    return this.currentSelectedSchool.asObservable();
-  }
-
   setCurrentSchool(school: School) {
-    this.currentSelectedSchool.next(school);
+    this.currentSelectedSchool = school;
+    this.changeSelectedSchool$.next(school);
   }
 
   refresh(refreshToken: string): Observable<any> {
@@ -59,6 +58,14 @@ export class AccountService {
 
   getSchoolsByUserId(): Observable<School[]> {
     return this.http.get<School[]>(`${environment.baseUrl}/instructor/schools`);
+  }
+
+  getStripeSession(enrollmentToken: string): Observable<any> {
+    return this.http.get<any>(`${environment.baseUrl}/payments/stripe/session/${enrollmentToken}`);
+  }
+
+  getPaymentStatus(): Observable<PaymentStatus> {
+    return this.http.get<PaymentStatus>(`${environment.baseUrl}/payments/status`);
   }
 
   async isAuth(): Promise<boolean> {

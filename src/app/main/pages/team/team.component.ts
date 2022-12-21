@@ -38,7 +38,13 @@ export class TeamComponent implements OnInit, OnDestroy {
     this.accountService.currentUser().pipe(takeUntil(this.unsubscribe$)).subscribe((user: User) => {
       this.currentUser = user;
     });
-    this.accountService.currentSelectedSchool$.pipe(takeUntil(this.unsubscribe$)).subscribe((school: School) => {
+
+    this.school = this.accountService.currentSelectedSchool;
+    if (this.school) {
+      this.syncTeamMemberList();
+    }
+
+    this.accountService.changeSelectedSchool$.pipe(takeUntil(this.unsubscribe$)).subscribe((school: School) => {
       this.school = school;
       this.syncTeamMemberList();
     });

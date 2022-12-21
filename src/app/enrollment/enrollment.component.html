@@ -1,6 +1,10 @@
-<mat-spinner *ngIf="loading"></mat-spinner>
 
-<ng-container *ngIf="!loading">
+<ng-container *ngIf="loading">
+    <div class="overlay"></div>
+    <mat-spinner></mat-spinner>
+  </ng-container>
+
+<ng-container *ngIf="init">
     <mat-card *ngIf="enrollment; else noValidEnrollment">
         <mat-card-title>{{ 'enrollment.title'| translate }}</mat-card-title>
         <mat-card-content>
@@ -13,6 +17,12 @@
                 <mat-step *ngIf="!enrollment.isUser">
                     <ng-template matStepLabel>{{ 'account.register'| translate }}</ng-template>
                     <fb-user-register [email]="enrollment.email" (loginEvent)="loginEvent($event, stepper)"></fb-user-register>
+                </mat-step>
+                <mat-step *ngIf="enrollment.type == 'STUDENT'">
+                    <ng-template matStepLabel>{{ 'enrollment.payment'| translate }}</ng-template>
+                    <p [innerHtml]="'enrollment.paymentInformation'| translate"></p>
+                    <p class="paymentResilation">({{ 'enrollment.paymentResilation'| translate }})</p>
+                    <button mat-raised-button color="primary" (click)="getStripeSession()">{{ 'enrollment.paymentButton'| translate }}</button>
                 </mat-step>
                 <mat-step>
                     <ng-template matStepLabel>{{ 'enrollment.accept'| translate }}</ng-template>

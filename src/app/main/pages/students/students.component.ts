@@ -7,7 +7,7 @@ import { StudentListPDFService } from 'src/app/core/services/student-list-pdf.se
 import { School } from 'src/app/shared/domain/school';
 import { Student } from 'src/app/shared/domain/student';
 
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { EmailDialogComponent } from '../../component/email-dialog/email-dialog.component';
 import { TranslateService } from '@ngx-translate/core';
 import { DeviceSizeService } from 'src/app/core/services/device-size.service';
@@ -48,7 +48,11 @@ export class StudentsComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.accountService.currentSelectedSchool$.pipe(takeUntil(this.unsubscribe$)).subscribe((school: School) => {
+    this.school = this.accountService.currentSelectedSchool;
+    if (this.school) {
+      this.syncStudentList();
+    }
+    this.accountService.changeSelectedSchool$.pipe(takeUntil(this.unsubscribe$)).subscribe((school: School) => {
       this.school = school;
       this.selectedStudent = undefined;
       this.studentList = [];
@@ -107,10 +111,10 @@ export class StudentsComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(response => {
-      if (response?.event === "send"){
+      if (response?.event === "send") {
         this.addStudent(response.value);
       }
-    }); 
+    });
   }
 
   addStudent(email: string) {

@@ -34,7 +34,11 @@
         "inTeam": "Du bist nun im Team von",
         "acceptQuestion": "Bist du damit einverstanden?",
         "confirmation": "Bestätigung",
-        "wrongToken": "Dieses token gibt es nicht oder ist ungültig"
+        "wrongToken": "Dieses token gibt es nicht oder ist ungültig",
+        "payment": "Zahlung",
+        "paymentInformation": "Das Flugbuch kostet pro Jahr 12.- <br>Damit das Flugbuch mit einer Flugschule geteilt werden kann, musst du diese Zahlung begleichen.",
+        "paymentResilation": "Eine Kündigung ist jeweils Ende Jahr möglich, worüber du jeweils 30 Tage zuvor per Mail informiert wirst.",
+        "paymentButton": "Bezahlen"
     },
     "error": {
         "title": "Fehler"

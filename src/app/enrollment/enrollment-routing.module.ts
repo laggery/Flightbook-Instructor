@@ -6,6 +6,10 @@ const routes: Routes = [
   {
     path: ':token',
     component: EnrollmentComponent
+  },
+  {
+    path: ':token/:payment',
+    component: EnrollmentComponent
   }
 ];
 
