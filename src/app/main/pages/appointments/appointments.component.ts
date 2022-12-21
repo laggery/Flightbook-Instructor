@@ -39,24 +39,33 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private studentListPDFService: StudentListPDFService,
     private dialog: MatDialog) {
-      this.currentAppointmentFilter = this.schoolService.filter;
-    }
+    this.currentAppointmentFilter = this.schoolService.filter;
+  }
 
   ngOnInit(): void {
-    this.accountService.currentSelectedSchool$.pipe(takeUntil(this.unsubscribe$)).subscribe((school: School) => {
+    this.school = this.accountService.currentSelectedSchool;
+    if (this.school) {
+      this.initialLoad();
+    }
+    this.accountService.changeSelectedSchool$.pipe(takeUntil(this.unsubscribe$)).subscribe((school: School) => {
       this.school = school;
-      if (school?.id) {
-        this.loadAppointments(school.id);
-
-        this.schoolService.getTeamMembers(school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((teamMembers: TeamMember[]) => {
-          this.teamMembers = teamMembers;
-        })
-
-        this.schoolService.getStudentsBySchoolId(school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((students: Student[]) => {
-          this.students = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
-        })
-      }
+      this.initialLoad();
     });
+
+  }
+
+  initialLoad() {
+    if (this.school?.id) {
+      this.loadAppointments(this.school.id);
+
+      this.schoolService.getTeamMembers(this.school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((teamMembers: TeamMember[]) => {
+        this.teamMembers = teamMembers;
+      })
+
+      this.schoolService.getStudentsBySchoolId(this.school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((students: Student[]) => {
+        this.students = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
+      })
+    }
   }
 
   ngOnDestroy() {
@@ -68,7 +77,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     if (!offset && this.paginator) {
       this.paginator.pageIndex = 0;
     }
-    this.schoolService.getAppointmentsBySchoolId({limit, offset}, schoolId).pipe(takeUntil(this.unsubscribe$)).subscribe((pagerEntity: PagerEntity<Appointment[]>) => {
+    this.schoolService.getAppointmentsBySchoolId({ limit, offset }, schoolId).pipe(takeUntil(this.unsubscribe$)).subscribe((pagerEntity: PagerEntity<Appointment[]>) => {
       this.pagerEntity = pagerEntity;
       if (pagerEntity.entity) {
         this.appointments.data = pagerEntity.entity;
@@ -97,7 +106,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe(response => {
-      if (response?.event === "save" && this.school?.id && type == "add"){
+      if (response?.event === "save" && this.school?.id && type == "add") {
         const schoolId = this.school.id;
         this.schoolService.postAppointment(schoolId, response.appointment).pipe(takeUntil(this.unsubscribe$)).subscribe((appointment: Appointment) => {
           this.loadAppointments(schoolId);
@@ -129,7 +138,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     if (appointment.maxPeople) {
       students.splice(appointment.maxPeople)
     }
-    this.studentListPDFService.generatePdf(students, this.school); 
+    this.studentListPDFService.generatePdf(students, this.school);
   }
 
   handlePage(event: any) {
