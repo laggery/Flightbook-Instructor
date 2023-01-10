@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { takeUntil } from 'rxjs/operators';
 import { AccountService } from '../../core/services/account.service';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'fb-login',
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: UntypedFormBuilder,
     private router: Router,
     private accountService: AccountService,
+    private translate: TranslateService
   ) {
     this.form = this.fb.group({
       email: [this.email, Validators.email],
@@ -72,5 +74,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         }
       })
     }
+  }
+
+  setLanguage(lang: string) {
+    localStorage.setItem('language', lang);
+    this.translate.use(lang);
   }
 }

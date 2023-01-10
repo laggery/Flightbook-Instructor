@@ -1,6 +1,8 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
+import { Appointment } from 'src/app/shared/domain/appointment';
 import { School } from 'src/app/shared/domain/school';
 import { Student } from 'src/app/shared/domain/student';
 
@@ -13,7 +15,7 @@ export class StudentListPDFService {
   datePipe: DatePipe;
   widthFlight = "100";
 
-  constructor() {
+  constructor(private translate: TranslateService) {
     this.datePipe = new DatePipe('en-US');
   }
 
@@ -26,7 +28,7 @@ export class StudentListPDFService {
     }
   }
 
-  async generatePdf(students: Student[], school: School): Promise<any> {
+  async generatePdf(students: Student[], school: School, appointment?: Appointment): Promise<any> {
     await this.loadPdfMaker();
 
     students = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
@@ -40,20 +42,20 @@ export class StudentListPDFService {
       studentPdfData.push([
         {
           text: [
-            `Name:\n`,
+            `${this.translate.instant('account.name')}:\n`,
             `${student.user?.firstname} ${student.user?.lastname}\n`,
             `\n`,
-            `Gleitschirm\n`,
+            `${this.translate.instant('flight.glider')}\n`,
             `${student.lastFlight?.glider?.brand || ''} ${student.lastFlight?.glider?.name || ''}`
           ],
           style: 'tableRow'
         },
         {
           text: [
-            `Letzter Flug:\n`,
+            `${this.translate.instant('student.lastflight')}:\n`,
             `${lastFlight}\n`,
             `\n`,
-            `Anzahl:\n`,
+            `${this.translate.instant('student.amountofflights')}:\n`,
             `${student.statistic?.nbFlights}`
           ],
           style: 'tableRow'
@@ -61,10 +63,10 @@ export class StudentListPDFService {
         ,
         {
           text: [
-            `Tel:\n`,
+            `${this.translate.instant('student.phone')}:\n`,
             `\n`,
             `\n`,
-            `Notfallkontakt:\n`,
+            `${this.translate.instant('student.emergencyContact')}:\n`,
             `\n`
           ],
           style: 'tableRow'
@@ -82,6 +84,27 @@ export class StudentListPDFService {
       ]);
     })
 
+    let headerText = `${this.translate.instant('studentList.date')}: ................  ${this.translate.instant('studentList.place')}: .........................  ${this.translate.instant('studentList.topic')}: ...................................... ${this.translate.instant('studentList.takeOffCoordinator')}: ................................  ${this.translate.instant('student.phone')}: ...............................`;
+    if (appointment) {
+      const stringBuilder = [];
+      if (appointment.scheduling) {
+        appointment.scheduling = new Date(appointment.scheduling);
+      }
+      console.log(appointment.scheduling);
+      stringBuilder.push(`${this.translate.instant('studentList.date')}: ${appointment.scheduling?.getDay()}.${appointment.scheduling?.getMonth()}.${appointment.scheduling?.getFullYear()}     `);
+      stringBuilder.push(`${this.translate.instant('studentList.place')}: ${appointment.meetingPoint}     `);
+      stringBuilder.push(`${this.translate.instant('studentList.topic')}: ......................................`);
+      if (appointment.takeOffCoordinator) {
+        stringBuilder.push(`${this.translate.instant('studentList.takeOffCoordinator')}: ${appointment.takeOffCoordinator?.firstname} ${appointment.takeOffCoordinator?.firstname}    `);
+      } else {
+        stringBuilder.push(`${this.translate.instant('studentList.takeOffCoordinator')}: ................................`);
+      
+      }
+      stringBuilder.push(`${this.translate.instant('student.phone')}: ...............................`);
+
+      headerText = stringBuilder.join(" ");
+    } 
+
     let docDefinition: TDocumentDefinitions = {
       pageMargins: [20, 30, 20, 10],
       pageOrientation: 'landscape',
@@ -91,7 +114,7 @@ export class StudentListPDFService {
             fontSize: 10,
             margin: [20, 18, 0, 0],
             width: "*",
-            text: `Datum: ................  Ort: .........................  Tagesthema: ...................................... Startleiter*in: ................................  Tel: ...............................`,
+            text: headerText
           },
           {
             fontSize: 10,
@@ -112,15 +135,15 @@ export class StudentListPDFService {
             heights: rowHeight,
             body: [
               [
-                { text: "Informationen", style: 'tableHeader' },
+                { text: `${this.translate.instant('studentList.information')}`, style: 'tableHeader' },
                 { text: "", style: 'tableHeader' },
                 { text: "", style: 'tableHeader' },
-                { text: "Level", style: 'tableHeader' },
-                { text: "1. Flug", style: 'tableHeader' },
-                { text: "2. Flug", style: 'tableHeader' },
-                { text: "3. Flug", style: 'tableHeader' },
-                { text: "4. Flug", style: 'tableHeader' },
-                { text: "5. Flug", style: 'tableHeader' }
+                { text: `${this.translate.instant('studentList.level')}`, style: 'tableHeader' },
+                { text: `1. ${this.translate.instant('studentList.flight')}`, style: 'tableHeader' },
+                { text: `2. ${this.translate.instant('studentList.flight')}`, style: 'tableHeader' },
+                { text: `3. ${this.translate.instant('studentList.flight')}`, style: 'tableHeader' },
+                { text: `4. ${this.translate.instant('studentList.flight')}`, style: 'tableHeader' },
+                { text: `5. ${this.translate.instant('studentList.flight')}`, style: 'tableHeader' }
               ],
               ...studentPdfData
             ]

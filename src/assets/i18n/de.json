@@ -21,6 +21,7 @@
         "register": "Account erstellen",
         "firstname": "Vorname",
         "lastname": "Nachname",
+        "name": "Name",
         "email": "E-Mail",
         "delete": "Löschen"
     },
@@ -28,7 +29,7 @@
         "title": "Einschreibung",
         "accept": "Akzeptieren",
         "shareFlightbook": "Flugbuch teilen",
-        "accessFlightbook": "möche Zugriff auf dein Flugbuch haben.",
+        "accessFlightbook": "möchte Zugriff auf dein Flugbuch haben.",
         "hasAccess": "hat nun Einsicht in dein Flugbuch",
         "addTeam": "möchte dich als Team Mitglieder haben.",
         "inTeam": "Du bist nun im Team von",
@@ -63,7 +64,18 @@
             "time": "Flugdauer",
             "km": "Km",
             "description": "Beschreibung"
-        }
+        },
+        "phone": "Tel",
+        "emergencyContact": "Notfallkontakt"
+    },
+    "studentList": {
+        "date": "Datum",
+        "place": "Ort",
+        "topic": "Tagesthema",
+        "flight": "Flug",
+        "takeOffCoordinator": "Startleiter*in",
+        "information": "Informationen",
+        "level": "Level"
     },
     "controlSheet": {
         "title": "Kontrollblatt",
@@ -151,6 +163,7 @@
         "send": "Senden"
     },
     "appointment": {
+        "appointment": "Termin",
         "title": "Kalender",
         "new": "Neuer Termin",
         "dateTime": "Datum und Zeit",
