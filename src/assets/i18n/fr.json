@@ -1,5 +1,10 @@
 {
-    "flightbook": "Carnet de vols",
+    "title": "App instructeur",
+    "menu" : {
+        "students": "Élèves",
+        "appointments": "Rendez-vous",
+        "team": "Équipe"
+    },
     "language": {
         "fr": "Français",
         "de": "Allemand",
@@ -7,16 +12,182 @@
         "it": "Italien"
     },
     "login": {
+        "title": "Log In",
         "email": "E-Mail",
-        "password": "Mot de passe",
-        "oldpassword": "Ancien mot de passe",
-        "newpassword": "Nouveau mot de passe",
-        "confirmpassword": "Confirmez mot de passe",
-        "passwordlost": "Mot de passe oublié ?"
+        "password": "Mot de passe"
+    },
+    "account": {
+        "title": "Compte",
+        "register": "Inscription",
+        "firstname": "Prénom",
+        "lastname": "Nom",
+        "name": "Nom",
+        "email": "E-Mail",
+        "delete": "Effacer"
+    },
+    "enrollment": {
+        "title": "Inscription",
+        "accept": "Accepter",
+        "shareFlightbook": "Partager le carnet de vol",
+        "accessFlightbook": "souhaite avoir accès à ton carnet de vol.",
+        "hasAccess": "a désormais accès à ton carnet de vol",
+        "addTeam": "souhaite t'avoir comme membre de l'équipe.",
+        "inTeam": "Tu fais désormais partie de l'équipe de",
+        "acceptQuestion": "Es-tu d'accord ?",
+        "confirmation": "Confirmation",
+        "wrongToken": "Ce token n'existe pas ou n'est pas valide",
+        "payment": "Paiement",
+        "paymentInformation": "Le carnet de vol coûte 12.- par an <br>Pour que le carnet de vol puisse être partagé avec une école, tu dois régler ce paiement.",
+        "paymentResilation": "Une résiliation est possible à la fin de chaque année. Tu en seras informé(e) par e-mail 30 jours avant.",
+        "paymentButton": "Payer"
+    },
+    "error": {
+        "title": "Erreur"
+    },
+    "student": {
+        "information": "Informations",
+        "addStudent": "Ajouter un élève",
+        "removeStudentMessage": "Veux-tu vraiment supprimer $REPLACE_NAME de ta liste?",
+        "amountofflights": "Nb. de vols",
+        "lastflight": "Dernier vol",
+        "flighthour": "Heures de vol",
+        "average": "Temps moyen",
+        "list": "Liste de participants",
+        "noStudentSelected": "Aucun élève n'a été sélectionné.",
+        "flights": "Vols",
+        "flight": {
+            "number": "N°",
+            "glider": "Parapente",
+            "date": "Date",
+            "start": "Décollage",
+            "landing": "Atterrissage",
+            "time": "Durée",
+            "km": "Km",
+            "description": "Description"
+        },
+        "phone": "Tél",
+        "emergencyContact": "No. d'urgence"
+    },
+    "studentList": {
+        "date": "Date",
+        "place": "Lieu",
+        "topic": "Sujet du jour",
+        "flight": "vol",
+        "takeOffCoordinator": "Aide au décollage",
+        "information": "Informations",
+        "level": "Niveau"
     },
     "controlSheet": {
-        "trainingHill": "Entrainement",
-        "theory": "Theorie",
-        "altitudeFlight": "Grand vols"
+        "title": "Fiche de contrôle",
+        "trainingHill": {
+            "title": "Pente école",
+            "auslegen": "Dépliage du parapente",
+            "aufziehen": "Gonflage et course",
+            "slalom": "Course en slalom",
+            "laufenAngebremst": "Course avec parapente freiné",
+            "vorbereitung": "Préparation au décollage & MA VIE",
+            "startphasen": "Décollage en 3 phases",
+            "richtungsaenderungen": "Vols avec changements de direction",
+            "startabbruch": "Interruption de décollage (ligne de non-retour)",
+            "seitenwindstart": "Décollage avec vent de travers (év. simulation)",
+            "schlechtAusgelegt": "Décollage avec calotte mal préparée",
+            "starts": "Décollage avec gonflage dos et face à l'aile",
+            "landungen": "Technique d'atterrissage / atterrissages",
+            "notlandung": "Instruction d'atterrissage d'urgence",
+            "notschirm": "Initiation au parachute de secours",
+            "kurven": "Virages 90 - 180° (prise de terrain)",
+            "entwirren": "Démêlage des suspentes",
+            "faltmethoden": "Différentes méthode de pliage",
+            "theorietest": "Test théorique pour 1er grand vol"
+        },
+        "theory": {
+            "title": "Cours théorique",
+            "fluglehre": "Aérodynamique",
+            "wetterkunde": "Météorologie",
+            "flugpraxis": "Pratique de vol",
+            "gesetzgebung": "Législation",
+            "materialkunde": "Matériel"
+        },
+        "altitudeFlight": {
+            "title": "Grands vols",
+            "tandem": "Vols biplace comme passager (fac.)",
+            "notlandung": "Instruction d'atterrissage d'urgence",
+            "startplatzwahl": "Inspection et choix du décollage",
+            "aufziehen": "Décollage avec gonflage dos et face à l'aile",
+            "kreise": "Virage complets à droite et à gauche",
+            "richtungswechsel": "Changements rapide de direction",
+            "acht": "Huite (deux cercles en sens opposé)",
+            "engekreise": "Virage serrés",
+            "sackflug": "Comportement en cas de phase parachutale",
+            "geschwBereich": "Maitrise de la plage de vitesse",
+            "beschlunigung": "Utilisation du système d'accélération",
+            "negativsteuerung": "Commande en négatif et positif",
+            "gewichtsverlagerung": "Pilotage par déplacement du poids",
+            "traggurten": "Pilotages aux élévateurs arrière",
+            "pendeln": "Tangage",
+            "rollen": "Roulis",
+            "klappen": "Fermeture asymétrique",
+            "ohren": "Faire les oreilles",
+            "bStall": "Stall aux B (fac.)",
+            "spirale": "Initiation à la spirale",
+            "instrumente": "Vol à l'aide d'instruments",
+            "soaring": "Soaring de pente (plus de 30 minutes)",
+            "thermik": "Vol thermique (plus de 30 minutes)",
+            "landevolte": "Volte d'atterrissage à gauche / à droite",
+            "punktlandung": "Atterrissage de précision",
+            "rueckenwindlandung": "Instruction d'atterrissage par vent arrière",
+            "traggurtenLandung": "Atterrissage aux élévateurs arrière",
+            "hanglandung": "Atterrissage à la pente",
+            "touchAndGo": "Touch and go (fac.)",
+            "examProgramme": "Programme d'examen"
+        }
+    },
+    "formMessage": {
+        "emailExist": "Cette adresse e-mail est déjà utilisée!",
+        "emailAlreadyAdded": "Cette adresse e-mail a déjà été ajoutée",
+        "invalidEmail": "Veuillez saisir une adresse e-mail valide.",
+        "invalidPassword": "Veuillez saisir un mot de passe valide.",
+        "emailpwdnotcorrect": "L'e-mail ou le mot de passe n'est pas correct!",
+        "firstnameRequired": "Le prénom est obligatoire",
+        "lastnameRequired": "Le nom de famille est obligatoire",
+        "requestSent": "La demande a été envoyée"
+    },
+    "buttons": {
+        "login": "Connexion",
+        "save": "Sauvegarder",
+        "done": "Ok",
+        "logout": "Déconnexion",
+        "createAccount": "Créer un compte!",
+        "addControlSheet": "Ajouter une fiche de contrôle",
+        "cancel": "Annuler",
+        "send": "Envoyer"
+    },
+    "appointment": {
+        "appointment": "Rendez-vous",
+        "title": "Calendrier",
+        "new": "Nouveau rendez-vous",
+        "dateTime": "Date et heure",
+        "meetingPoint": "Point de rencontre",
+        "maxPeople": "Max participants",
+        "registrations": "Inscriptions",
+        "state": "Statut",
+        "instructor": "Instructeur",
+        "takeOffCoordinator": "Aide au décollage",
+        "description": "Description",
+        "stateValue": {
+            "ANNOUNCED": "Annoncé",
+            "CONFIRMED": "Confirmé",
+            "CANCELED": "Annulé"
+        },
+        "passed": "Rendez-vous passé",
+        "subscribeStudent": "Ajouter participants",
+        "student": "Élève",
+        "waitingList": "Liste d'attente",
+        "noSubscription": "Il n'y a actuellement pas d'inscriptions"
+    },
+    "team": {
+        "title": "Équipe",
+        "addMember": "Ajouter un membre",
+        "removeMessage": "Veux-tu vraiment supprimer $REPLACE_NAME de ton équipe?"
     }
 }

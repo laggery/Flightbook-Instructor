@@ -138,7 +138,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     if (appointment.maxPeople) {
       students.splice(appointment.maxPeople)
     }
-    this.studentListPDFService.generatePdf(students, this.school);
+    this.studentListPDFService.generatePdf(students, this.school, appointment);
   }
 
   handlePage(event: any) {
