@@ -23,7 +23,24 @@
         "lastname": "Nom",
         "name": "Nom",
         "email": "E-Mail",
-        "delete": "Effacer"
+        "delete": "Effacer",
+        "has": "As-tu déjà un compte Flightbook?"
+    },
+    "school": {
+        "school": "Ecole",
+        "register": "Enregistrer une école",
+        "confirmation": "Confirmation",
+        "name": "Nom",
+        "address": "Adresse",
+        "address2": "Adresse 2",
+        "zip": "CP",
+        "city": "Ville",
+        "phone": "Téléphone",
+        "email": "E-Mail",
+        "language": "Langue",
+        "success": "L'école {{school}} a été créée",
+        "manage": "Tu peux gérer l'école à l'adresse suivante: <a target='_blank' href='{{link}}'>{{link}}</a>",
+        "access": "Accéder"
     },
     "enrollment": {
         "title": "Inscription",
@@ -144,12 +161,19 @@
     },
     "formMessage": {
         "emailExist": "Cette adresse e-mail est déjà utilisée!",
+        "schoolExist": "Cette école existe déjà!",
         "emailAlreadyAdded": "Cette adresse e-mail a déjà été ajoutée",
         "invalidEmail": "Veuillez saisir une adresse e-mail valide.",
         "invalidPassword": "Veuillez saisir un mot de passe valide.",
         "emailpwdnotcorrect": "L'e-mail ou le mot de passe n'est pas correct!",
         "firstnameRequired": "Le prénom est obligatoire",
         "lastnameRequired": "Le nom de famille est obligatoire",
+        "nameRequired": "Le nom est obligatoire",
+        "addressRequired": "L'adresse est obligatoire",
+        "zipRequired": "Le CP est obligatoire",
+        "cityRequired": "La ville est obligatoire",
+        "phoneRequired": "La téléphone est obligatoire",
+        "emailRequired": "L'email est obligatoire",
         "requestSent": "La demande a été envoyée"
     },
     "buttons": {
@@ -160,7 +184,9 @@
         "createAccount": "Créer un compte!",
         "addControlSheet": "Ajouter une fiche de contrôle",
         "cancel": "Annuler",
-        "send": "Envoyer"
+        "send": "Envoyer",
+        "yes": "Oui",
+        "no": "Non"
     },
     "appointment": {
         "appointment": "Rendez-vous",

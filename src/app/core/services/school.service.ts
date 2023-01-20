@@ -10,6 +10,7 @@ import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 import { AppointmentFilter } from 'src/app/shared/domain/appointment-filter';
 import * as moment from 'moment';
 import { TeamMember } from 'src/app/shared/domain/team-member';
+import { School } from 'src/app/shared/domain/school';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +22,10 @@ export class SchoolService {
 
   constructor(private http: HttpClient) {
     this.filter = new AppointmentFilter();
+  }
+
+  createSchool(school: School): Observable<School> {
+    return this.http.post<School>(`${environment.baseUrl}/schools`, school);
   }
 
   getStudentsBySchoolId(id: number): Observable<Student[]> {

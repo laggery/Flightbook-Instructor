@@ -7,4 +7,5 @@ export class School {
     city: string | undefined;
     phone: string | undefined;
     email: string | undefined;
+    language: string | undefined;
 }

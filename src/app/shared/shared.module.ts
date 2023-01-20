@@ -4,6 +4,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
@@ -52,6 +53,7 @@ const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
     MatTableModule,
     MatSidenavModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatSnackBarModule,
     MatDialogModule,
     MatMenuModule,
@@ -78,6 +80,7 @@ const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
     MatTableModule,
     MatSidenavModule,
     MatButtonModule,
+    MatButtonToggleModule,
     MatSnackBarModule,
     MatDialogModule,
     MatMenuModule,
