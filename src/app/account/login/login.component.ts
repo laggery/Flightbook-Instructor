@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   @Input() loginPageRedirect: boolean = true;
+  @Input() showLanguage: boolean = true;
   @Input() email: string | undefined;
 
   @Output() loginEvent = new EventEmitter<boolean>();
@@ -28,6 +29,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private translate: TranslateService
   ) {
+    if (!this.email) {
+      this.email = '';
+    }
     this.form = this.fb.group({
       email: [this.email, Validators.email],
       password: ['', Validators.required]

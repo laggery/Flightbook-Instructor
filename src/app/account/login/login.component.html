@@ -20,7 +20,7 @@
             <button mat-raised-button color="primary">{{ 'buttons.login'| translate }}</button>
         </form>
 
-        <div class="language-list">
+        <div *ngIf="showLanguage" class="language-list">
             <p>
               <a (click)="setLanguage('fr')" class="language fr">{{ 'language.fr' | translate }}</a>
               <a (click)="setLanguage('de')" class="language de">{{ 'language.de' | translate }}</a>

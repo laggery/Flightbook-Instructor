@@ -6,7 +6,7 @@
         "team": "Team"
     },
     "language": {
-        "fr": "Franz.",
+        "fr": "Französisch",
         "de": "Deutsch",
         "en": "Englisch",
 		"it": "Italienisch"
@@ -23,7 +23,24 @@
         "lastname": "Nachname",
         "name": "Name",
         "email": "E-Mail",
-        "delete": "Löschen"
+        "delete": "Löschen",
+        "has": "Hast du bereits ein Flightbook account?"
+    },
+    "school": {
+        "school": "Schule",
+        "register": "Flugschule registrieren",
+        "confirmation": "Bestätigung",
+        "name": "Name",
+        "address": "Adresse",
+        "address2": "Adresse 2",
+        "zip": "PLZ",
+        "city": "Stadt",
+        "phone": "Telefon",
+        "email": "E-Mail",
+        "language": "Kommunkationssprache",
+        "success": "Die Flugschule {{school}} wurde erstellt",
+        "manage": "Du kannst die Flugschule auf der <a target='_blank' href='{{link}}'>{{link}}</a> Seite verwalten",
+        "access": "Zugreifen"
     },
     "enrollment": {
         "title": "Einschreibung",
@@ -144,12 +161,19 @@
     },
     "formMessage": {
         "emailExist": "Diese E-Mail-Adresse wird bereits verwendet!",
+        "schoolExist": "Diese Flugschule gibt es bereits!",
         "emailAlreadyAdded": "Diese E-Mail Adresse wurde bereits hinzugefügt",
         "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
         "invalidPassword": "Bitte geben Sie ein gültiges Passwort ein.",
         "emailpwdnotcorrect": "E-Mail oder Password ist nicht korrekt!",
         "firstnameRequired": "Vorname ist erforderlich",
         "lastnameRequired": "Nachname ist erforderlich",
+        "nameRequired": "Name ist erforderlich",
+        "addressRequired": "Adresse ist erforderlich",
+        "zipRequired": "PLZ ist erforderlich",
+        "cityRequired": "Stadt ist erforderlich",
+        "phoneRequired": "Telefon ist erforderlich",
+        "emailRequired": "Email ist erforderlich",
         "requestSent": "Die anfrage wurde gesendet"
     },
     "buttons": {
@@ -160,7 +184,9 @@
         "createAccount": "Registrieren",
         "addControlSheet": "Ausbildungskontrollblatt hinzufügen",
         "cancel": "Abbrechen",
-        "send": "Senden"
+        "send": "Senden",
+        "yes": "Ja",
+        "no": "Nein"
     },
     "appointment": {
         "appointment": "Termin",
