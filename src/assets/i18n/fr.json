@@ -28,7 +28,7 @@
     },
     "school": {
         "school": "Ecole",
-        "register": "Enregistrer une école",
+        "register": "Créer une école",
         "confirmation": "Confirmation",
         "name": "Nom",
         "address": "Adresse",

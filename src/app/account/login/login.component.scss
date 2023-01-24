@@ -18,9 +18,10 @@ mat-form-field {
     margin-top: 20px;
 }
 
-.language {
+.language, .register-school {
     cursor: pointer;
-    color: var(--ion-color-primary, #3880ff);;
+    color: var(--ion-color-primary, #3880ff);
+    text-decoration: none;
 }
 
 .fr {

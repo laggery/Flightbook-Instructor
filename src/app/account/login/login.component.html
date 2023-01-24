@@ -21,6 +21,7 @@
         </form>
 
         <div *ngIf="showLanguage" class="language-list">
+            <a class="register-school" href="/school/register">{{ 'school.register' | translate }}</a>
             <p>
               <a (click)="setLanguage('fr')" class="language fr">{{ 'language.fr' | translate }}</a>
               <a (click)="setLanguage('de')" class="language de">{{ 'language.de' | translate }}</a>
