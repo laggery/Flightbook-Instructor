@@ -6,7 +6,7 @@ COPY package-lock.json ./
 RUN npm install
 COPY . .
 RUN npm set progress=false && npm config set depth 0 && npm cache clean --force
-RUN $(npm bin)/ng build
+RUN npm run build
 
 ### STAGE 2: Run ###
 FROM nginx:stable-alpine
