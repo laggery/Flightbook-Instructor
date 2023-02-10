@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { StudentsComponent } from './pages/students/students.component';
 import { MainComponent } from './main.component';
 
 const routes: Routes = [
@@ -15,7 +14,7 @@ const routes: Routes = [
     children: [
       { path: 'students', loadChildren: () => import('./pages/students/students.module').then(m => m.StudentsModule) },
       { path: 'appointments', pathMatch: 'full', loadChildren: () => import('./pages/appointments/appointments.module').then(m => m.AppointmentsModule) },
-      { path: 'team', pathMatch: 'full', loadChildren: () => import('./pages/team/team.module').then(m => m.TeamModule) }
+      { path: 'configuration', pathMatch: 'full', loadChildren: () => import('./pages/configuration/configuration.module').then(m => m.ConfigurationModule) }
     ]
   }
 ];

@@ -9,13 +9,15 @@ import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { catchError } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class HttpErrorInterceptor implements HttpInterceptor {
 
     constructor(
         private router: Router,
-        private snackBar: MatSnackBar
+        private snackBar: MatSnackBar,
+        private translate: TranslateService,
     ) { }
 
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
@@ -25,7 +27,7 @@ export class HttpErrorInterceptor implements HttpInterceptor {
             }
 
             if (err.status >= 500 || err.status === 0) {
-                this.snackBar.open('Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut oder senden Sie eine E-Mail an: yannick.lagger@flightbook.ch', 'Ok', {
+                this.snackBar.open(this.translate.instant('message.error'), this.translate.instant('buttons.done'), {
                     horizontalPosition: 'center',
                     verticalPosition: 'top',
                 });

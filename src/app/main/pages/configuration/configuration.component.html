@@ -1,0 +1,17 @@
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="side" opened>
+        <mat-list class="config-list">
+            <mat-list-item class="config-item" (click)="openDetail('team')">
+                <p matLine>{{ 'team.title'| translate }}</p>
+            </mat-list-item>
+            <mat-list-item class="config-item" (click)="openDetail('appointmentType')">
+                <p matLine>{{ 'appointment.appointment'| translate }}</p>
+            </mat-list-item>
+        </mat-list>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <fb-team *ngIf="type=='team'" (backButtonClick)=backButton()></fb-team>
+        <fb-appointment-type *ngIf="type=='appointmentType'" (backButtonClick)=backButton()></fb-appointment-type>
+    </mat-sidenav-content>
+</mat-sidenav-container>

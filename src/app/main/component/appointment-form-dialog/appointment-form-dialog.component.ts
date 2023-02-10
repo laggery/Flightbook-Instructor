@@ -4,6 +4,7 @@ import { ThemePalette } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSelect } from '@angular/material/select';
 import { Appointment } from 'src/app/shared/domain/appointment';
+import { AppointmentType } from 'src/app/shared/domain/appointment-type-dto';
 import { State } from 'src/app/shared/domain/state';
 import { Student } from 'src/app/shared/domain/student';
 import { Subscription } from 'src/app/shared/domain/subscription';
@@ -21,6 +22,7 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
   states = Object.keys(State);
   private appointment: Appointment;
   students: Student[];
+  appointmentTypes: AppointmentType[];
   selectedStudents = new Set<string>();
 
   @ViewChildren('subscriptionFormList') subscriptionFormList?: QueryList<ElementRef>
@@ -45,6 +47,7 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
   ) {
     this.appointment = data.appointment;
     this.students = data.students;
+    this.appointmentTypes = data.appointmentTypes;
 
     const subscriptionFbArray = this.fb.array([]);
     this.appointment.subscriptions.forEach((subscription: Subscription) => {
@@ -55,6 +58,7 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
 
     this.form = this.fb.group({
       state: [this.appointment.state, Validators.required],
+      type: [this.appointment.type, Validators.nullValidator],
       date: [this.appointment.scheduling, Validators.required],
       meetingPoint: [this.appointment.meetingPoint, Validators.required],
       maxPeople: [this.appointment.maxPeople, Validators.nullValidator],
@@ -103,8 +107,13 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
       this.appointment.takeOffCoordinator = new User();
     }
 
+    if (!this.appointment.type) {
+      this.appointment.type = new AppointmentType();
+    }
+
     if (this.form.valid) {
       this.appointment.state = this.form.get("state")?.value;
+      this.appointment.type.id = this.form.get("type")?.value;
       this.appointment.scheduling = this.form.get("date")?.value;
       this.appointment.instructor.email = this.form.get("instructor")?.value;
       this.appointment.takeOffCoordinator.email = this.form.get("takeOffCoordinator")?.value;

@@ -11,6 +11,7 @@ import { AppointmentFilter } from 'src/app/shared/domain/appointment-filter';
 import * as moment from 'moment';
 import { TeamMember } from 'src/app/shared/domain/team-member';
 import { School } from 'src/app/shared/domain/school';
+import { AppointmentType } from 'src/app/shared/domain/appointment-type-dto';
 
 @Injectable({
   providedIn: 'root'
@@ -67,6 +68,28 @@ export class SchoolService {
 
   getSubscriptionStudentDetail(id: number, appointmentId: number): Observable<Student[]> {
     return this.http.get<Student[]>(`${environment.baseUrl}/instructor/schools/${id}/appointments/${appointmentId}/students`);
+  }
+
+  getAppointmentTypesBySchoolId(id: number, { limit = undefined, offset = undefined, archived = undefined}: { limit?: number, offset?: number, archived?: boolean} = {}): Observable<AppointmentType[]> {
+    let params = new HttpParams();
+    if(archived!=undefined) {
+      params = params.append('archived', archived);
+    }
+    if (limit) {
+      params = params.append('limit', limit.toString());
+    }
+    if (offset) {
+      params = params.append('offset', offset.toString());
+    }
+    return this.http.get<AppointmentType[]>(`${environment.baseUrl}/instructor/schools/${id}/appointment-types`, {params});
+  }
+
+  postAppointmentType(id: number, appointmentType: AppointmentType): Observable<AppointmentType> {
+    return this.http.post<AppointmentType>(`${environment.baseUrl}/instructor/schools/${id}/appointment-types`, appointmentType);
+  }
+
+  putAppointmentType(id: number, appointmentType: AppointmentType): Observable<AppointmentType> {
+    return this.http.put<AppointmentType>(`${environment.baseUrl}/instructor/schools/${id}/appointment-types/${appointmentType.id}`, appointmentType);
   }
 
   private createFilterParams(limit: Number | undefined, offset: Number | undefined): HttpParams {

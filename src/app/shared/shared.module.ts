@@ -22,6 +22,7 @@ import { HoursFormatPipe } from './pipes/hours-format/hours-format.pipe';
 import { MatOptionModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgxMatDateFormats, NgxMatDatetimePickerModule, NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentModule, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular-material-components/moment-adapter';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -69,6 +70,7 @@ const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
     MatSelectModule,
     MatDatepickerModule,
     MatPaginatorModule,
+    MatSlideToggleModule,
 
     NgxMatDatetimePickerModule
   ],
@@ -96,6 +98,7 @@ const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
     MatSelectModule,
     MatDatepickerModule,
     MatPaginatorModule,
+    MatSlideToggleModule,
 
     NgxMatDatetimePickerModule,
     NgxMatMomentModule
@@ -103,7 +106,7 @@ const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
   providers: [
     // values
     {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_MOMENT_FORMATS},
-    {provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}},
+    {provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}}
   ],
 })
 export class SharedModule { }

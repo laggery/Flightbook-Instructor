@@ -1,9 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { AccountService } from 'src/app/core/services/account.service';
+import { DeviceSizeService } from 'src/app/core/services/device-size.service';
 import { SchoolService } from 'src/app/core/services/school.service';
 import { School } from 'src/app/shared/domain/school';
 import { TeamMember } from 'src/app/shared/domain/team-member';
@@ -11,14 +12,16 @@ import { User } from 'src/app/shared/domain/user';
 import { EmailDialogComponent } from '../../component/email-dialog/email-dialog.component';
 
 @Component({
-  selector: 'app-team',
+  selector: 'fb-team',
   templateUrl: './team.component.html',
   styleUrls: ['./team.component.scss']
 })
 export class TeamComponent implements OnInit, OnDestroy {
+  @Output() backButtonClick = new EventEmitter();
   school?: School;
   teamMembers: TeamMember[];
   currentUser?: User;
+  isMobile = false;
 
   unsubscribe$ = new Subject<void>();
 
@@ -29,7 +32,8 @@ export class TeamComponent implements OnInit, OnDestroy {
     private schoolService: SchoolService,
     private accountService: AccountService,
     private dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private deviceSize: DeviceSizeService
   ) {
     this.teamMembers = [];
   }
@@ -47,6 +51,10 @@ export class TeamComponent implements OnInit, OnDestroy {
     this.accountService.changeSelectedSchool$.pipe(takeUntil(this.unsubscribe$)).subscribe((school: School) => {
       this.school = school;
       this.syncTeamMemberList();
+    });
+
+    this.deviceSize.isMobile.pipe(takeUntil(this.unsubscribe$)).subscribe((val: boolean) => {
+      this.isMobile = val;
     });
   }
 
@@ -118,6 +126,10 @@ export class TeamComponent implements OnInit, OnDestroy {
 
     await firstValueFrom(this.schoolService.deleteTeamMember(this.school?.id, teamMember))
     this.syncTeamMemberList();
+  }
+
+  backButton() {
+    this.backButtonClick.emit();
   }
 
 }

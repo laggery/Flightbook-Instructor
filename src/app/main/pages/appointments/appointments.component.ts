@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { AccountService } from 'src/app/core/services/account.service';
 import { SchoolService } from 'src/app/core/services/school.service';
 import { StudentListPDFService } from 'src/app/core/services/student-list-pdf.service';
 import { Appointment } from 'src/app/shared/domain/appointment';
 import { AppointmentFilter } from 'src/app/shared/domain/appointment-filter';
+import { AppointmentType } from 'src/app/shared/domain/appointment-type-dto';
 import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 import { School } from 'src/app/shared/domain/school';
 import { State } from 'src/app/shared/domain/state';
@@ -25,7 +25,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
 
   unsubscribe$ = new Subject<void>();
   school: School | undefined;
-  appointments: MatTableDataSource<Appointment> = new MatTableDataSource();
+  appointments: Appointment[];
+  appointmentTypes: AppointmentType[] = [];
   teamMembers: TeamMember[] = [];
   students: Student[] = [];
   displayedColumns: string[] = ['edit', 'subscription', 'list', 'scheduling', 'meetingPoint', 'instructor', 'takeOffCoordinator', 'countSubscription', 'countWaitinglist', 'state'];
@@ -40,6 +41,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     private studentListPDFService: StudentListPDFService,
     private dialog: MatDialog) {
     this.currentAppointmentFilter = this.schoolService.filter;
+    this.appointments = [];
   }
 
   ngOnInit(): void {
@@ -49,6 +51,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     }
     this.accountService.changeSelectedSchool$.pipe(takeUntil(this.unsubscribe$)).subscribe((school: School) => {
       this.school = school;
+      this.appointmentTypes = [];
       this.initialLoad();
     });
 
@@ -65,6 +68,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
       this.schoolService.getStudentsBySchoolId(this.school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((students: Student[]) => {
         this.students = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
       })
+
+      this.schoolService.getAppointmentTypesBySchoolId(this.school.id, {archived: false}).pipe(takeUntil(this.unsubscribe$)).subscribe((appointmentTypes: AppointmentType[]) => {
+        this.appointmentTypes = appointmentTypes;
+        if (this.displayedColumns.length == 11) {
+          this.displayedColumns.splice(-1);
+        }
+        if (appointmentTypes.length > 0) {
+          this.displayedColumns.push('type');
+        }
+      });
     }
   }
 
@@ -80,7 +93,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     this.schoolService.getAppointmentsBySchoolId({ limit, offset }, schoolId).pipe(takeUntil(this.unsubscribe$)).subscribe((pagerEntity: PagerEntity<Appointment[]>) => {
       this.pagerEntity = pagerEntity;
       if (pagerEntity.entity) {
-        this.appointments.data = pagerEntity.entity;
+        this.appointments = pagerEntity.entity;
       }
     })
   }
@@ -101,7 +114,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
       data: {
         teamMembers: this.teamMembers,
         students: this.students,
-        appointment: appointment
+        appointment: appointment,
+        appointmentTypes: this.appointmentTypes
       }
     });
 
