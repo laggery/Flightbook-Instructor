@@ -1,3 +1,4 @@
+import { AppointmentType } from "./appointment-type-dto";
 import { School } from "./school";
 import { State } from "./state";
 import { Subscription } from "./subscription";
@@ -5,6 +6,7 @@ import { User } from "./user";
 
 export class Appointment {
     id: number | undefined;
+    type: AppointmentType | undefined;
     scheduling: Date | undefined;
     meetingPoint: string | undefined;
     maxPeople: number | undefined;

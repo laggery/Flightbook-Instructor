@@ -90,7 +90,6 @@ export class StudentListPDFService {
       if (appointment.scheduling) {
         appointment.scheduling = new Date(appointment.scheduling);
       }
-      console.log(appointment.scheduling);
       stringBuilder.push(`${this.translate.instant('studentList.date')}: ${appointment.scheduling?.getDay()}.${appointment.scheduling?.getMonth()}.${appointment.scheduling?.getFullYear()}     `);
       stringBuilder.push(`${this.translate.instant('studentList.place')}: ${appointment.meetingPoint}     `);
       stringBuilder.push(`${this.translate.instant('studentList.topic')}: ......................................`);

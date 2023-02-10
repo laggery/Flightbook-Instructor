@@ -1,9 +1,11 @@
 {
+    "flightbook": "Carnet de vols",
     "title": "App instructeur",
     "menu" : {
         "students": "Élèves",
         "appointments": "Rendez-vous",
-        "team": "Équipe"
+        "team": "Équipe",
+        "configuration": "Configuration"
     },
     "language": {
         "fr": "Français",
@@ -77,7 +79,9 @@
             "glider": "Parapente",
             "date": "Date",
             "start": "Décollage",
+            "startCountry": "Décollage pays",
             "landing": "Atterrissage",
+            "landingCountry": "Atterissage pays",
             "time": "Durée",
             "km": "Km",
             "description": "Description"
@@ -93,6 +97,24 @@
         "takeOffCoordinator": "Aide au décollage",
         "information": "Informations",
         "level": "Niveau"
+    },
+    "export": {
+        "pilote": "Pilote",
+        "nbStartplaces": "Nombre de places de décollages",
+        "nbLandingplaces": "Nombre de places d'atterissages",
+        "nbflights": "Nombre de vols",
+        "flights": "Vols",
+        "startplaces": "Places de décollages",
+        "landingplaces": "Places d'atterissages",
+        "firstlastname": "Nom",
+        "school": "Tampon / Signature"
+    },
+    "place": {
+        "place": "Lieu",
+        "name": "Nom",
+        "altitude": "Altitude",
+        "country": "Pays",
+        "notes": "Notes"
     },
     "controlSheet": {
         "title": "Fiche de contrôle",
@@ -176,6 +198,10 @@
         "emailRequired": "L'email est obligatoire",
         "requestSent": "La demande a été envoyée"
     },
+    "message": {
+        "error": "Une erreur est survenue. Veuillez réessayer plus tard ou envoyer un email a : yannick.lagger@flightbook.ch",
+        "noFlight": "Cet élève n’a aucun vol"
+    },
     "buttons": {
         "login": "Connexion",
         "save": "Sauvegarder",
@@ -209,11 +235,19 @@
         "subscribeStudent": "Ajouter participants",
         "student": "Élève",
         "waitingList": "Liste d'attente",
-        "noSubscription": "Il n'y a actuellement pas d'inscriptions"
+        "noSubscription": "Il n'y a actuellement pas d'inscriptions",
+        "type": "Type"
     },
     "team": {
         "title": "Équipe",
         "addMember": "Ajouter un membre",
         "removeMessage": "Veux-tu vraiment supprimer $REPLACE_NAME de ton équipe?"
+    },
+    "appointmentType": {
+        "tite": "Type de rdv",
+        "addType": "Ajouter",
+        "name": "Nom",
+        "archive": "Archiver",
+        "edit": "Modifier"
     }
 }

@@ -8,6 +8,14 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
+    <mat-form-field *ngIf="data.appointmentTypes.length > 0" appearance="fill">
+        <mat-label>{{ 'appointment.type'| translate }}</mat-label>
+        <mat-select formControlName="type">
+            <mat-option *ngFor="let appointmentType of data.appointmentTypes" [value]="appointmentType.id">
+                {{appointmentType.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
     <mat-form-field>
         <input matInput [ngxMatDatetimePicker]="picker" 
                         placeholder="{{ 'appointment.dateTime'| translate }}" 

@@ -1,3 +1,6 @@
+<button class="back-button" *ngIf="isMobile" mat-mini-fab color="primary" (click)=backButton()>
+  <mat-icon>arrow_back</mat-icon>
+</button>
 <mat-card class="team-card">
     <mat-card-title>{{ 'team.title'| translate }}</mat-card-title>
     <button class="add-button" mat-raised-button color="primary" (click)="openEmailDialog()">
