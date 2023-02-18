@@ -58,7 +58,7 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
 
     this.form = this.fb.group({
       state: [this.appointment.state, Validators.required],
-      type: [this.appointment.type, Validators.nullValidator],
+      type: [this.appointment.type?.id, Validators.nullValidator],
       date: [this.appointment.scheduling, Validators.required],
       meetingPoint: [this.appointment.meetingPoint, Validators.required],
       maxPeople: [this.appointment.maxPeople, Validators.nullValidator],
