@@ -84,7 +84,8 @@
             "landingCountry": "Landung Land",
             "time": "Flugdauer",
             "km": "Km",
-            "description": "Beschreibung"
+            "description": "Beschreibung",
+            "diff": "Diff."
         },
         "phone": "Tel",
         "emergencyContact": "Notfallkontakt"
