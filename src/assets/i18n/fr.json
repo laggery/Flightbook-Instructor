@@ -84,7 +84,8 @@
             "landingCountry": "Atterissage pays",
             "time": "Durée",
             "km": "Km",
-            "description": "Description"
+            "description": "Description",
+            "diff": "Diff."
         },
         "phone": "Tél",
         "emergencyContact": "No. d'urgence"
