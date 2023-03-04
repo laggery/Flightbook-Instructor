@@ -2,7 +2,7 @@
     <button class="menu-button" *ngIf="isMobile" mat-mini-fab color="primary" (click)=backButton()>
         <mat-icon>arrow_back</mat-icon>
     </button>
-    <h2>{{ student.user?.firstname }} {{ student.user?.lastname }}<div class="icon-list "><mat-icon class="print-flights" (click)="printFlightbook()">print</mat-icon><mat-icon class="remove-student" (click)="removeStudent()">delete_forever</mat-icon></div></h2>
+    <h2>{{ student.user?.firstname }} {{ student.user?.lastname }}<div class="icon-list "><mat-icon class="print-flights" (click)="printFlightbook()">print</mat-icon><mat-icon color="warn" class="remove-student" (click)="removeStudent()">delete_forever</mat-icon></div></h2>
 
     <mat-expansion-panel class='card' hideToggle expanded>
         <mat-expansion-panel-header>

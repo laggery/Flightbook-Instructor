@@ -6,12 +6,14 @@
                 {{ 'formMessage.emailpwdnotcorrect'| translate }}
             </mat-error>
             <mat-form-field class="full-width-input">
+                <mat-label>{{ 'login.email'| translate }}</mat-label>
                 <input matInput placeholder="{{ 'login.email'| translate }}" formControlName="email" required>
                 <mat-error>
                     {{ 'formMessage.invalidEmail'| translate }}
                 </mat-error>
             </mat-form-field>
             <mat-form-field class="full-width-input">
+                <mat-label>{{ 'login.password'| translate }}</mat-label>
                 <input matInput type="password" placeholder="{{ 'login.password'| translate }}" formControlName="password" required>
                 <mat-error>
                     {{ 'formMessage.invalidPassword'| translate }}
