@@ -18,12 +18,8 @@
     width: 100%;
 }
 
-th.mat-header-cell:first-of-type, td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type {
-    padding-left: 0px;
-}
-
-th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:last-of-type {
-    padding-right: 0px;
+.mat-mdc-cell, .mat-mdc-header-cell {
+    padding: 0;
 }
 
 .mat-column-nb {
@@ -53,9 +49,6 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
 }
 
 // ---- statistics ---- 
-.basic-stat {
-    margin-top: 12px;
-}
 .basic-stat label {
     display: inline-block;
     width: 165px;
@@ -71,6 +64,5 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
 }
 
 .remove-student {
-    color: var(--warn-color);
     margin-left: 15px;
 }
