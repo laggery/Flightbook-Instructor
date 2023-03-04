@@ -1,14 +1,14 @@
 <mat-card class="appointment-card">
     <mat-card-title>{{ 'appointment.title'| translate }}</mat-card-title>
-    <button class="add-button" mat-raised-button color="primary" (click)="addAppointment()">
+    <button class="add-button" mat-raised-button extended color="primary" (click)="addAppointment()">
         <mat-icon>add_circle</mat-icon> {{ 'appointment.new'| translate }}
     </button>
     <mat-card-content>
-        <mat-chip-list>
-            <mat-chip [selected]="currentAppointmentFilter.state === states.ANNOUNCED" (click)="changeState(states.ANNOUNCED)">{{ 'appointment.stateValue.ANNOUNCED'| translate }}</mat-chip>
-            <mat-chip [selected]="currentAppointmentFilter.state === states.CONFIRMED" (click)="changeState(states.CONFIRMED)">{{ 'appointment.stateValue.CONFIRMED'| translate }}</mat-chip>
-            <mat-chip [selected]="currentAppointmentFilter.state === states.CANCELED" (click)="changeState(states.CANCELED)">{{ 'appointment.stateValue.CANCELED'| translate }}</mat-chip>
-        </mat-chip-list>
+        <mat-chip-listbox>
+            <mat-chip-option [selected]="currentAppointmentFilter.state === states.ANNOUNCED" (click)="changeState(states.ANNOUNCED)">{{ 'appointment.stateValue.ANNOUNCED'| translate }}</mat-chip-option>
+            <mat-chip-option [selected]="currentAppointmentFilter.state === states.CONFIRMED" (click)="changeState(states.CONFIRMED)">{{ 'appointment.stateValue.CONFIRMED'| translate }}</mat-chip-option>
+            <mat-chip-option [selected]="currentAppointmentFilter.state === states.CANCELED" (click)="changeState(states.CANCELED)">{{ 'appointment.stateValue.CANCELED'| translate }}</mat-chip-option>
+        </mat-chip-listbox>
     </mat-card-content>
 
     <table #table mat-table [dataSource]="appointments">
