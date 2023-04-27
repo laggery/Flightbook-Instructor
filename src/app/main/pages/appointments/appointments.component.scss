@@ -28,7 +28,7 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
     padding-right: 20px;
 }
 
-.mat-column-action {
+.mat-column-edit, .mat-column-subscription, .mat-column-list{
     cursor: pointer;
 }
 

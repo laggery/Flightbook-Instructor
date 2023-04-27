@@ -201,7 +201,8 @@
     },
     "message": {
         "error": "Une erreur est survenue. Veuillez réessayer plus tard ou envoyer un email a : yannick.lagger@flightbook.ch",
-        "noFlight": "Cet élève n’a aucun vol"
+        "noFlight": "Cet élève n’a aucun vol",
+        "pdfDownloaded": "Le PDF a été téléchargé"
     },
     "buttons": {
         "login": "Connexion",
