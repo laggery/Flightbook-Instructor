@@ -15,6 +15,9 @@ import { Student } from 'src/app/shared/domain/student';
 import { TeamMember } from 'src/app/shared/domain/team-member';
 import { AppointmentFormDialogComponent } from '../../component/appointment-form-dialog/appointment-form-dialog.component';
 import { SubscriptionsComponent } from '../../component/subscriptions/subscriptions.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { TranslateService } from '@ngx-translate/core';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-appointments',
@@ -35,13 +38,19 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   currentAppointmentFilter: AppointmentFilter;
   @ViewChild('paginator') paginator: MatPaginator | undefined;
 
+  datePipe: DatePipe;
+
   constructor(
     private schoolService: SchoolService,
     private accountService: AccountService,
     private studentListPDFService: StudentListPDFService,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    private snackBar: MatSnackBar,
+    private translate: TranslateService
+  ) {
     this.currentAppointmentFilter = this.schoolService.filter;
     this.appointments = [];
+    this.datePipe = new DatePipe('en-US');
   }
 
   ngOnInit(): void {
@@ -152,7 +161,16 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     if (appointment.maxPeople) {
       students.splice(appointment.maxPeople)
     }
-    this.studentListPDFService.generatePdf(students, this.school, appointment);
+    try {
+      const pdf = await this.studentListPDFService.generatePdf(students, this.school, appointment);
+      pdf.open();
+    } catch(error: any) {}
+      const pdf = await this.studentListPDFService.generatePdf(students, this.school, appointment);
+      pdf.download(`${this.datePipe.transform(appointment.scheduling, 'yyyy.MM.dd')}-registrations.pdf`);
+      this.snackBar.open(this.translate.instant('message.pdfDownloaded'), this.translate.instant('buttons.done'), {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+    });
   }
 
   handlePage(event: any) {

@@ -32,7 +32,6 @@ export class StudentsComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private schoolService: SchoolService,
     private accountService: AccountService,
-    private studentListPDFService: StudentListPDFService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
     private deviceSize: DeviceSizeService
@@ -83,14 +82,6 @@ export class StudentsComponent implements OnInit, OnDestroy {
 
   backButton() {
     this.sidenav?.open();
-  }
-
-  printStudentList() {
-    if (!this.school) {
-      return;
-    }
-
-    this.studentListPDFService.generatePdf(this.studentList, this.school);
   }
 
   checkboxChange(changeEvent: MatCheckboxChange, student: Student) {

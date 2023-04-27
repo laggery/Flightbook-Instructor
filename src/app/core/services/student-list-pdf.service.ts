@@ -1,6 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { TCreatedPdf } from 'pdfmake/build/pdfmake';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { Appointment } from 'src/app/shared/domain/appointment';
 import { School } from 'src/app/shared/domain/school';
@@ -28,7 +29,7 @@ export class StudentListPDFService {
     }
   }
 
-  async generatePdf(students: Student[], school: School, appointment?: Appointment): Promise<any> {
+  async generatePdf(students: Student[], school: School, appointment?: Appointment): Promise<TCreatedPdf> {
     await this.loadPdfMaker();
 
     students = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
@@ -166,6 +167,6 @@ export class StudentListPDFService {
       }
     };
 
-    return this.pdfMake.createPdf(docDefinition, null, null, this.pdfMake.vfs).open();
+    return this.pdfMake.createPdf(docDefinition, null, null, this.pdfMake.vfs);
   }
 }
