@@ -45,11 +45,13 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>{{ 'appointment.takeOffCoordinator'| translate }}</mat-label>
-        <mat-select formControlName="takeOffCoordinator">
+        <!-- <mat-select formControlName="takeOffCoordinator">
             <mat-option *ngFor="let teamMember of data.teamMembers" [value]="teamMember.user.email">
                 {{teamMember.user.firstname}} {{teamMember.user.lastname}}
             </mat-option>
-        </mat-select>
+        </mat-select> -->
+        <input matInput placeholder="{{ 'appointment.takeOffCoordinator'| translate }}" type="text"
+            formControlName="takeOffCoordinatorText">
     </mat-form-field>
     <mat-form-field>
         <mat-label>{{ 'appointment.maxPeople'| translate }}</mat-label>

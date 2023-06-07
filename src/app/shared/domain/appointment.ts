@@ -15,5 +15,6 @@ export class Appointment {
     school: School | undefined;
     instructor: User | undefined;
     takeOffCoordinator: User | undefined;
+    takeOffCoordinatorText: string | undefined;
     subscriptions: Subscription[] = [];
 }

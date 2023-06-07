@@ -96,6 +96,8 @@ export class StudentListPDFService {
       stringBuilder.push(`${this.translate.instant('studentList.topic')}: ......................................`);
       if (appointment.takeOffCoordinator) {
         stringBuilder.push(`${this.translate.instant('studentList.takeOffCoordinator')}: ${appointment.takeOffCoordinator?.firstname} ${appointment.takeOffCoordinator?.firstname}    `);
+      } else if (appointment.takeOffCoordinatorText) {
+        stringBuilder.push(`${this.translate.instant('studentList.takeOffCoordinator')}: ${appointment.takeOffCoordinatorText}    `);
       } else {
         stringBuilder.push(`${this.translate.instant('studentList.takeOffCoordinator')}: ................................`);
       

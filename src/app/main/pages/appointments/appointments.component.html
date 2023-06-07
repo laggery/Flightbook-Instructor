@@ -58,8 +58,11 @@
         <!-- TakeOffCoordinator Column -->
         <ng-container matColumnDef="takeOffCoordinator">
             <th mat-header-cell *matHeaderCellDef>{{ 'appointment.takeOffCoordinator' | translate }}</th>
-            <td mat-cell *matCellDef="let element"> {{ element.takeOffCoordinator?.firstname || "-" }} {{
-                element.takeOffCoordinator?.lastname }} </td>
+            <td mat-cell *matCellDef="let element">
+                <ng-container *ngIf="element.takeOffCoordinator">{{ element.takeOffCoordinator?.firstname || "-" }} {{
+                    element.takeOffCoordinator?.lastname }}</ng-container>
+                <ng-container *ngIf="!element.takeOffCoordinator">{{ element.takeOffCoordinatorText || "-" }}</ng-container>    
+            </td>
         </ng-container>
 
         <!-- Registrations Column -->
