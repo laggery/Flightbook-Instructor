@@ -64,6 +64,7 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
       maxPeople: [this.appointment.maxPeople, Validators.nullValidator],
       instructor: [this.appointment.instructor?.email, Validators.required],
       takeOffCoordinator: [this.appointment.takeOffCoordinator?.email, Validators.nullValidator],
+      takeOffCoordinatorText: [this.appointment.takeOffCoordinatorText, Validators.nullValidator],
       description: [this.appointment.description, Validators.nullValidator],
       subscriptions: subscriptionFbArray
     });
@@ -117,6 +118,7 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
       this.appointment.scheduling = this.form.get("date")?.value;
       this.appointment.instructor.email = this.form.get("instructor")?.value;
       this.appointment.takeOffCoordinator.email = this.form.get("takeOffCoordinator")?.value;
+      this.appointment.takeOffCoordinatorText = this.form.get("takeOffCoordinatorText")?.value;
       this.appointment.maxPeople = this.form.get("maxPeople")?.value;
       this.appointment.meetingPoint = this.form.get("meetingPoint")?.value;
       this.appointment.description = this.form.get("description")?.value;
