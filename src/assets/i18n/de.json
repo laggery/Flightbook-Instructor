@@ -235,6 +235,8 @@
         },
         "passed": "Vergangene Termine",
         "subscribeStudent": "Schüler anmelden",
+        "guestSubscribeStudent": "Gastschüler anmelden",
+        "guestStudent": "Gastschüler",
         "student": "Schüler",
         "waitingList": "Warteliste",
         "noSubscription": "Zurzeit hat es keine Anmeldungen",

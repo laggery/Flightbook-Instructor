@@ -4,8 +4,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { TCreatedPdf } from 'pdfmake/build/pdfmake';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { Appointment } from 'src/app/shared/domain/appointment';
+import { GuestSubscription } from 'src/app/shared/domain/guest-subscription';
 import { School } from 'src/app/shared/domain/school';
 import { Student } from 'src/app/shared/domain/student';
+import { User } from 'src/app/shared/domain/user';
 
 @Injectable({
   providedIn: 'root'
@@ -32,7 +34,16 @@ export class StudentListPDFService {
   async generatePdf(students: Student[], school: School, appointment?: Appointment): Promise<TCreatedPdf> {
     await this.loadPdfMaker();
 
-    students = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
+    appointment?.guestSubscriptions.forEach((guestSubscription: GuestSubscription) => {
+      const user = new User();
+      user.firstname = guestSubscription.firstname;
+      user.lastname = guestSubscription.lastname;
+      const student = new Student();
+      student.user = user;
+      students.push(student);
+    })
+
+    students = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname.toLowerCase() > obj2.user?.firstname.toLowerCase() ? 1 : -1)));
 
     let studentPdfData: any = [];
     const rowHeight = [10];
@@ -46,7 +57,7 @@ export class StudentListPDFService {
             `${this.translate.instant('account.name')}:\n`,
             `${student.user?.firstname} ${student.user?.lastname}\n`,
             `\n`,
-            `${this.translate.instant('flight.glider')}\n`,
+            `${this.translate.instant('student.flight.glider')}\n`,
             `${student.lastFlight?.glider?.brand || ''} ${student.lastFlight?.glider?.name || ''}`
           ],
           style: 'tableRow'
@@ -57,7 +68,7 @@ export class StudentListPDFService {
             `${lastFlight}\n`,
             `\n`,
             `${this.translate.instant('student.amountofflights')}:\n`,
-            `${student.statistic?.nbFlights}`
+            `${student.statistic?.nbFlights || "-"}`
           ],
           style: 'tableRow'
         }

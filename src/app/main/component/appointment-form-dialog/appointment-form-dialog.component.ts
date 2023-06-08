@@ -10,6 +10,7 @@ import { Student } from 'src/app/shared/domain/student';
 import { Subscription } from 'src/app/shared/domain/subscription';
 import { User } from 'src/app/shared/domain/user';
 import { AppointmentsComponent } from '../../pages/appointments/appointments.component';
+import { GuestSubscription } from 'src/app/shared/domain/guest-subscription';
 
 @Component({
   selector: 'app-appointment-form-dialog',
@@ -26,6 +27,7 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
   selectedStudents = new Set<string>();
 
   @ViewChildren('subscriptionFormList') subscriptionFormList?: QueryList<ElementRef>
+  @ViewChildren('guestSubscriptionFormList') guestSubscriptionFormList?: QueryList<ElementRef>
   @ViewChildren("selectStudent") selectStudent?: QueryList<MatSelect>;
   @ViewChild('picker') picker: any;
 
@@ -54,7 +56,16 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
       subscriptionFbArray.push(this.fb.group({
         user: [subscription.user?.email, Validators.required]
       }));
-    })
+    });
+
+    const guestSubscriptionFbArray = this.fb.array([]);
+    this.appointment.guestSubscriptions.forEach((guestSubscription: GuestSubscription) => {
+      guestSubscriptionFbArray.push(this.fb.group({
+        id: [guestSubscription.id, Validators.required],
+        firstname: [guestSubscription.firstname, Validators.required],
+        lastname: [guestSubscription.lastname, Validators.required]
+      }));
+    });
 
     this.form = this.fb.group({
       state: [this.appointment.state, Validators.required],
@@ -66,7 +77,8 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
       takeOffCoordinator: [this.appointment.takeOffCoordinator?.email, Validators.nullValidator],
       takeOffCoordinatorText: [this.appointment.takeOffCoordinatorText, Validators.nullValidator],
       description: [this.appointment.description, Validators.nullValidator],
-      subscriptions: subscriptionFbArray
+      subscriptions: subscriptionFbArray,
+      guestSubscriptions: guestSubscriptionFbArray
     });
   }
   ngAfterViewInit(): void {
@@ -132,6 +144,16 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
         this.appointment.subscriptions.push(subscription);
       })
 
+      const guestSubscriptionList = this.form.get("guestSubscriptions")?.value;
+      this.appointment.guestSubscriptions = [];
+      guestSubscriptionList.forEach((guestSubscriptionUser: any) => {
+        const guestSubscription = new GuestSubscription();
+        guestSubscription.id = guestSubscriptionUser.id;
+        guestSubscription.firstname = guestSubscriptionUser.firstname;
+        guestSubscription.lastname = guestSubscriptionUser.lastname;
+        this.appointment.guestSubscriptions.push(guestSubscription);
+      })
+
       this.dialogRef.close({
         event: "save",
         appointment: this.appointment
@@ -165,6 +187,27 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
   removeSubscription(index: number, email: string) {
     this.selectedStudents.delete(email);
     this.subscriptions.removeAt(index);
+  }
+
+  get guestSubscriptions(): FormArray {
+    return this.form.get("guestSubscriptions") as FormArray
+  }
+
+  addGuestSubscription() {
+    const guestSubscriptionForm = this.fb.group({
+      firstname: ['', Validators.required],
+      lastname: ['', Validators.required]
+    });
+
+    this.guestSubscriptions.push(guestSubscriptionForm);
+
+    setTimeout(() => {
+      this.guestSubscriptionFormList?.last.nativeElement.scrollIntoView({ behavior: "smooth" });
+    }, 0);
+  }
+
+  removeGuestSubscription(index: number) {
+    this.guestSubscriptions.removeAt(index);
   }
 
 }

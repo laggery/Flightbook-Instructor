@@ -1,4 +1,3 @@
-import { Appointment } from "./appointment";
 import { User } from "./user";
 
 export class Subscription {
