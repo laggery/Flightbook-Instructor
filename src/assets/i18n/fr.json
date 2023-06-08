@@ -235,6 +235,8 @@
         },
         "passed": "Rendez-vous passé",
         "subscribeStudent": "Ajouter participants",
+        "guestSubscribeStudent": "Ajouter participants externes",
+        "guestStudent": "Élève externes",
         "student": "Élève",
         "waitingList": "Liste d'attente",
         "noSubscription": "Il n'y a actuellement pas d'inscriptions",

@@ -1,4 +1,5 @@
 import { AppointmentType } from "./appointment-type-dto";
+import { GuestSubscription } from "./guest-subscription";
 import { School } from "./school";
 import { State } from "./state";
 import { Subscription } from "./subscription";
@@ -17,4 +18,5 @@ export class Appointment {
     takeOffCoordinator: User | undefined;
     takeOffCoordinatorText: string | undefined;
     subscriptions: Subscription[] = [];
+    guestSubscriptions: GuestSubscription[] = [];
 }

@@ -63,7 +63,7 @@
         <textarea matInput placeholder="{{ 'appointment.description'| translate }}" type="number"
             formControlName="description"></textarea>
     </mat-form-field>
-    <ng-container class="subscriptions-control" formArrayName="subscriptions">
+    <div class="subscription-form" formArrayName="subscriptions">
         <button mat-mini-fab color="primary" (click)="addSubscription()">
             <mat-icon>add</mat-icon>
         </button>
@@ -83,7 +83,28 @@
                 </mat-select>
             </mat-form-field>
         </div>
-    </ng-container>
+    </div>
+    <div class="guestSubscription-form" formArrayName="guestSubscriptions">
+        <button mat-mini-fab color="primary" (click)="addGuestSubscription()">
+            <mat-icon>add</mat-icon>
+        </button>
+        <mat-label class="subscribe-student">{{ 'appointment.guestSubscribeStudent'| translate }}</mat-label>
+        <div class="subscription-list" *ngFor="let guestSubscriptions of guestSubscriptions.controls; let i=index" [formGroupName]="i" #guestSubscriptionFormList>
+            <button mat-icon-button color="warn" (click)="removeGuestSubscription(i)">
+                <mat-icon>remove</mat-icon>
+            </button>
+            <mat-form-field class="guestSubscription-form-field">
+                <mat-label>{{ 'account.firstname'| translate }}</mat-label>
+                <input matInput placeholder="{{ 'account.firstname'| translate }}" type="text"
+                formControlName="firstname">
+            </mat-form-field>
+            <mat-form-field class="guestSubscription-form-field">
+                <mat-label>{{ 'account.lastname'| translate }}</mat-label>
+                <input matInput placeholder="{{ 'account.lastname'| translate }}" type="text"
+                formControlName="lastname">
+            </mat-form-field>
+        </div>
+    </div>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
