@@ -100,9 +100,9 @@ export class StudentListPDFService {
     if (appointment) {
       const stringBuilder = [];
       if (appointment.scheduling) {
-        appointment.scheduling = new Date(appointment.scheduling);
+        appointment.scheduling =  new Date(appointment.scheduling);
       }
-      stringBuilder.push(`${this.translate.instant('studentList.date')}: ${appointment.scheduling?.getDay()}.${appointment.scheduling?.getMonth()}.${appointment.scheduling?.getFullYear()}     `);
+      stringBuilder.push(`${this.translate.instant('studentList.date')}: ${this.datePipe.transform(appointment.scheduling, 'dd.MM.yyyy')}     `);
       stringBuilder.push(`${this.translate.instant('studentList.place')}: ${appointment.meetingPoint}     `);
       stringBuilder.push(`${this.translate.instant('studentList.topic')}: ......................................`);
       if (appointment.takeOffCoordinator) {
