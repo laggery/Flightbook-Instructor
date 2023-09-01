@@ -2,7 +2,7 @@
     <button class="menu-button" *ngIf="isMobile" mat-mini-fab color="primary" (click)=backButton()>
         <mat-icon>arrow_back</mat-icon>
     </button>
-    <h2>{{ student.user?.firstname }} {{ student.user?.lastname }}<div class="icon-list "><mat-icon class="print-flights" (click)="printFlightbook()">print</mat-icon><mat-icon color="warn" class="remove-student" (click)="removeStudent()">delete_forever</mat-icon></div></h2>
+    <h2>{{ student.user?.firstname }} {{ student.user?.lastname }}<div class="icon-list "><mat-icon class="print-flights" (click)="printFlightbook()">print</mat-icon><mat-icon *ngIf="type=='actif'" color="warn" class="remove-student" (click)="removeStudent()">delete_forever</mat-icon></div></h2>
 
     <mat-expansion-panel class='card' hideToggle expanded>
         <mat-expansion-panel-header>
@@ -17,7 +17,7 @@
         </div>
     </mat-expansion-panel>
 
-    <mat-expansion-panel class='card'>
+    <mat-expansion-panel class='card' *ngIf="(type=='archived' && controlSheet) || type=='actif'">
         <mat-expansion-panel-header>
           <mat-panel-title><h3>{{ 'controlSheet.title'| translate }}</h3></mat-panel-title>
         </mat-expansion-panel-header>
@@ -80,6 +80,9 @@
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
+        <mat-paginator #paginator [length]="flightPagerEntity.totalItems" [pageSize]="flightPagerEntity.itemsPerPage"
+            [pageSizeOptions]="[20, 50]" (page)="handleFlightPage($event)">
+        </mat-paginator>
     </mat-expansion-panel>
 </div>
 <ng-template #noStudentSelected><p class="no-student-selcted">{{ 'student.noStudentSelected'| translate }}</p></ng-template>

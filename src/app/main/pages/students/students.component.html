@@ -2,22 +2,37 @@
     <mat-sidenav #sidenav mode="side" opened>
         <mat-list class="student-list">
             <mat-list-item>
-                <button class="student-list-button" mat-raised-button color="primary" (click)=openEmailDialog()>{{ 'student.addStudent'| translate }}</button>
+                <button class="student-list-button" mat-raised-button color="primary" (click)=openEmailDialog()>{{'student.addStudent'| translate }}</button>
             </mat-list-item>
             <!-- <mat-list-item>
                 <button class="student-list-button" mat-raised-button color="primary" (click)=printStudentList()>{{ 'student.list'| translate }}</button>
             </mat-list-item> -->
-            <mat-list-item class="student-info" *ngFor='let student of students' (click)=studentDetail(student)>
-                <!-- <mat-checkbox (change)=checkboxChange($event,student) (click)=$event.stopPropagation() color="primary"></mat-checkbox> -->
-                <p class="student-name">{{ student.user?.firstname }} {{ student.user?.lastname }}</p>
-                <p>{{ 'student.lastflight'| translate }}: {{ student.lastFlight?.date | date:'dd.MM.YYYY' }}</p>
-                <p>{{ 'student.amountofflights'| translate }}: {{ student.statistic?.nbFlights }}</p>
-                <p>{{ 'student.flight.glider'| translate }}: {{ student.lastFlight?.glider?.brand }} {{ student.lastFlight?.glider?.name }}</p>
-            </mat-list-item>
+            <mat-tab-group mat-align-tabs="start" (selectedTabChange)="tabChange($event)">
+                <mat-tab label="{{ 'student.actif'| translate }}">
+                    <mat-list-item class="student-info" *ngFor='let student of students' (click)=studentDetail(student)>
+                        <!-- <mat-checkbox (change)=checkboxChange($event,student) (click)=$event.stopPropagation() color="primary"></mat-checkbox> -->
+                        <p class="student-name">{{ student.user?.firstname }} {{ student.user?.lastname }}</p>
+                        <p>{{ 'student.lastflight'| translate }}: {{ student.lastFlight?.date | date:'dd.MM.YYYY' }}</p>
+                        <p>{{ 'student.amountofflights'| translate }}: {{ student.statistic?.nbFlights }}</p>
+                        <p>{{ 'student.flight.glider'| translate }}: {{ student.lastFlight?.glider?.brand }} {{
+                            student.lastFlight?.glider?.name }}</p>
+                    </mat-list-item>
+                </mat-tab>
+                <mat-tab label="{{ 'student.archived'| translate }}">
+                    <mat-list-item class="student-info" *ngFor='let student of archivedStudents' (click)=studentDetail(student)>
+                        <p class="student-name">{{ student.user?.firstname }} {{ student.user?.lastname }}</p>
+                        <p>{{ 'student.lastflight'| translate }}: {{ student.lastFlight?.date | date:'dd.MM.YYYY' }}</p>
+                        <p>{{ 'student.amountofflights'| translate }}: {{ student.statistic?.nbFlights }}</p>
+                        <p>{{ 'student.flight.glider'| translate }}: {{ student.lastFlight?.glider?.brand }} {{
+                            student.lastFlight?.glider?.name }}</p>
+                    </mat-list-item>
+                </mat-tab>
+            </mat-tab-group>
         </mat-list>
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <fb-student-detail [student]="selectedStudent" [school]="school" (backButtonClick)=backButton() (removeUserButtonClick)=syncStudentList()></fb-student-detail>
+        <fb-student-detail [student]="selectedStudent" [school]="school" [type]="type" (backButtonClick)=backButton()
+            (removeUserButtonClick)=syncStudentList()></fb-student-detail>
     </mat-sidenav-content>
 </mat-sidenav-container>

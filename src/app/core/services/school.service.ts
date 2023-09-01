@@ -32,6 +32,9 @@ export class SchoolService {
   getStudentsBySchoolId(id: number): Observable<Student[]> {
     return this.http.get<Student[]>(`${environment.baseUrl}/instructor/schools/${id}/students`);
   }
+  getArchivedStudentsBySchoolId(id: number): Observable<Student[]> {
+    return this.http.get<Student[]>(`${environment.baseUrl}/instructor/schools/${id}/students/archived`);
+  }
 
   getTeamMembers(id: number): Observable<TeamMember[]> {
     return this.http.get<TeamMember[]>(`${environment.baseUrl}/instructor/schools/${id}/team-members`);

@@ -8,6 +8,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -25,7 +26,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { NgxMatDateFormats, NgxMatDatetimePickerModule, NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker';
 import { NgxMatMomentModule, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular-material-components/moment-adapter';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginationIntlService } from '../core/services/mat-pagination-intl.service';
 
 export const MOMENT_DATETIME_FORMAT = 'DD.MM.YYYY HH:mm';
 
@@ -52,6 +54,7 @@ const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
     MatCheckboxModule,
     MatCardModule,
     MatTableModule,
+    MatTabsModule,
     MatSidenavModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -80,6 +83,7 @@ const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
     MatCheckboxModule,
     MatCardModule,
     MatTableModule,
+    MatTabsModule,
     MatSidenavModule,
     MatButtonModule,
     MatButtonToggleModule,
@@ -106,7 +110,8 @@ const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
   providers: [
     // values
     {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_MOMENT_FORMATS},
-    {provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}}
+    {provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}},
+    {provide: MatPaginatorIntl, useClass: MatPaginationIntlService}
   ],
 })
 export class SharedModule { }
