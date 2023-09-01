@@ -1,4 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
@@ -7,6 +8,7 @@ import { PdfExportService } from 'src/app/core/services/pdf-export.service';
 import { StudentService } from 'src/app/core/services/student.service';
 import { ControlSheet } from 'src/app/shared/domain/control-sheet';
 import { Flight } from 'src/app/shared/domain/flight';
+import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 import { School } from 'src/app/shared/domain/school';
 import { Student } from 'src/app/shared/domain/student';
 
@@ -22,11 +24,17 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   school: School | undefined;
 
+  @Input()
+  type: string | undefined;
+
   @Output() backButtonClick = new EventEmitter();
 
   @Output() removeUserButtonClick = new EventEmitter();
 
   flights: Flight[];
+  flightPagerEntity = new PagerEntity<Flight[]>;
+  @ViewChild('paginator') paginator: MatPaginator | undefined;
+
   displayedColumns: string[] = ['nb', 'date', 'start', 'landing', 'glider', 'time', 'km', 'description'];
   isMobile = false;
 
@@ -58,13 +66,52 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['student'] && changes['student'].currentValue) {
-      this.studentService.getFlightsByStudentId(changes['student'].currentValue.user.id).pipe(takeUntil(this.unsubscribe$)).subscribe((flights: Flight[]) => {
-        this.flights = flights;
-      });
+      if (this.type == 'actif') {
+        this.loadStudentFLights(changes['student'].currentValue.user.id);
+        this.studentService.getControlSheetByStudentId(changes['student'].currentValue.user.id).pipe(takeUntil(this.unsubscribe$)).subscribe((controlSheet: ControlSheet) => {
+          this.controlSheet = controlSheet;
+        });
+      } else if (this.school?.id) {
+        this.loadArchivedStudentFLights(changes['student'].currentValue.user.id, this.school?.id);
+        this.studentService.getControlSheetByArchivedStudentId(changes['student'].currentValue.user.id).pipe(takeUntil(this.unsubscribe$)).subscribe((controlSheet: ControlSheet) => {
+          this.controlSheet = controlSheet;
+        });
+      }
+    }
+  }
 
-      this.studentService.getControlSheetByStudentId(changes['student'].currentValue.user.id).pipe(takeUntil(this.unsubscribe$)).subscribe((controlSheet: ControlSheet) => {
-        this.controlSheet = controlSheet;
-      });
+  loadStudentFLights(userId: number, offset: number | undefined = undefined, limit = 20) {
+    if (!offset && this.paginator) {
+      this.paginator.pageIndex = 0;
+    }
+
+    this.studentService.getFlightsByStudentId({ limit, offset }, userId).pipe(takeUntil(this.unsubscribe$)).subscribe((pagerEntity: PagerEntity<Flight[]>) => {
+      this.flightPagerEntity = pagerEntity;
+      if (pagerEntity.entity) {
+        this.flights = pagerEntity.entity;
+      }
+    });
+  }
+
+  loadArchivedStudentFLights(userId: number, schoolId: number, offset: number | undefined = undefined, limit = 20) {
+    if (!offset && this.paginator) {
+      this.paginator.pageIndex = 0;
+    }
+
+    this.studentService.getFlightsByArchivedStudentIdAndSchoolId({ limit, offset }, userId, schoolId).pipe(takeUntil(this.unsubscribe$)).subscribe((pagerEntity: PagerEntity<Flight[]>) => {
+      this.flightPagerEntity = pagerEntity;
+      if (pagerEntity.entity) {
+        this.flights = pagerEntity.entity;
+      }
+    });
+  }
+
+  handleFlightPage(event: any) {
+    let offset = event.pageIndex * event.pageSize;
+    if (this.type == 'actif' && this.student?.user?.id) {
+      this.loadStudentFLights(this.student?.user.id, offset, event.pageSize);
+    } else if (this.type == 'archived' && this.student?.user?.id && this.school?.id) {
+      this.loadArchivedStudentFLights(this.student?.user.id, this.school?.id, offset, event.pageSize);
     }
   }
 

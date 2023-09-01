@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AccountService } from 'src/app/core/services/account.service';
@@ -13,6 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DeviceSizeService } from 'src/app/core/services/device-size.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Subject, takeUntil } from 'rxjs';
+import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 
 @Component({
   selector: 'fb-students',
@@ -24,9 +25,12 @@ export class StudentsComponent implements OnInit, OnDestroy {
   selectedStudent: Student | undefined;
   studentList: Student[];
   @ViewChild(MatSidenav) sidenav: MatSidenav | undefined;
+  @ViewChild(MatTabGroup) tabGroup: MatTabGroup | undefined;
   unsubscribe$ = new Subject<void>();
 
   students: Student[];
+  archivedStudents: Student[];
+  type: string;
 
   constructor(
     private translate: TranslateService,
@@ -38,6 +42,8 @@ export class StudentsComponent implements OnInit, OnDestroy {
   ) {
     this.studentList = [];
     this.students = [];
+    this.archivedStudents = [];
+    this.type = 'actif';
   }
 
   ngOnInit(): void {
@@ -56,6 +62,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
       this.selectedStudent = undefined;
       this.studentList = [];
       this.syncStudentList();
+      this.syncArchivedStudentList();
     });
   }
 
@@ -69,6 +76,15 @@ export class StudentsComponent implements OnInit, OnDestroy {
       this.schoolService.getStudentsBySchoolId(this.school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((students: Student[]) => {
         this.students = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
         this.selectedStudent = this.students[0];
+      })
+    }
+  }
+
+  syncArchivedStudentList() {
+    if (this.tabGroup?.selectedIndex == 1 && this.school?.id) {
+      this.schoolService.getArchivedStudentsBySchoolId(this.school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((students: Student[]) => {
+        this.archivedStudents = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
+        this.selectedStudent = this.archivedStudents[0];
       })
     }
   }
@@ -130,4 +146,14 @@ export class StudentsComponent implements OnInit, OnDestroy {
       });
     });
   }
+
+  tabChange(event: MatTabChangeEvent) {
+    if (event.index == 0) {
+      this.selectedStudent = this.students[0];
+      this.type = 'actif';
+    } else {
+      this.type = 'archived';
+      this.syncArchivedStudentList();
+    } 
+ } 
 }

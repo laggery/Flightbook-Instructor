@@ -88,7 +88,9 @@
             "diff": "Diff."
         },
         "phone": "Tel",
-        "emergencyContact": "Notfallkontakt"
+        "emergencyContact": "Notfallkontakt",
+        "actif": "Aktiv",
+        "archived": "Archiviert"
     },
     "studentList": {
         "date": "Datum",
@@ -253,5 +255,9 @@
         "name": "Name",
         "archive": "Archivieren",
         "edit": "Ändern"
+    },
+    "paginator": {
+        "itemPerPage": "Pro Seite:",
+        "of": "von"
     }
 }
