@@ -91,9 +91,9 @@ export class StudentNoteComponent implements OnDestroy, OnChanges {
   handleNotePage(event: any) {
     let offset = event.pageIndex * event.pageSize;
     if (this.type == 'actif') {
-      this.loadStudentNotes(this.student?.id!);
+      this.loadStudentNotes(this.student?.id!, offset, event.pageSize);
     } else {
-      this.loadArchivedStudentNotes(this.student?.id!);
+      this.loadArchivedStudentNotes(this.student?.id!, offset, event.pageSize);
     }
   }
 
