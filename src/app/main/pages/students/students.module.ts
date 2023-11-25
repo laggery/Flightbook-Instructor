@@ -8,6 +8,7 @@ import { EmailDialogComponent } from '../../component/email-dialog/email-dialog.
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlSheetComponent } from '../../component/control-sheet/control-sheet.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { StudentNoteComponent } from '../../component/student-note/student-note.component';
 
 
 
@@ -16,7 +17,8 @@ import { TranslateModule } from '@ngx-translate/core';
     StudentsComponent,
     StudentDetailComponent,
     EmailDialogComponent,
-    ControlSheetComponent
+    ControlSheetComponent,
+    StudentNoteComponent
   ],
   imports: [
     CommonModule,

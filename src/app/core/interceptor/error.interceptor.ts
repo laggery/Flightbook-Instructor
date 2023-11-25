@@ -32,6 +32,13 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                     verticalPosition: 'top',
                 });
             }
+
+            if (err.status === 403) {
+                this.snackBar.open(this.translate.instant('message.403'), this.translate.instant('buttons.done'), {
+                    horizontalPosition: 'center',
+                    verticalPosition: 'top',
+                });
+            }
             return throwError(() => err);
         }));
     }

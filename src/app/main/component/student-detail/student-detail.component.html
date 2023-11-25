@@ -17,6 +17,13 @@
         </div>
     </mat-expansion-panel>
 
+    <mat-expansion-panel class='card'>
+        <mat-expansion-panel-header>
+          <mat-panel-title><h3>{{ 'studentNote.title'| translate }}</h3></mat-panel-title>
+        </mat-expansion-panel-header>
+        <fb-student-note [student]="student" [type]="type"></fb-student-note>
+    </mat-expansion-panel>
+
     <mat-expansion-panel class='card' *ngIf="(type=='archived' && controlSheet) || type=='actif'">
         <mat-expansion-panel-header>
           <mat-panel-title><h3>{{ 'controlSheet.title'| translate }}</h3></mat-panel-title>
