@@ -20,7 +20,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatChipsModule } from '@angular/material/chips'
 import { HoursFormatPipe } from './pipes/hours-format/hours-format.pipe';
-import { MatOptionModule } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule, MatOptionModule, NativeDateAdapter } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
@@ -42,7 +42,22 @@ const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
     monthYearA11yLabel: 'MMMM YYYY',
   },
 };
-    
+
+export class CustomDateAdapter extends NativeDateAdapter {
+  override getFirstDayOfWeek(): number {
+    return 1; // Monday is the first day of the week
+  }
+  override format(date: Date, displayFormat: Object): string {
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    return this._to2digit(day) + '.' + this._to2digit(month) + '.' + year;
+  }
+
+  private _to2digit(n: number) {
+    return ('00' + n).slice(-2);
+  }
+}
 
 @NgModule({
   declarations: [
@@ -72,6 +87,7 @@ const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
     MatOptionModule,
     MatSelectModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatPaginatorModule,
     MatSlideToggleModule,
 
@@ -101,6 +117,7 @@ const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
     MatOptionModule,
     MatSelectModule,
     MatDatepickerModule,
+    MatNativeDateModule,
     MatPaginatorModule,
     MatSlideToggleModule,
 
@@ -111,6 +128,7 @@ const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
     // values
     {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_MOMENT_FORMATS},
     {provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}},
+    {provide: DateAdapter, useClass: CustomDateAdapter, deps: [MAT_DATE_LOCALE, MAT_DATE_FORMATS]},
     {provide: MatPaginatorIntl, useClass: MatPaginationIntlService}
   ],
 })

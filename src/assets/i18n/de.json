@@ -101,6 +101,13 @@
         "information": "Informationen",
         "level": "Level"
     },
+    "studentNote": {
+        "date": "Datum",
+        "title": "Notizen",
+        "addNote": "Notiz hinzufügen",
+        "noteTitle": "Titel (optional)",
+        "comment": "Kommentar"
+    },
     "export": {
         "pilote": "Pilot",
         "nbStartplaces": "Anzahl Startplätze",
@@ -203,6 +210,7 @@
     },
     "message": {
         "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut oder senden Sie eine E-Mail an: yannick.lagger@flightbook.ch",
+        "403": "Sie haben keine Berechtigung für diese Abfrage",
         "noFlight": "Dieser Schüler hat keinen Flug",
         "pdfDownloaded": "Das PDF wurde heruntergeladen"
     },
