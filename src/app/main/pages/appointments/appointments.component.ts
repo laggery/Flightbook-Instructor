@@ -74,7 +74,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
         this.teamMembers = teamMembers;
       })
 
-      this.schoolService.getStudentsBySchoolId(this.school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((students: Student[]) => {
+      this.schoolService.getStudentsBySchoolId(this.school.id, false).pipe(takeUntil(this.unsubscribe$)).subscribe((students: Student[]) => {
         this.students = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
       })
 

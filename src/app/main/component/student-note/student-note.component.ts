@@ -16,9 +16,6 @@ export class StudentNoteComponent implements OnDestroy, OnChanges {
   @Input()
   student: Student | undefined;
 
-  @Input()
-  type: string | undefined;
-
   @ViewChild('paginator') paginator: MatPaginator | undefined;
 
   displayAddNote = false;
@@ -38,12 +35,7 @@ export class StudentNoteComponent implements OnDestroy, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['student'] && changes['student'].currentValue) {
-      if (this.type == 'actif') {
-        this.loadStudentNotes(this.student?.id!);
-      } else {
-        this.loadArchivedStudentNotes(this.student?.id!);
-      }
-      
+      this.loadStudentNotes(changes['student'].currentValue.id!);      
     }
   }
 
@@ -65,19 +57,6 @@ export class StudentNoteComponent implements OnDestroy, OnChanges {
     });
   }
 
-  loadArchivedStudentNotes(studentId: number, offset: number | undefined = undefined, limit = 5) {
-    if (!offset && this.paginator) {
-      this.paginator.pageIndex = 0;
-    }
-
-    this.studentService.getNotesByArchivedStudentId({ limit, offset }, studentId).pipe(takeUntil(this.unsubscribe$)).subscribe((pagerEntity: PagerEntity<Note[]>) => {
-      this.notesPagerEntity = pagerEntity;
-      if (pagerEntity.entity) {
-        this.notes = pagerEntity.entity;
-      }
-    });
-  }
-
   addNote() {
     this.mode = 'new';
     this.updateFormGroup();
@@ -90,11 +69,7 @@ export class StudentNoteComponent implements OnDestroy, OnChanges {
 
   handleNotePage(event: any) {
     let offset = event.pageIndex * event.pageSize;
-    if (this.type == 'actif') {
-      this.loadStudentNotes(this.student?.id!, offset, event.pageSize);
-    } else {
-      this.loadArchivedStudentNotes(this.student?.id!, offset, event.pageSize);
-    }
+    this.loadStudentNotes(this.student?.id!, offset, event.pageSize);
   }
 
   saveNote() {

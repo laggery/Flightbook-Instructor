@@ -29,8 +29,12 @@ export class SchoolService {
     return this.http.post<School>(`${environment.baseUrl}/schools`, school);
   }
 
-  getStudentsBySchoolId(id: number): Observable<Student[]> {
-    return this.http.get<Student[]>(`${environment.baseUrl}/instructor/schools/${id}/students`);
+  getStudentsBySchoolId(id: number, archived: boolean): Observable<Student[]> {
+    let params = new HttpParams();
+    if (archived !== undefined) {
+      params = params.append('archived', archived);
+    }
+    return this.http.get<Student[]>(`${environment.baseUrl}/instructor/schools/${id}/students`, { params });
   }
   getArchivedStudentsBySchoolId(id: number): Observable<Student[]> {
     return this.http.get<Student[]>(`${environment.baseUrl}/instructor/schools/${id}/students/archived`);

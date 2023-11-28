@@ -2,7 +2,12 @@
     <button class="menu-button" *ngIf="isMobile" mat-mini-fab color="primary" (click)=backButton()>
         <mat-icon>arrow_back</mat-icon>
     </button>
-    <h2>{{ student.user?.firstname }} {{ student.user?.lastname }}<div class="icon-list "><mat-icon class="print-flights" (click)="printFlightbook()">print</mat-icon><mat-icon *ngIf="type=='actif'" color="warn" class="remove-student" (click)="removeStudent()">delete_forever</mat-icon></div></h2>
+    <h2>{{ student.user?.firstname }} {{ student.user?.lastname }}
+        <div class="icon-list ">
+            <mat-icon class="print-flights" (click)="printFlightbook()">print</mat-icon>
+            <mat-icon *ngIf="!student.isArchived" color="warn" class="archive-student" (click)="archiveStudent()">archive</mat-icon>
+        </div>
+    </h2>
 
     <mat-expansion-panel class='card' hideToggle expanded>
         <mat-expansion-panel-header>
@@ -21,10 +26,10 @@
         <mat-expansion-panel-header>
           <mat-panel-title><h3>{{ 'studentNote.title'| translate }}</h3></mat-panel-title>
         </mat-expansion-panel-header>
-        <fb-student-note [student]="student" [type]="type"></fb-student-note>
+        <fb-student-note [student]="student"></fb-student-note>
     </mat-expansion-panel>
 
-    <mat-expansion-panel class='card' *ngIf="(type=='archived' && controlSheet) || type=='actif'">
+    <mat-expansion-panel class='card' *ngIf="(student.isArchived && controlSheet) || !student.isArchived">
         <mat-expansion-panel-header>
           <mat-panel-title><h3>{{ 'controlSheet.title'| translate }}</h3></mat-panel-title>
         </mat-expansion-panel-header>

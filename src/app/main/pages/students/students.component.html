@@ -32,7 +32,7 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <fb-student-detail [student]="selectedStudent" [school]="school" [type]="type" (backButtonClick)=backButton()
-            (removeUserButtonClick)=syncStudentList()></fb-student-detail>
+        <fb-student-detail [student]="selectedStudent" [school]="school" (backButtonClick)=backButton()
+            (removeUserButtonClick)=syncStudentList(false)></fb-student-detail>
     </mat-sidenav-content>
 </mat-sidenav-container>
