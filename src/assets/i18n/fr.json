@@ -66,7 +66,7 @@
     "student": {
         "information": "Informations",
         "addStudent": "Ajouter un élève",
-        "removeStudentMessage": "Veux-tu vraiment supprimer $REPLACE_NAME de ta liste?",
+        "archiveStudentMessage": "Veux-tu vraiment archiver $REPLACE_NAME?",
         "amountofflights": "Nb. de vols",
         "lastflight": "Dernier vol",
         "flighthour": "Heures de vol",

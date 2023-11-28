@@ -7,4 +7,5 @@ export class Student {
     public user: User | undefined;
     public statistic: FlightStatistic | undefined;
     public lastFlight: Flight | undefined;
+    public isArchived: boolean | undefined;
 }

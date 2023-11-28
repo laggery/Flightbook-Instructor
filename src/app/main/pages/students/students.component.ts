@@ -30,7 +30,6 @@ export class StudentsComponent implements OnInit, OnDestroy {
 
   students: Student[];
   archivedStudents: Student[];
-  type: string;
 
   constructor(
     private translate: TranslateService,
@@ -43,7 +42,6 @@ export class StudentsComponent implements OnInit, OnDestroy {
     this.studentList = [];
     this.students = [];
     this.archivedStudents = [];
-    this.type = 'actif';
   }
 
   ngOnInit(): void {
@@ -55,14 +53,17 @@ export class StudentsComponent implements OnInit, OnDestroy {
 
     this.school = this.accountService.currentSelectedSchool;
     if (this.school) {
-      this.syncStudentList();
+      this.syncStudentList(false);
     }
     this.accountService.changeSelectedSchool$.pipe(takeUntil(this.unsubscribe$)).subscribe((school: School) => {
       this.school = school;
       this.selectedStudent = undefined;
       this.studentList = [];
-      this.syncStudentList();
-      this.syncArchivedStudentList();
+      if (this.tabGroup?.selectedIndex == 0) {
+        this.syncStudentList(false);
+      } else {
+        this.syncStudentList(true);
+      }
     });
   }
 
@@ -71,20 +72,16 @@ export class StudentsComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  syncStudentList() {
+  syncStudentList(archived: boolean) {
     if (this.school?.id) {
-      this.schoolService.getStudentsBySchoolId(this.school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((students: Student[]) => {
-        this.students = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
-        this.selectedStudent = this.students[0];
-      })
-    }
-  }
-
-  syncArchivedStudentList() {
-    if (this.tabGroup?.selectedIndex == 1 && this.school?.id) {
-      this.schoolService.getArchivedStudentsBySchoolId(this.school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((students: Student[]) => {
-        this.archivedStudents = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
-        this.selectedStudent = this.archivedStudents[0];
+      this.schoolService.getStudentsBySchoolId(this.school.id, archived).pipe(takeUntil(this.unsubscribe$)).subscribe((students: Student[]) => {
+        if (archived) {
+          this.archivedStudents = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
+          this.selectedStudent = this.archivedStudents[0];
+        } else {
+          this.students = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
+          this.selectedStudent = this.students[0];
+        }
       })
     }
   }
@@ -149,11 +146,9 @@ export class StudentsComponent implements OnInit, OnDestroy {
 
   tabChange(event: MatTabChangeEvent) {
     if (event.index == 0) {
-      this.selectedStudent = this.students[0];
-      this.type = 'actif';
+      this.syncStudentList(false);
     } else {
-      this.type = 'archived';
-      this.syncArchivedStudentList();
+      this.syncStudentList(true);
     } 
  } 
 }

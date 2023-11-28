@@ -24,9 +24,6 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
   school: School | undefined;
 
-  @Input()
-  type: string | undefined;
-
   @Output() backButtonClick = new EventEmitter();
 
   @Output() removeUserButtonClick = new EventEmitter();
@@ -66,17 +63,10 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['student'] && changes['student'].currentValue) {
-      if (this.type == 'actif') {
-        this.loadStudentFLights(changes['student'].currentValue.id);
-        this.studentService.getControlSheetByStudentId(changes['student'].currentValue.id).pipe(takeUntil(this.unsubscribe$)).subscribe((controlSheet: ControlSheet) => {
-          this.controlSheet = controlSheet;
-        });
-      } else if (this.school?.id) {
-        this.loadArchivedStudentFLights(changes['student'].currentValue.id);
-        this.studentService.getControlSheetByArchivedStudentId(changes['student'].currentValue.id).pipe(takeUntil(this.unsubscribe$)).subscribe((controlSheet: ControlSheet) => {
-          this.controlSheet = controlSheet;
-        });
-      }
+      this.loadStudentFLights(changes['student'].currentValue.id);
+      this.studentService.getControlSheetByStudentId(changes['student'].currentValue.id).pipe(takeUntil(this.unsubscribe$)).subscribe((controlSheet: ControlSheet) => {
+        this.controlSheet = controlSheet;
+      });
     }
   }
 
@@ -93,25 +83,10 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  loadArchivedStudentFLights(studentId: number, offset: number | undefined = undefined, limit = 20) {
-    if (!offset && this.paginator) {
-      this.paginator.pageIndex = 0;
-    }
-
-    this.studentService.getFlightsByArchivedStudentIdAndSchoolId({ limit, offset }, studentId).pipe(takeUntil(this.unsubscribe$)).subscribe((pagerEntity: PagerEntity<Flight[]>) => {
-      this.flightPagerEntity = pagerEntity;
-      if (pagerEntity.entity) {
-        this.flights = pagerEntity.entity;
-      }
-    });
-  }
-
   handleFlightPage(event: any) {
     let offset = event.pageIndex * event.pageSize;
-    if (this.type == 'actif' && this.student?.id) {
+    if (this.student?.id) {
       this.loadStudentFLights(this.student?.id, offset, event.pageSize);
-    } else if (this.type == 'archived' && this.student?.id && this.school?.id) {
-      this.loadArchivedStudentFLights(this.student?.id, offset, event.pageSize);
     }
   }
 
@@ -128,17 +103,17 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
     this.backButtonClick.emit();
   }
 
-  async removeStudent() {
-    const confirmationMessage = this.translate.instant('student.removeStudentMessage').replace("$REPLACE_NAME", `${this.student?.user?.firstname} ${this.student?.user?.lastname}`);
+  async archiveStudent() {
+    const confirmationMessage = this.translate.instant('student.archiveStudentMessage').replace("$REPLACE_NAME", `${this.student?.user?.firstname} ${this.student?.user?.lastname}`);
     if (!confirm(confirmationMessage)) {
       return;
     }
 
-    if (!this.student?.id || !this.school?.id) {
+    if (!this.student?.id) {
       return;
     }
 
-    await firstValueFrom(this.studentService.removeStudent(this.student?.id, this.school.id));
+    await firstValueFrom(this.studentService.archiveStudent(this.student?.id));
 
     this.removeUserButtonClick.emit("deleted");
   }

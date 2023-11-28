@@ -1,4 +1,4 @@
-<button *ngIf="type == 'actif'" class="add-button" mat-raised-button extended color="primary" (click)="addNote()">
+<button *ngIf="!student?.isArchived" class="add-button" mat-raised-button extended color="primary" (click)="addNote()">
     <mat-icon>add_circle</mat-icon> {{ 'studentNote.addNote'| translate }}
 </button>
 
@@ -31,7 +31,7 @@
     <ng-container *ngFor='let note of notes; let last = last;'>
         <mat-list-item class="noteList">
             <span matListItemTitle>{{ note.date | date:'dd.MM.YYYY' }} {{ note.title }} 
-                <div *ngIf="type == 'actif'" class="icon-list">
+                <div *ngIf="!student?.isArchived" class="icon-list">
                     <mat-icon class="edit-note" (click)="editNote(note)">edit</mat-icon>
                     <mat-icon color="warn" class="remove-note" (click)="removeNote(note)">delete_forever</mat-icon>
                 </div>

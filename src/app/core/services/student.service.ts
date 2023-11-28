@@ -19,11 +19,6 @@ export class StudentService {
     return this.http.get<PagerEntity<Flight[]>>(`${environment.baseUrl}/instructor/students/${id}/flights`, { params });
   }
 
-  getFlightsByArchivedStudentIdAndSchoolId({ limit = undefined, offset = undefined}: { limit?: number, offset?: number} = {}, id: number): Observable<PagerEntity<Flight[]>> {
-    let params: HttpParams = this.createFilterParams(limit, offset);
-    return this.http.get<PagerEntity<Flight[]>>(`${environment.baseUrl}/instructor/students/archived/${id}/flights`, { params });
-  }
-
   getNotesByStudentId({ limit = undefined, offset = undefined}: { limit?: number, offset?: number} = {}, studentId: number): Observable<PagerEntity<Note[]>> {
     let params: HttpParams = this.createFilterParams(limit, offset);
     return this.http.get<PagerEntity<Note[]>>(`${environment.baseUrl}/instructor/students/${studentId}/notes`, { params });
@@ -41,11 +36,6 @@ export class StudentService {
     return this.http.delete(`${environment.baseUrl}/instructor/students/${studentId}/notes/${id}`);
   }
 
-  getNotesByArchivedStudentId({ limit = undefined, offset = undefined}: { limit?: number, offset?: number} = {}, studentId: number): Observable<PagerEntity<Note[]>> {
-    let params: HttpParams = this.createFilterParams(limit, offset);
-    return this.http.get<PagerEntity<Note[]>>(`${environment.baseUrl}/instructor/students/archived/${studentId}/notes`, { params });
-  }
-
   getControlSheetByStudentId(id: number): Observable<ControlSheet> {
     return this.http.get<ControlSheet>(`${environment.baseUrl}/instructor/students/${id}/control-sheet`);
   }
@@ -58,8 +48,8 @@ export class StudentService {
     return this.http.post<ControlSheet>(`${environment.baseUrl}/instructor/students/${id}/control-sheet`, controlSheet);
   }
 
-  removeStudent(id: number, schoolId: number) {
-    return this.http.delete(`${environment.baseUrl}/instructor/schools/${schoolId}/students/${id}`);
+  archiveStudent(id: number) {
+    return this.http.delete(`${environment.baseUrl}/instructor/students/${id}`);
   }
 
   private createFilterParams(limit: Number | undefined, offset: Number | undefined): HttpParams {
