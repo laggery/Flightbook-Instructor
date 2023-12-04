@@ -89,6 +89,12 @@
                 <td class="description" mat-cell *matCellDef="let element"> {{element.description}} </td>
             </ng-container>
 
+            <!-- Alone Column -->
+            <ng-container matColumnDef="alone">
+                <th class="alone" mat-header-cell *matHeaderCellDef>{{ 'student.flight.alone'| translate }}</th>
+                <td class="alone" mat-cell *matCellDef="let element"><mat-slide-toggle [(ngModel)]="element.shvAlone" color="primary" (change)="changeAloneValue(element)"></mat-slide-toggle></td>
+            </ng-container>
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>

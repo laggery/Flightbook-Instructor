@@ -85,7 +85,8 @@
             "time": "Durée",
             "km": "Km",
             "description": "Description",
-            "diff": "Diff."
+            "diff": "Diff.",
+            "alone": "Seul"
         },
         "phone": "Tél",
         "emergencyContact": "No. d'urgence",
@@ -113,6 +114,8 @@
         "nbStartplaces": "Nombre de places de décollages",
         "nbLandingplaces": "Nombre de places d'atterissages",
         "nbflights": "Nombre de vols",
+        "flightsAlone": "Vols seul",
+        "nbflightsAlone": "Nombre de vols seul",
         "flights": "Vols",
         "startplaces": "Places de décollages",
         "landingplaces": "Places d'atterissages",
@@ -212,7 +215,8 @@
         "error": "Une erreur est survenue. Veuillez réessayer plus tard ou envoyer un email a : yannick.lagger@flightbook.ch",
         "403": "Vous n'êtes pas autorisé(e) à effectuer cette requête",
         "noFlight": "Cet élève n’a aucun vol",
-        "pdfDownloaded": "Le PDF a été téléchargé"
+        "pdfDownloaded": "Le PDF a été téléchargé",
+        "aloneFlight": "Le vol a été enregistré"
     },
     "buttons": {
         "login": "Connexion",

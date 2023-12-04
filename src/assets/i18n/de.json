@@ -85,7 +85,8 @@
             "time": "Flugdauer",
             "km": "Km",
             "description": "Beschreibung",
-            "diff": "Diff."
+            "diff": "Diff.",
+            "alone": "Allein"
         },
         "phone": "Tel",
         "emergencyContact": "Notfallkontakt",
@@ -113,6 +114,8 @@
         "nbStartplaces": "Anzahl Startplätze",
         "nbLandingplaces": "Anzahl Landeplätze",
         "nbflights": "Anzahl Flüge",
+        "flightsAlone": "Alleinflüge",
+        "nbflightsAlone": "Anzahl Alleinflüge",
         "flights": "Flüge",
         "startplaces": "Startplätze",
         "landingplaces": "Landeplätze",
@@ -212,7 +215,8 @@
         "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut oder senden Sie eine E-Mail an: yannick.lagger@flightbook.ch",
         "403": "Sie haben keine Berechtigung für diese Abfrage",
         "noFlight": "Dieser Schüler hat keinen Flug",
-        "pdfDownloaded": "Das PDF wurde heruntergeladen"
+        "pdfDownloaded": "Das PDF wurde heruntergeladen",
+        "aloneFlight": "Flug wurde gespeichert"
     },
     "buttons": {
         "login": "Anmelden",

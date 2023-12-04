@@ -33,6 +33,7 @@ export class PdfExportService {
     const generateFromTemp = generateFrom;
 
     let flightList: any = [];
+    let aloneFlights: any = [];
     let startPlaces = new Set();
     let landingPlaces = new Set();
     flights.forEach((flight: Flight) => {
@@ -63,7 +64,51 @@ export class PdfExportService {
         { text: diff, style: 'tableRow' },
         { text: flight.description, style: 'tableRow' }
       ])
+
+      if (flight.shvAlone) {
+        aloneFlights.push([
+          { text: flight.number, style: 'tableRow' },
+          { text: this.datePipe.transform(flight.date, 'dd.MM.yyyy'), style: 'tableRow' },
+          { text: flight.start?.name, style: 'tableRow' },
+          { text: flight.landing?.name, style: 'tableRow' },
+          { text: flight.time, style: 'tableRow' },
+          { text: flight.description, style: 'tableRow' }
+        ])
+      }
     })
+
+    let shvAloneTable: any = {margin: [0, 0, 0, 0], columns: []};
+    if (aloneFlights.length > 0) {
+      shvAloneTable = {
+        margin: [0, 15, 0, 0],
+        columns: [
+          [
+            {
+              text: this.translate.instant('export.flightsAlone'), style: { bold: true }
+            },
+            {
+              style: 'aloneTable',
+              table: {
+                widths: ['auto', 'auto', 'auto', 'auto', 45, '*'],
+                headerRows: 1,
+                body: [
+                  [
+                    { text: this.translate.instant('student.flight.number'), style: 'tableHeader' },
+                    { text: this.translate.instant('student.flight.date'), style: 'tableHeader' },
+                    { text: this.translate.instant('student.flight.start'), style: 'tableHeader' },
+                    { text: this.translate.instant('student.flight.landing'), style: 'tableHeader' },
+                    { text: this.translate.instant('student.flight.time'), style: 'tableHeader' },
+                    { text: this.translate.instant('student.flight.description'), style: 'tableHeader' }
+                  ],
+                  ...aloneFlights
+                ]
+              },
+              layout: 'lightHorizontalLines'
+            },
+          ]
+        ]
+      }
+    }
 
     let startPlacesList: any = [];
     startPlaces.forEach((jsonPlace: any) => {
@@ -161,8 +206,9 @@ export class PdfExportService {
         },
         { text: `${this.translate.instant('export.nbLandingplaces')}: ${landingPlaces.size}` },
         { text: `${this.translate.instant('export.nbflights')}: ${flightList.length}` },
+        { text: `${this.translate.instant('export.nbflightsAlone')}: ${aloneFlights.length}` },
         {
-          margin: [0, 10, 0, 0],
+          margin: [0, 15, 0, 0],
           columns: [
             [
               {
@@ -210,6 +256,7 @@ export class PdfExportService {
             ],
           ]
         },
+        shvAloneTable,
         { text: this.translate.instant('export.flights'), pageOrientation: 'landscape', pageBreak: 'before', style: { bold: true } },
         {
           style: 'flightTable',
@@ -247,6 +294,10 @@ export class PdfExportService {
           fontSize: 10
         },
         placeTable: {
+          margin: [0, 10, 5, 0],
+          fontSize: 10
+        },
+        aloneTable: {
           margin: [0, 10, 5, 0],
           fontSize: 10
         }
