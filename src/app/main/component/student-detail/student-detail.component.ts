@@ -32,7 +32,7 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   flightPagerEntity = new PagerEntity<Flight[]>;
   @ViewChild('paginator') paginator: MatPaginator | undefined;
 
-  displayedColumns: string[] = ['nb', 'date', 'start', 'landing', 'glider', 'time', 'km', 'description'];
+  displayedColumns: string[] = ['nb', 'date', 'start', 'landing', 'glider', 'time', 'km', 'description', 'alone'];
   isMobile = false;
 
   controlSheet: any;
@@ -131,7 +131,18 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
 
-    this.pdfExportService.generatePdf(this.flights, this.student?.user);
+    const flights = await firstValueFrom(this.studentService.getFlightsByStudentId({limit: 2000}, this.student?.id!))
+
+    this.pdfExportService.generatePdf(flights.entity!, this.student?.user);
+  }
+
+  changeAloneValue(flight: Flight) {
+    this.studentService.putFlightByStudentId(this.student?.id!, flight).pipe(takeUntil(this.unsubscribe$)).subscribe((flight: Flight) => {
+      this.snackBar.open(this.translate.instant('message.aloneFlight'), this.translate.instant('buttons.done'), {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+      });
+    });
   }
 
 }

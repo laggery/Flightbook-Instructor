@@ -13,4 +13,5 @@ export class Flight {
     description?: string;
     price?: number;
     timestamp?: Date;
+    shvAlone?: boolean;
 }
