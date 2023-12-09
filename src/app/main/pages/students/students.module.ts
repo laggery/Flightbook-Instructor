@@ -9,6 +9,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ControlSheetComponent } from '../../component/control-sheet/control-sheet.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { StudentNoteComponent } from '../../component/student-note/student-note.component';
+import { StartRatingComponent } from '../../component/start-rating/start-rating.component';
 
 
 
@@ -18,7 +19,8 @@ import { StudentNoteComponent } from '../../component/student-note/student-note.
     StudentDetailComponent,
     EmailDialogComponent,
     ControlSheetComponent,
-    StudentNoteComponent
+    StudentNoteComponent,
+    StartRatingComponent
   ],
   imports: [
     CommonModule,

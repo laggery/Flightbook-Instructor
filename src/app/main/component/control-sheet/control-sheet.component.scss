@@ -5,5 +5,13 @@ ul {
 ul li {
     list-style-type: none;
     float: left;
-    width: 349px;
+    width: 365px;
+}
+
+.definition {
+    margin-left: 20px;
+}
+
+app-start-rating {
+    display: inline-block;
 }

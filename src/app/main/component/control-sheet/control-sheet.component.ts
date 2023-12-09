@@ -18,21 +18,21 @@ export class ControlSheetComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  saveTrainingHill(value: boolean, key: any) {
+  saveTrainingHill(value: number, key: any) {
     if (this.controlSheet && this.controlSheet?.trainingHill) {
       this.controlSheet.trainingHill[key] = value;
       this.saveControlSheetEvent.emit(this.controlSheet);
     }
   }
 
-  saveTheory(value: boolean, key: any) {
+  saveTheory(value: number, key: any) {
     if (this.controlSheet && this.controlSheet?.theory) {
       this.controlSheet.theory[key] = value;
       this.saveControlSheetEvent.emit(this.controlSheet);
     }
   }
 
-  saveAltitudeFlight(value: boolean, key: any) {
+  saveAltitudeFlight(value: number, key: any) {
     if (this.controlSheet && this.controlSheet?.altitudeFlight) {
       this.controlSheet.altitudeFlight[key] = value;
       this.saveControlSheetEvent.emit(this.controlSheet);
