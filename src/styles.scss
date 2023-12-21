@@ -174,9 +174,14 @@ table {
 }
 
 .mat-datepicker-actions {
-  margin-top: -94px;
+  margin-top: -93px;
   margin-bottom: 53px;
-  margin-right: 7%;
+  width: 84%;
+  z-index: 1000;
+}
+
+.ngx-mat-timepicker {
+  z-index: 1001;
 }
 
 .mat-calendar-body-today {

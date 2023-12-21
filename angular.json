@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Flightbook-InstructorApp:build:production"
+              "buildTarget": "Flightbook-InstructorApp:build:production"
             },
             "development": {
-              "browserTarget": "Flightbook-InstructorApp:build:development"
+              "buildTarget": "Flightbook-InstructorApp:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Flightbook-InstructorApp:build"
+            "buildTarget": "Flightbook-InstructorApp:build"
           }
         },
         "test": {
