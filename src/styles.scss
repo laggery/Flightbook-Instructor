@@ -156,3 +156,34 @@ table {
 .mat-mdc-table .mdc-data-table__row {
   height: 48px;
 }
+
+// @Hack for ngx-mat-datetime-picker since angular 16
+.mat-datepicker-content {
+  box-shadow: 0 2px 4px -1px #0003, 0 4px 5px #00000024, 0 1px 10px #0000001f;
+  background-color: #fff;
+  color: #000000de
+}
+
+.mat-calendar-body-selected {
+  background-color: mat.get-color-from-palette($fb-primary, 400);
+  color: #fff;
+}
+
+.mat-calendar-body-cell-content {
+  border: none !important;
+}
+
+.mat-datepicker-actions {
+  margin-top: -93px;
+  margin-bottom: 53px;
+  width: 84%;
+  z-index: 1000;
+}
+
+.ngx-mat-timepicker {
+  z-index: 1001;
+}
+
+.mat-calendar-body-today {
+  border: #00000061 solid 1px !important;
+}
