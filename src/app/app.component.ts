@@ -12,8 +12,15 @@ import * as moment from 'moment';
 export class AppComponent {
 
   constructor(private translate: TranslateService, private devicesSizeService: DeviceSizeService) {
-    this.translate.setDefaultLang('de');
-    this.translate.use(localStorage.getItem('language') || navigator.language.split('-')[0]);
+    const defaultLang = 'de';
+    this.translate.addLangs(['de', 'fr']);
+    this.translate.setDefaultLang(defaultLang);
+    const browserLang = localStorage.getItem('language') || navigator.language.split('-')[0];
+    if (this.translate.getLangs().includes(browserLang)) {
+      this.translate.use(browserLang);
+    } else {
+      this.translate.use(defaultLang);
+    }
     moment.updateLocale('en', {
       week: {
         dow: 1,
