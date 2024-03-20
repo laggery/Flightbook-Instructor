@@ -28,6 +28,7 @@ import { NgxMatDateFormats, NgxMatDatetimePickerModule, NGX_MAT_DATE_FORMATS } f
 import { NgxMatMomentModule, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular-material-components/moment-adapter';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatPaginationIntlService } from '../core/services/mat-pagination-intl.service';
+import { NgxColorsModule } from 'ngx-colors';
 
 export const MOMENT_DATETIME_FORMAT = 'DD.MM.YYYY HH:mm';
 
@@ -91,7 +92,8 @@ export class CustomDateAdapter extends NativeDateAdapter {
     MatPaginatorModule,
     MatSlideToggleModule,
 
-    NgxMatDatetimePickerModule
+    NgxMatDatetimePickerModule,
+    NgxColorsModule
   ],
   exports: [
     HoursFormatPipe,
@@ -122,7 +124,8 @@ export class CustomDateAdapter extends NativeDateAdapter {
     MatSlideToggleModule,
 
     NgxMatDatetimePickerModule,
-    NgxMatMomentModule
+    NgxMatMomentModule,
+    NgxColorsModule
   ],
   providers: [
     // values

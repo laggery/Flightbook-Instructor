@@ -6,7 +6,7 @@
 }
 
 .add-button {
-    margin: 0 auto 15px 0;
+    margin: 20px auto 15px 0;
     display: block;
 }
 
@@ -38,4 +38,26 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
 
 .mat-column-instructor {
     padding-right: 20px;
+}
+
+// Calendar CSS
+#draggable-events .draggable-event-item {
+    cursor: move;
+    margin: 3px 0;
+    color: rgb(255, 255, 255);
+    background-color: rgb(56, 128, 255);
+    border-bottom-color: rgb(56, 128, 255);
+    border-radius: 3px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    padding-left: 3px;
+  }
+
+#draggable-events {
+    width: 200px;
+}  
+
+.fc-h-event {
+    background-color: rgb(56, 128, 255) !important;
+    border: 1px solid rgb(56, 128, 255) !important;
 }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
@@ -18,13 +18,19 @@ import { SubscriptionsComponent } from '../../component/subscriptions/subscripti
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { DatePipe } from '@angular/common';
+import { Calendar, CalendarOptions, EventClickArg } from '@fullcalendar/core';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import { FullCalendarComponent } from '@fullcalendar/angular';
+import interactionPlugin, { Draggable, EventReceiveArg } from '@fullcalendar/interaction';
+import * as moment from 'moment';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Component({
   selector: 'app-appointments',
   templateUrl: './appointments.component.html',
   styleUrls: ['./appointments.component.scss']
 })
-export class AppointmentsComponent implements OnInit, OnDestroy {
+export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   unsubscribe$ = new Subject<void>();
   school: School | undefined;
@@ -37,8 +43,23 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   states = State;
   currentAppointmentFilter: AppointmentFilter;
   @ViewChild('paginator') paginator: MatPaginator | undefined;
+  @ViewChild('calendar') calendarComponent: FullCalendarComponent | undefined;
+  @ViewChild('draggableEvents') draggableEvents: ElementRef | undefined;
+  calendarApi: Calendar | undefined;
+  draggable: any;
 
   datePipe: DatePipe;
+  calendarOptions: CalendarOptions = {
+    height: 'auto',
+    initialView: 'dayGridMonth',
+    plugins: [dayGridPlugin, interactionPlugin],
+    eventClick: (arg) => this.handleCalendarEventClick(arg),
+    events: [],
+    droppable: true,
+    timeZone: 'UTC',
+    eventReceive: this.handleEventReceive.bind(this),
+    datesSet: this.monthNavigation.bind(this)
+  };
 
   constructor(
     private schoolService: SchoolService,
@@ -51,6 +72,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     this.currentAppointmentFilter = this.schoolService.filter;
     this.appointments = [];
     this.datePipe = new DatePipe('en-US');
+    this.calendarOptions.locale = this.translate.currentLang;
+    this.calendarOptions.buttonText = {
+      today: this.translate.instant('fullcalendar.today')
+    };
   }
 
   ngOnInit(): void {
@@ -63,7 +88,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
       this.appointmentTypes = [];
       this.initialLoad();
     });
+  }
 
+  ngAfterViewInit() {
+    this.calendarApi = this.calendarComponent?.getApi();
   }
 
   initialLoad() {
@@ -78,7 +106,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
         this.students = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
       })
 
-      this.schoolService.getAppointmentTypesBySchoolId(this.school.id, {archived: false}).pipe(takeUntil(this.unsubscribe$)).subscribe((appointmentTypes: AppointmentType[]) => {
+      this.schoolService.getAppointmentTypesBySchoolId(this.school.id, { archived: false }).pipe(takeUntil(this.unsubscribe$)).subscribe((appointmentTypes: AppointmentType[]) => {
         this.appointmentTypes = appointmentTypes;
         if (this.displayedColumns.length == 11) {
           this.displayedColumns.splice(-1);
@@ -93,16 +121,31 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
+    this.draggable?.destroy();
   }
 
   loadAppointments(schoolId: number, offset: number | undefined = undefined, limit = this.schoolService.limit) {
     if (!offset && this.paginator) {
       this.paginator.pageIndex = 0;
     }
-    this.schoolService.getAppointmentsBySchoolId({ limit, offset }, schoolId).pipe(takeUntil(this.unsubscribe$)).subscribe((pagerEntity: PagerEntity<Appointment[]>) => {
-      this.pagerEntity = pagerEntity;
-      if (pagerEntity.entity) {
-        this.appointments = pagerEntity.entity;
+    this.schoolService.getAppointmentsBySchoolId({ limit, offset }, schoolId).pipe(takeUntil(this.unsubscribe$)).subscribe({
+      next: (pagerEntity: PagerEntity<Appointment[]>) => {
+        this.pagerEntity = pagerEntity;
+        if (pagerEntity.entity) {
+          this.appointments = pagerEntity.entity;
+          const events: any[] = [];
+          this.appointments.forEach((appointment: Appointment) => {
+            if (appointment.scheduling) {
+              events.push({
+                id: appointment.id?.toString(),
+                title: appointment.type ? appointment.type.name : '-',
+                date: moment(appointment.scheduling).format('YYYY-MM-DD'),
+                color: appointment.type?.color || 'rgb(56, 128, 255)'
+              });
+            }
+          });
+          this.calendarOptions.events = events;
+        }
       }
     })
   }
@@ -114,6 +157,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
   addAppointment() {
     const appointment = new Appointment();
     appointment.state = State.ANNOUNCED;
+    appointment.scheduling = moment().utc().hours(8).minutes(0).seconds(0).millisecond(0).toDate();
     this.handleAppointmentDialog(appointment, "add");
   }
 
@@ -164,13 +208,14 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
     try {
       const pdf = await this.studentListPDFService.generatePdf(students, this.school, appointment);
       pdf.open();
-    } catch(error: any) {}
+    } catch (error: any) {
       const pdf = await this.studentListPDFService.generatePdf(students, this.school, appointment);
       pdf.download(`${this.datePipe.transform(appointment.scheduling, 'yyyy.MM.dd')}-registrations.pdf`);
       this.snackBar.open(this.translate.instant('message.pdfDownloaded'), this.translate.instant('buttons.done'), {
         horizontalPosition: 'center',
         verticalPosition: 'top',
-    });
+      });
+    }
   }
 
   handlePage(event: any) {
@@ -191,4 +236,65 @@ export class AppointmentsComponent implements OnInit, OnDestroy {
       this.loadAppointments(this.school.id);
     }
   }
+
+  tabChanged(tabChangeEvent: MatTabChangeEvent) {
+    if (tabChangeEvent.index === 1) {
+      // Make the element draggable
+      if (this.draggableEvents?.nativeElement) {
+        this.draggable = new Draggable(this.draggableEvents?.nativeElement, {
+          itemSelector: '.draggable-event-item',
+          eventData: function (eventEl) {
+            return {
+              title: eventEl.innerText
+            };
+          }
+        });
+      }
+    } else {
+      if (!this.school?.id) {
+        return;
+      }
+      this.schoolService.filter.from = undefined;
+      this.schoolService.filter.to = undefined;
+      this.schoolService.limit = 10;
+      this.loadAppointments(this.school?.id);
+    }
+  }
+
+  handleCalendarEventClick(arg: EventClickArg) {
+    const selectedAppointment = this.appointments.find((appointment: Appointment) => appointment.id == parseInt(arg.event.id));
+    if (selectedAppointment) {
+      this.editAppointment(selectedAppointment);
+    }
+  }
+
+  handleEventReceive(arg: EventReceiveArg) {
+    if (!arg.event.start || !this.school?.id) {
+      return;
+    }
+
+    const schoolId = this.school.id;
+    const appointment = new Appointment();
+    appointment.scheduling = moment(arg.event.start).utc().hours(8).minutes(0).seconds(0).millisecond(0).toDate();
+    appointment.state = State.ANNOUNCED;
+    appointment.type = this.appointmentTypes.find((appointmentType: AppointmentType) => appointmentType.name == arg.event.title);
+    appointment.meetingPoint = appointment.type?.meetingPoint;
+    appointment.maxPeople = appointment.type?.maxPeople;
+    appointment.instructor = appointment.type?.instructor;
+    this.schoolService.postAppointment(schoolId, appointment).pipe(takeUntil(this.unsubscribe$)).subscribe((appointment: Appointment) => {
+      this.loadAppointments(schoolId);
+    });
+  }
+
+  monthNavigation(arg: any) {
+    if (!this.school?.id) {
+      return;
+    }
+
+    this.schoolService.limit = 400;
+    this.schoolService.filter.from = moment(arg.start).utc().toDate();
+    this.schoolService.filter.to = moment(arg.end).utc().toDate();
+    this.loadAppointments(this.school?.id);
+  }
+
 }

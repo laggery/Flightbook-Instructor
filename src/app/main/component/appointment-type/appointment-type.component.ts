@@ -10,6 +10,7 @@ import { SchoolService } from 'src/app/core/services/school.service';
 import { AppointmentType } from 'src/app/shared/domain/appointment-type-dto';
 import { School } from 'src/app/shared/domain/school';
 import { AppointmentTypeDialogComponent } from '../appointment-type-dialog/appointment-type-dialog.component';
+import { TeamMember } from 'src/app/shared/domain/team-member';
 
 @Component({
   selector: 'fb-appointment-type',
@@ -23,8 +24,9 @@ export class AppointmentTypeComponent implements OnInit, OnDestroy {
   color: ThemePalette = 'primary';
   school?: School;
   appointmentTypes: AppointmentType[];
-  displayedColumns: string[] = ['name', 'archived', 'edit'];
+  displayedColumns: string[] = ['name','color' , 'archived', 'edit'];
   isMobile = false;
+  teamMembers: TeamMember[];
 
   unsubscribe$ = new Subject<void>();
 
@@ -36,6 +38,7 @@ export class AppointmentTypeComponent implements OnInit, OnDestroy {
     private deviceSize: DeviceSizeService
   ) {
     this.appointmentTypes = [];
+    this.teamMembers = [];
   }
 
   ngOnInit(): void {
@@ -46,11 +49,13 @@ export class AppointmentTypeComponent implements OnInit, OnDestroy {
     this.school = this.accountService.currentSelectedSchool;
     if (this.school) {
       this.syncAppoiontmentTypeList();
+      this.syncTeamMemberList();
     }
 
     this.accountService.changeSelectedSchool$.pipe(takeUntil(this.unsubscribe$)).subscribe((school: School) => {
       this.school = school;
       this.syncAppoiontmentTypeList();
+      this.syncTeamMemberList();
     });
   }
 
@@ -67,6 +72,14 @@ export class AppointmentTypeComponent implements OnInit, OnDestroy {
     }
   }
 
+  syncTeamMemberList() {
+    if (this.school?.id) {
+      this.schoolService.getTeamMembers(this.school.id).pipe(takeUntil(this.unsubscribe$)).subscribe((teamMembers: TeamMember[]) => {
+        this.teamMembers = teamMembers.sort(((member1, member2) => (member1?.user?.firstname && member2?.user?.firstname && member1?.user?.firstname > member2?.user?.firstname ? 1 : -1)));
+      })
+    }
+  }
+
   openAppointmentTypeForm(type?: AppointmentType) {
     let isNew = false;
     if (!type) {
@@ -77,7 +90,8 @@ export class AppointmentTypeComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(AppointmentTypeDialogComponent, {
       data: {
         title: this.translate.instant('appointmentType.addType'),
-        type: type
+        type: type,
+        teamMembers: this.teamMembers,
       },
       width: "500px"
     });
@@ -115,6 +129,11 @@ export class AppointmentTypeComponent implements OnInit, OnDestroy {
 
   async change(event: MatSlideToggleChange, type: AppointmentType) {
     type.archived = event.checked;
+    this.updateAppointmentType(type);
+  }
+
+  async changeColor(color: string, type: AppointmentType) {
+    type.color = color;
     this.updateAppointmentType(type);
   }
 

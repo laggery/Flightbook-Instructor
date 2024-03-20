@@ -232,7 +232,8 @@
     },
     "appointment": {
         "appointment": "Rendez-vous",
-        "title": "Calendrier",
+        "calendar": "Calendrier",
+        "list": "Liste",
         "new": "Nouveau rendez-vous",
         "dateTime": "Date et heure",
         "meetingPoint": "Point de rencontre",
@@ -256,6 +257,9 @@
         "noSubscription": "Il n'y a actuellement pas d'inscriptions",
         "type": "Type"
     },
+    "fullcalendar": {
+        "today": "Aujourd'hui"
+    },
     "team": {
         "title": "Équipe",
         "addMember": "Ajouter un membre",
@@ -266,7 +270,11 @@
         "addType": "Ajouter",
         "name": "Nom",
         "archive": "Archiver",
-        "edit": "Modifier"
+        "edit": "Modifier",
+        "color": "Couleur",
+        "invalidColor": "Veuillez saisir une couleur valide",
+        "default": "Valeur par défaut",
+        "time": "Heure"
     },
     "paginator": {
         "itemPerPage": "Par page:",

@@ -7,6 +7,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { AppointmentsRoutingModule } from './appointments-routing.module';
 import { AppointmentFormDialogComponent } from '../../component/appointment-form-dialog/appointment-form-dialog.component';
 import { SubscriptionsComponent } from '../../component/subscriptions/subscriptions.component';
+import { FullCalendarModule } from '@fullcalendar/angular';
 
 
 
@@ -22,7 +23,8 @@ import { SubscriptionsComponent } from '../../component/subscriptions/subscripti
     TranslateModule.forChild(),
     SharedModule,
     AppointmentsRoutingModule,
-    FormsModule
+    FormsModule,
+    FullCalendarModule
   ]
 })
 export class AppointmentsModule { }

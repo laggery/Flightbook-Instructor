@@ -103,7 +103,7 @@ export class StudentListPDFService {
         appointment.scheduling =  new Date(appointment.scheduling);
       }
       stringBuilder.push(`${this.translate.instant('studentList.date')}: ${this.datePipe.transform(appointment.scheduling, 'dd.MM.yyyy')}     `);
-      stringBuilder.push(`${this.translate.instant('studentList.place')}: ${appointment.meetingPoint}     `);
+      stringBuilder.push(`${this.translate.instant('studentList.place')}: ${appointment.meetingPoint || " - "}     `);
       stringBuilder.push(`${this.translate.instant('studentList.topic')}: ......................................`);
       if (appointment.takeOffCoordinator) {
         stringBuilder.push(`${this.translate.instant('studentList.takeOffCoordinator')}: ${appointment.takeOffCoordinator?.firstname} ${appointment.takeOffCoordinator?.firstname}    `);

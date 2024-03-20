@@ -2,7 +2,7 @@ import { AfterViewChecked, AfterViewInit, ChangeDetectorRef, Component, ElementR
 import { FormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MatSelect } from '@angular/material/select';
+import { MatSelect, MatSelectChange } from '@angular/material/select';
 import { Appointment } from 'src/app/shared/domain/appointment';
 import { AppointmentType } from 'src/app/shared/domain/appointment-type-dto';
 import { State } from 'src/app/shared/domain/state';
@@ -11,6 +11,7 @@ import { Subscription } from 'src/app/shared/domain/subscription';
 import { User } from 'src/app/shared/domain/user';
 import { AppointmentsComponent } from '../../pages/appointments/appointments.component';
 import { GuestSubscription } from 'src/app/shared/domain/guest-subscription';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-appointment-form-dialog',
@@ -39,7 +40,6 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
   public stepMinute = 1;
   public stepSecond = 1;
   public color: ThemePalette = 'primary';
-  public defaultTime = [8, 0, 0] 
 
   constructor(
     private fb: UntypedFormBuilder,
@@ -71,9 +71,9 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
       state: [this.appointment.state, Validators.required],
       type: [this.appointment.type?.id, Validators.nullValidator],
       date: [this.appointment.scheduling, Validators.required],
-      meetingPoint: [this.appointment.meetingPoint, Validators.required],
+      meetingPoint: [this.appointment.meetingPoint, Validators.nullValidator],
       maxPeople: [this.appointment.maxPeople, Validators.nullValidator],
-      instructor: [this.appointment.instructor?.email, Validators.required],
+      instructor: [this.appointment.instructor?.email, Validators.nullValidator],
       takeOffCoordinator: [this.appointment.takeOffCoordinator?.email, Validators.nullValidator],
       takeOffCoordinatorText: [this.appointment.takeOffCoordinatorText, Validators.nullValidator],
       description: [this.appointment.description, Validators.nullValidator],
@@ -208,6 +208,27 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
 
   removeGuestSubscription(index: number) {
     this.guestSubscriptions.removeAt(index);
+  }
+
+  changeType(event: MatSelectChange) {
+    if (!event.value) {
+      return;
+    }
+
+    const type = this.appointmentTypes.find((appointmentType: AppointmentType) => appointmentType.id == event.value);
+    this.form.get("meetingPoint")?.setValue(type?.meetingPoint);
+    this.form.get("maxPeople")?.setValue(type?.maxPeople);
+    this.form.get("instructor")?.setValue(type?.instructor?.email);
+    const date = moment(this.form.get("date")?.value);
+    if (type?.time) {
+      const time = moment(type.time, 'HH:mm');
+      date.utc().set({
+        hour:   time.get('hour'),
+        minute: time.get('minute'),
+        second: time.get('second')
+    });
+      this.form.get("date")?.setValue(date.toDate());
+    }
   }
 
 }

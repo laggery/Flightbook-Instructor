@@ -232,7 +232,8 @@
     },
     "appointment": {
         "appointment": "Termin",
-        "title": "Kalender",
+        "calendar": "Kalender",
+        "list": "Liste",
         "new": "Neuer Termin",
         "dateTime": "Datum und Zeit",
         "meetingPoint": "Treffpunkt",
@@ -256,6 +257,9 @@
         "noSubscription": "Zurzeit hat es keine Anmeldungen",
         "type": "Terminart"
     },
+    "fullcalendar": {
+        "today": "Heute"
+    },
     "team": {
         "title": "Team",
         "addMember": "Mitglied hinzufügen",
@@ -266,7 +270,11 @@
         "addType": "Hinzufügen",
         "name": "Name",
         "archive": "Archivieren",
-        "edit": "Ändern"
+        "edit": "Ändern",
+        "color": "Farbe",
+        "invalidColor": "Bitte geben Sie eine gültige Farbe ein.",
+        "default": "Standardwerte",
+        "time": "Zeit"
     },
     "paginator": {
         "itemPerPage": "Pro Seite:",
