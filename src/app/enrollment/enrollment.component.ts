@@ -62,8 +62,8 @@ export class EnrollmentComponent implements OnInit, OnDestroy {
     if (loggedIn) {
       this.loading = true;
       const status = await firstValueFrom(this.accountService.getPaymentStatus());
-      if (!status.active && this.enrollment?.school?.id) {
-        const freeAccount = await firstValueFrom(this.enrollmentService.hasFreeEnrollment(this.enrollment?.school?.id));
+      if (!status.active && this.enrollment?.school?.id && this.enrollment?.token) {
+        const freeAccount = await firstValueFrom(this.enrollmentService.hasFreeEnrollment(this.enrollment?.school?.id, this.enrollment?.token));
         if (freeAccount) {
           status.active = true;
         }

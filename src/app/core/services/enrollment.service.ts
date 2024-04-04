@@ -19,7 +19,7 @@ export class EnrollmentService {
     return this.http.post<boolean>(`${environment.baseUrl}/enrollments/${token}`, null);
   }
 
-  hasFreeEnrollment(schoolId: number) {
-    return this.http.get<boolean>(`${environment.baseUrl}/student/schools/${schoolId}/enrollment/free`);
+  hasFreeEnrollment(schoolId: number, token: string) {
+    return this.http.get<boolean>(`${environment.baseUrl}/student/schools/${schoolId}/enrollment/${token}/free`);
   }
 }
