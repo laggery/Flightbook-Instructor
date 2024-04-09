@@ -60,7 +60,7 @@
                     <th mat-header-cell *matHeaderCellDef>{{ 'appointment.instructor' | translate }}</th>
                     <td mat-cell *matCellDef="let element">
                         <ng-container *ngIf="element.instructor">
-                            {{ element.instructor?.firstname }} {{ element.instructor?.firstname }}
+                            {{ element.instructor?.firstname }} {{ element.instructor?.lastname }}
                         </ng-container>
                         <ng-container *ngIf="!element.instructor">
                             -
