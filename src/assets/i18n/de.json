@@ -131,6 +131,7 @@
     },
     "controlSheet": {
         "title": "Kontrollblatt",
+        "userCanEdit": "Darf der Schüler das Kontrollblatt bearbeiten?",
         "trainingHill": {
             "title": "Übungshang",
             "auslegen": "Auslegen",

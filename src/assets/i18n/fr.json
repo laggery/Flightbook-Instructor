@@ -131,6 +131,7 @@
     },
     "controlSheet": {
         "title": "Fiche de contrôle",
+        "userCanEdit": "L'élève a-t-il le droit d'éditer la fiche de contrôle?",
         "trainingHill": {
             "title": "Pente école",
             "auslegen": "Dépliage du parapente",

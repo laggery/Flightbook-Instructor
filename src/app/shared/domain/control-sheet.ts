@@ -5,6 +5,7 @@ import { User } from "./user";
 
 export class ControlSheet {
   public id: number | undefined;
+  public userCanEdit: boolean | undefined;
   public user: User | undefined;
   public trainingHill: TrainingHill | undefined;
   public theory: Theory | undefined;

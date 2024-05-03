@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ControlSheet } from 'src/app/shared/domain/control-sheet';
 
 @Component({
@@ -7,7 +8,6 @@ import { ControlSheet } from 'src/app/shared/domain/control-sheet';
   styleUrls: ['./control-sheet.component.scss']
 })
 export class ControlSheetComponent implements OnInit {
-
   @Input()
   controlSheet: ControlSheet | undefined;
 
@@ -44,4 +44,8 @@ export class ControlSheetComponent implements OnInit {
     this.saveControlSheetEvent.emit(this.controlSheet);
   }
 
+  canEditChange(event: MatSlideToggleChange) {
+    this.controlSheet!.userCanEdit = event.checked;
+    this.saveControlSheetEvent.emit(this.controlSheet);
+  }
 }
