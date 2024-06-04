@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-start-rating',
@@ -10,7 +10,7 @@ export class StartRatingComponent implements OnInit {
   @Input()
   selectedRating: number | undefined;
 
-  @Output() click = new EventEmitter<number>();
+  @Output() clickRating = new EventEmitter<number>();
 
   stars = [
     {
@@ -34,7 +34,12 @@ export class StartRatingComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.displayStars(this.selectedRating || 0);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['selectedRating']) {
+      this.displayStars(this.selectedRating || 0);
+    }
   }
 
   displayStars(value: number): void {
@@ -56,6 +61,6 @@ export class StartRatingComponent implements OnInit {
     this.displayStars(value);
 
     this.selectedRating = value;
-    this.click.emit(this.selectedRating);
+    this.clickRating.emit(this.selectedRating);
   }
 }

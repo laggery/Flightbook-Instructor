@@ -1,4 +1,5 @@
 import { AltitudeFlight } from "./altitude-flight";
+import { Level } from "./level";
 import { Theory } from "./theory";
 import { TrainingHill } from "./training-hill";
 import { User } from "./user";
@@ -10,4 +11,5 @@ export class ControlSheet {
   public trainingHill: TrainingHill | undefined;
   public theory: Theory | undefined;
   public altitudeFlight: AltitudeFlight | undefined;
+  public level: Level | undefined;
 }

@@ -86,7 +86,8 @@
             "km": "Km",
             "description": "Beschreibung",
             "diff": "Diff.",
-            "alone": "Allein"
+            "alone": "Allein",
+            "maneuver": "Manöver"
         },
         "phone": "Tel",
         "emergencyContact": "Notfallkontakt",
@@ -100,7 +101,8 @@
         "flight": "Flug",
         "takeOffCoordinator": "Startleiter*in",
         "information": "Informationen",
-        "level": "Level"
+        "level": "Level",
+        "comments": "Bemerkungen"
     },
     "studentNote": {
         "date": "Datum",
@@ -193,6 +195,12 @@
             "hanglandung": "Hanglandung",
             "touchAndGo": "Touch and go (fak.)",
             "examProgramme": "Prüfungsprogramme"
+        },
+        "level": {
+            "title": "Level",
+            "start": "Start",
+            "maneuver": "Manöver",
+            "landing": "Landung"
         }
     },
     "formMessage": {

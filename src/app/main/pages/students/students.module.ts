@@ -10,6 +10,7 @@ import { ControlSheetComponent } from '../../component/control-sheet/control-she
 import { TranslateModule } from '@ngx-translate/core';
 import { StudentNoteComponent } from '../../component/student-note/student-note.component';
 import { StartRatingComponent } from '../../component/start-rating/start-rating.component';
+import { LevelComponent } from '../../component/level/level.component';
 
 
 
@@ -19,6 +20,7 @@ import { StartRatingComponent } from '../../component/start-rating/start-rating.
     StudentDetailComponent,
     EmailDialogComponent,
     ControlSheetComponent,
+    LevelComponent,
     StudentNoteComponent,
     StartRatingComponent
   ],

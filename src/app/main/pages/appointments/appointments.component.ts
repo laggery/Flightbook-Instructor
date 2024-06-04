@@ -206,10 +206,10 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       students.splice(appointment.maxPeople)
     }
     try {
-      const pdf = await this.studentListPDFService.generatePdf(students, this.school, appointment);
+      const pdf = await this.studentListPDFService.generatePdf_V2(students, this.school, appointment);
       pdf.open();
     } catch (error: any) {
-      const pdf = await this.studentListPDFService.generatePdf(students, this.school, appointment);
+      const pdf = await this.studentListPDFService.generatePdf_V2(students, this.school, appointment);
       pdf.download(`${this.datePipe.transform(appointment.scheduling, 'yyyy.MM.dd')}-registrations.pdf`);
       this.snackBar.open(this.translate.instant('message.pdfDownloaded'), this.translate.instant('buttons.done'), {
         horizontalPosition: 'center',

@@ -35,7 +35,7 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   displayedColumns: string[] = ['nb', 'date', 'start', 'landing', 'glider', 'time', 'km', 'description', 'alone'];
   isMobile = false;
 
-  controlSheet: any;
+  controlSheet: ControlSheet | undefined;
   @ViewChild('table', { read: ElementRef }) table: ElementRef | undefined;
 
   unsubscribe$ = new Subject<void>();
@@ -90,11 +90,11 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  saveControlSheet(controlSheet: any) {
-    if (!this.student?.id) {
+  saveControlSheet() {
+    if (!this.student?.id || !this.controlSheet) {
       return;
     }
-    this.studentService.postControlSheetByStudentId(this.student?.id, controlSheet).pipe(takeUntil(this.unsubscribe$)).subscribe((controlSheet: ControlSheet) => {
+    this.studentService.postControlSheetByStudentId(this.student?.id, this.controlSheet).pipe(takeUntil(this.unsubscribe$)).subscribe((controlSheet: ControlSheet) => {
       this.controlSheet = controlSheet;
     });
   }

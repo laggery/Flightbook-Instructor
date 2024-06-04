@@ -86,7 +86,8 @@
             "km": "Km",
             "description": "Description",
             "diff": "Diff.",
-            "alone": "Seul"
+            "alone": "Seul",
+            "maneuver": "Manoeuvre"
         },
         "phone": "Tél",
         "emergencyContact": "No. d'urgence",
@@ -100,7 +101,8 @@
         "flight": "vol",
         "takeOffCoordinator": "Aide au décollage",
         "information": "Informations",
-        "level": "Niveau"
+        "level": "Niveau",
+        "comments": "Commentaires"
     },
     "studentNote": {
         "date": "Date",
@@ -193,6 +195,12 @@
             "hanglandung": "Atterrissage à la pente",
             "touchAndGo": "Touch and go (fac.)",
             "examProgramme": "Programme d'examen"
+        },
+        "level": {
+            "title": "Niveau",
+            "start": "Décollage",
+            "maneuver": "Manoeuvre",
+            "landing": "Atterrissage"
         }
     },
     "formMessage": {

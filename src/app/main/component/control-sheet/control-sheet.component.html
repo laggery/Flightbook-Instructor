@@ -4,7 +4,7 @@
     <ul>
         <ng-container *ngFor="let item of controlSheet?.trainingHill | keyvalue">
             <li *ngIf="item.key != 'id'">
-                <app-start-rating [selectedRating]="item.value" (click)="saveTrainingHill($event, item.key)"></app-start-rating><span class="definition">{{ ('controlSheet.trainingHill.' + item.key) | translate }}</span>
+                <app-start-rating [selectedRating]="item.value" (clickRating)="saveTrainingHill($event, item.key)"></app-start-rating><span class="definition">{{ ('controlSheet.trainingHill.' + item.key) | translate }}</span>
             </li>
         </ng-container>
     </ul>
@@ -13,7 +13,7 @@
     <ul>
         <ng-container *ngFor="let item of controlSheet?.theory | keyvalue">
             <li *ngIf="item.key != 'id'">
-                <app-start-rating [selectedRating]="item.value" (click)="saveTheory($event, item.key)"></app-start-rating><span class="definition">{{ ('controlSheet.theory.' + item.key) | translate }}</span>
+                <app-start-rating [selectedRating]="item.value" (clickRating)="saveTheory($event, item.key)"></app-start-rating><span class="definition">{{ ('controlSheet.theory.' + item.key) | translate }}</span>
             </li>
         </ng-container>
     </ul>
@@ -22,7 +22,7 @@
     <ul>
         <ng-container *ngFor="let item of controlSheet?.altitudeFlight | keyvalue">
             <li *ngIf="item.key != 'id'">
-                <app-start-rating [selectedRating]="item.value" (click)="saveAltitudeFlight($event, item.key)"></app-start-rating><span class="definition">{{ ('controlSheet.altitudeFlight.' + item.key) | translate }}</span>
+                <app-start-rating [selectedRating]="item.value" (clickRating)="saveAltitudeFlight($event, item.key)"></app-start-rating><span class="definition">{{ ('controlSheet.altitudeFlight.' + item.key) | translate }}</span>
             </li>
         </ng-container>
     </ul>
