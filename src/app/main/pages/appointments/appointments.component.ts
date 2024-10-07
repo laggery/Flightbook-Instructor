@@ -24,6 +24,7 @@ import { FullCalendarComponent } from '@fullcalendar/angular';
 import interactionPlugin, { Draggable, EventReceiveArg } from '@fullcalendar/interaction';
 import * as moment from 'moment';
 import { MatTabChangeEvent } from '@angular/material/tabs';
+import { Subscription } from 'src/app/shared/domain/subscription';
 
 @Component({
   selector: 'app-appointments',
@@ -38,7 +39,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   appointmentTypes: AppointmentType[] = [];
   teamMembers: TeamMember[] = [];
   students: Student[] = [];
-  displayedColumns: string[] = ['edit', 'subscription', 'list', 'scheduling', 'meetingPoint', 'instructor', 'takeOffCoordinator', 'countSubscription', 'countWaitinglist', 'state'];
+  displayedColumns: string[] = ['edit', 'subscription', 'list', 'scheduling', 'meetingPoint', 'instructor', 'takeOffCoordinator', 'countSubscription', 'countGuestSubscription', 'countWaitinglist', 'state'];
   pagerEntity = new PagerEntity<Appointment[]>;
   states = State;
   currentAppointmentFilter: AppointmentFilter;
@@ -202,9 +203,12 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     }
 
     let students = await firstValueFrom(this.schoolService.getSubscriptionStudentDetail(this.school.id, appointment.id));
-    if (appointment.maxPeople) {
-      students.splice(appointment.maxPeople)
-    }
+    appointment.subscriptions.forEach((subscription: Subscription) => {
+      const studentIndex = students.findIndex((student: Student) => student.id == subscription.student?.id && subscription.waitingList);
+      if (studentIndex !== -1) {
+        students.splice(studentIndex, 1);
+      }
+    });
     try {
       const pdf = await this.studentListPDFService.generatePdf_V2(students, this.school, appointment);
       pdf.open();

@@ -19,4 +19,7 @@ export class Appointment {
     takeOffCoordinatorText: string | undefined;
     subscriptions: Subscription[] = [];
     guestSubscriptions: GuestSubscription[] = [];
+    countSubscription: number | undefined;
+    countGuestSubscription: number | undefined;
+    countWaitingList: number | undefined;
 }

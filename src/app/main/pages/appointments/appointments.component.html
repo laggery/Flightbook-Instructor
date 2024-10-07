@@ -83,16 +83,20 @@
                 <!-- Registrations Column -->
                 <ng-container matColumnDef="countSubscription">
                     <th mat-header-cell *matHeaderCellDef>{{ 'appointment.registrations' | translate }}</th>
-                    <td mat-cell *matCellDef="let element"> {{ (element.maxPeople && element.subscriptions.length >
-                        element.maxPeople) ? element.maxPeople : element.subscriptions.length}}<span
+                    <td mat-cell *matCellDef="let element"> {{ element.countSubscription }}<span
                             *ngIf="element.maxPeople">/{{ element.maxPeople }}</span></td>
+                </ng-container>
+
+                <!-- Guest Column -->
+                <ng-container matColumnDef="countGuestSubscription">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'appointment.guestRegistrations' | translate }}</th>
+                    <td mat-cell *matCellDef="let element"> {{ (element.countGuestSubscription > 0) ? element.countGuestSubscription : "-"}}</td>
                 </ng-container>
 
                 <!-- Waitinglist Column -->
                 <ng-container matColumnDef="countWaitinglist">
                     <th mat-header-cell *matHeaderCellDef>{{ 'appointment.waitingList' | translate }}</th>
-                    <td mat-cell *matCellDef="let element"> {{ (element.maxPeople && element.subscriptions.length >
-                        element.maxPeople) ? element.subscriptions.length - element.maxPeople : "-"}}</td>
+                    <td mat-cell *matCellDef="let element"> {{ (element.countWaitingList > 0) ? element.countWaitingList : "-"}}</td>
                 </ng-container>
 
                 <!-- State Column -->

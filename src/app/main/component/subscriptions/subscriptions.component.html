@@ -1,17 +1,17 @@
 <p class="no-subscriptions" *ngIf="appointment?.subscriptions?.length == 0 && appointment?.guestSubscriptions?.length == 0; else elseBlock">{{ 'appointment.noSubscription' | translate }}</p>
 <ng-template #elseBlock>
     <mat-dialog-content>
-        <h1 mat-dialog-title><span *ngIf="appointment.maxPeople">{{ subscribed.length }}/{{ appointment.maxPeople }} </span>{{ 'appointment.registrations' | translate }}</h1>
+        <h1 mat-dialog-title><span *ngIf="appointment.maxPeople">{{ appointment.countSubscription }}/{{ appointment.maxPeople }} </span>{{ 'appointment.registrations' | translate }}</h1>
         <p class="item-value subscriptions">
             <span class="subscription-item" *ngFor="let subscription of subscribed">
-                {{ subscription.user?.firstname }} {{ subscription.user?.lastname }}
+                {{ subscription.user?.firstname }} {{ subscription.user?.lastname }} <mat-icon *ngIf="subscription?.student?.isTandem">people</mat-icon>
             </span>
         </p>
         <div *ngIf="waitingList.length > 0">
             <h1 mat-dialog-title class="waiting-list">{{ 'appointment.waitingList' | translate }}</h1>
             <p class="item-value subscriptions">
                 <span class="subscription-item" *ngFor="let subscription of waitingList">
-                    {{ subscription.user?.firstname }} {{ subscription.user?.lastname }}
+                    {{ subscription.user?.firstname }} {{ subscription.user?.lastname }} <mat-icon *ngIf="subscription?.student?.isTandem">people</mat-icon>
                 </span>
             </p>
         </div>

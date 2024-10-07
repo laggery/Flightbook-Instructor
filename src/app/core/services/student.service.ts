@@ -5,6 +5,7 @@ import { ControlSheet } from 'src/app/shared/domain/control-sheet';
 import { Flight } from 'src/app/shared/domain/flight';
 import { Note } from 'src/app/shared/domain/note';
 import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
+import { Student } from 'src/app/shared/domain/student';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -54,6 +55,10 @@ export class StudentService {
 
   archiveStudent(id: number) {
     return this.http.delete(`${environment.baseUrl}/instructor/students/${id}`);
+  }
+
+  tandemStudent(student: Student) {
+    return this.http.put(`${environment.baseUrl}/instructor/students/${student.id}/tandem`, {});
   }
 
   private createFilterParams(limit: Number | undefined, offset: Number | undefined): HttpParams {

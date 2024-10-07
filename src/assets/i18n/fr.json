@@ -92,7 +92,8 @@
         "phone": "Tél",
         "emergencyContact": "No. d'urgence",
         "actif": "Actif",
-        "archived": "Archivé"
+        "archived": "Archivé",
+        "tandem": "Biplace"
     },
     "studentList": {
         "date": "Date",
@@ -248,6 +249,7 @@
         "meetingPoint": "Point de rencontre",
         "maxPeople": "Max participants",
         "registrations": "Inscriptions",
+        "guestRegistrations": "Invités",
         "state": "Statut",
         "instructor": "Instructeur",
         "takeOffCoordinator": "Aide au décollage",

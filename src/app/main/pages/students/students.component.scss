@@ -11,6 +11,16 @@
     display:block;
 }
 
+.student-name {
+    display: flex;
+    align-items: center;
+    display: inline;
+}
+
+.student-name mat-icon {
+    float: right;
+}
+
 mat-list mat-list-item.student-info {
     height: auto;
     padding: 16px;

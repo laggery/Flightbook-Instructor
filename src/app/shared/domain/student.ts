@@ -10,6 +10,7 @@ export class Student {
     public statistic: FlightStatistic | undefined;
     public lastFlight: Flight | undefined;
     public isArchived: boolean | undefined;
+    public isTandem: boolean | undefined;
     public lastNote: Note | undefined;
     public controlSheet: ControlSheet | undefined;
 }

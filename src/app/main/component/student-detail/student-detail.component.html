@@ -4,6 +4,7 @@
     </button>
     <h2>{{ student.user?.firstname }} {{ student.user?.lastname }}
         <div class="icon-list ">
+            <mat-slide-toggle class="tandem" color="primary" (change)="changeStudentIsTandem($event)" [disabled]="student.isArchived" [checked]="student.isTandem" labelPosition="before">{{ 'student.tandem'| translate }}</mat-slide-toggle>
             <mat-icon class="print-flights" (click)="printFlightbook()">print</mat-icon>
             <mat-icon *ngIf="!student.isArchived" color="warn" class="archive-student" (click)="archiveStudent()">archive</mat-icon>
         </div>

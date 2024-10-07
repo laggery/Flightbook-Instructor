@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
+import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
@@ -145,4 +146,10 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
+  async changeStudentIsTandem(event: MatSlideToggleChange) {
+    if (this.student) {
+      this.student.isTandem = event.checked;
+      await firstValueFrom(this.studentService.tandemStudent(this.student));
+    }
+  }
 }

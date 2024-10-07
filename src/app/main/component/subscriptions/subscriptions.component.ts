@@ -20,10 +20,10 @@ export class SubscriptionsComponent implements OnInit {
     this.appointment = data.appointment;
     if (this.appointment.maxPeople) {
       this.appointment.subscriptions.forEach((subscription: Subscription) => {
-        if (this.appointment.maxPeople && this.subscribed.length != this.appointment.maxPeople) {
-          this.subscribed.push(subscription);
-        } else {
+        if (subscription.waitingList) {
           this.waitingList.push(subscription);
+        } else {
+          this.subscribed.push(subscription);
         }
       })
     } else {

@@ -17,5 +17,6 @@ h1::before {
 }
 
 .subscription-item {
-    display: block;
+    display: flex;
+    align-items: center;
 }

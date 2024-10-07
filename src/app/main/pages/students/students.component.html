@@ -11,7 +11,7 @@
                 <mat-tab label="{{ 'student.actif'| translate }}">
                     <mat-list-item class="student-info" *ngFor='let student of students' (click)=studentDetail(student)>
                         <!-- <mat-checkbox (change)=checkboxChange($event,student) (click)=$event.stopPropagation() color="primary"></mat-checkbox> -->
-                        <p class="student-name">{{ student.user?.firstname }} {{ student.user?.lastname }}</p>
+                        <p class="student-name"><span>{{ student.user?.firstname }} {{ student.user?.lastname }}</span><mat-icon>{{student.isTandem ? "people" : "person"}}</mat-icon></p>
                         <p>{{ 'student.lastflight'| translate }}: {{ student.lastFlight?.date | date:'dd.MM.YYYY' }}</p>
                         <p>{{ 'student.amountofflights'| translate }}: {{ student.statistic?.nbFlights }}</p>
                         <p>{{ 'student.flight.glider'| translate }}: {{ student.lastFlight?.glider?.brand }} {{
@@ -20,7 +20,7 @@
                 </mat-tab>
                 <mat-tab label="{{ 'student.archived'| translate }}">
                     <mat-list-item class="student-info" *ngFor='let student of archivedStudents' (click)=studentDetail(student)>
-                        <p class="student-name">{{ student.user?.firstname }} {{ student.user?.lastname }}</p>
+                        <p class="student-name"><span>{{ student.user?.firstname }} {{ student.user?.lastname }}</span><mat-icon>{{student.isTandem ? "people" : "person"}}</mat-icon></p>
                         <p>{{ 'student.lastflight'| translate }}: {{ student.lastFlight?.date | date:'dd.MM.YYYY' }}</p>
                         <p>{{ 'student.amountofflights'| translate }}: {{ student.statistic?.nbFlights }}</p>
                         <p>{{ 'student.flight.glider'| translate }}: {{ student.lastFlight?.glider?.brand }} {{
