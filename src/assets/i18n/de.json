@@ -1,7 +1,7 @@
 {
     "flightbook": "Flugbuch",
     "title": "Instructor App",
-    "menu" : {
+    "menu": {
         "students": "Schüler",
         "appointments": "Termine",
         "team": "Team",
@@ -11,7 +11,7 @@
         "fr": "Französisch",
         "de": "Deutsch",
         "en": "Englisch",
-		"it": "Italienisch"
+        "it": "Italienisch"
     },
     "login": {
         "title": "Log In",
@@ -26,7 +26,7 @@
         "name": "Name",
         "email": "E-Mail",
         "delete": "Löschen",
-        "has": "Hast du bereits ein Flightbook account?"
+        "has": "Hast du bereits einen Flightbook-Account?"
     },
     "school": {
         "school": "Schule",
@@ -50,14 +50,14 @@
         "shareFlightbook": "Flugbuch teilen",
         "accessFlightbook": "möchte Zugriff auf dein Flugbuch haben.",
         "hasAccess": "hat nun Einsicht in dein Flugbuch",
-        "addTeam": "möchte dich als Team Mitglieder haben.",
+        "addTeam": "möchte dich ins Team aufnehmen.",
         "inTeam": "Du bist nun im Team von",
         "acceptQuestion": "Bist du damit einverstanden?",
         "confirmation": "Bestätigung",
-        "wrongToken": "Dieses token gibt es nicht oder ist ungültig",
+        "wrongToken": "Dieses Token gibt es nicht oder ist ungültig",
         "payment": "Zahlung",
         "paymentInformation": "Das Flugbuch kostet pro Jahr 12.- <br>Damit das Flugbuch mit einer Flugschule geteilt werden kann, musst du diese Zahlung begleichen.",
-        "paymentResilation": "Eine Kündigung ist jeweils Ende Jahr möglich, worüber du jeweils 30 Tage zuvor per Mail informiert wirst.",
+        "paymentResilation": "Eine Kündigung ist jeweils per Ende Jahr möglich, worüber du jeweils 30 Tage zuvor per Mail informiert wirst.",
         "paymentButton": "Bezahlen"
     },
     "error": {
@@ -207,10 +207,10 @@
     "formMessage": {
         "emailExist": "Diese E-Mail-Adresse wird bereits verwendet!",
         "schoolExist": "Diese Flugschule gibt es bereits!",
-        "emailAlreadyAdded": "Diese E-Mail Adresse wurde bereits hinzugefügt",
-        "invalidEmail": "Bitte geben Sie eine gültige E-Mail-Adresse ein.",
-        "invalidPassword": "Bitte geben Sie ein gültiges Passwort ein.",
-        "emailpwdnotcorrect": "E-Mail oder Password ist nicht korrekt!",
+        "emailAlreadyAdded": "Diese E-Mail-Adresse wurde bereits hinzugefügt",
+        "invalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein.",
+        "invalidPassword": "Bitte gib ein gültiges Passwort ein.",
+        "emailpwdnotcorrect": "E-Mail-Adresse oder Password ist nicht korrekt!",
         "firstnameRequired": "Vorname ist erforderlich",
         "lastnameRequired": "Nachname ist erforderlich",
         "nameRequired": "Name ist erforderlich",
@@ -218,12 +218,12 @@
         "zipRequired": "PLZ ist erforderlich",
         "cityRequired": "Stadt ist erforderlich",
         "phoneRequired": "Telefon ist erforderlich",
-        "emailRequired": "Email ist erforderlich",
-        "requestSent": "Die anfrage wurde gesendet"
+        "emailRequired": "E-Mail-Adresse ist erforderlich",
+        "requestSent": "Die Anfrage wurde gesendet"
     },
     "message": {
-        "error": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut oder senden Sie eine E-Mail an: yannick.lagger@flightbook.ch",
-        "403": "Sie haben keine Berechtigung für diese Abfrage",
+        "error": "Ein Fehler ist aufgetreten. Bitte versuche es später erneut oder sende eine E-Mail an: yannick.lagger@flightbook.ch",
+        "403": "Du hast keine Berechtigung für diese Abfrage",
         "noFlight": "Dieser Schüler hat keinen Flug",
         "pdfDownloaded": "Das PDF wurde heruntergeladen",
         "aloneFlight": "Flug wurde gespeichert"
@@ -283,7 +283,7 @@
         "archive": "Archivieren",
         "edit": "Ändern",
         "color": "Farbe",
-        "invalidColor": "Bitte geben Sie eine gültige Farbe ein.",
+        "invalidColor": "Bitte gib eine gültige Farbe ein.",
         "default": "Standardwerte",
         "time": "Zeit"
     },
