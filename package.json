@@ -10,8 +10,6 @@
   },
   "private": true,
   "dependencies": {
-    "@ngxmc/datetime-picker": "^19.1.0",
-    "@ngxmc/moment-adapter": "^19.1.0",
     "@angular/animations": "^19.0.6",
     "@angular/cdk": "^18.2.14",
     "@angular/common": "^19.0.6",
