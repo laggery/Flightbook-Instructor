@@ -4,9 +4,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { School } from 'src/app/shared/domain/school';
 
 @Component({
-  selector: 'app-school-register',
-  templateUrl: './school-register.component.html',
-  styleUrls: ['./school-register.component.scss']
+    selector: 'app-school-register',
+    templateUrl: './school-register.component.html',
+    styleUrls: ['./school-register.component.scss'],
+    standalone: false
 })
 export class SchoolRegisterComponent implements OnInit {
 

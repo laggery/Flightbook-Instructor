@@ -16,9 +16,10 @@ import { Subject, takeUntil } from 'rxjs';
 import { MatTabChangeEvent, MatTabGroup } from '@angular/material/tabs';
 
 @Component({
-  selector: 'fb-students',
-  templateUrl: './students.component.html',
-  styleUrls: ['./students.component.scss']
+    selector: 'fb-students',
+    templateUrl: './students.component.html',
+    styleUrls: ['./students.component.scss'],
+    standalone: false
 })
 export class StudentsComponent implements OnInit, OnDestroy {
   school: School | undefined;

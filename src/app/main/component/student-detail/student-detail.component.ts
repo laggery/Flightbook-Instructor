@@ -14,9 +14,10 @@ import { School } from 'src/app/shared/domain/school';
 import { Student } from 'src/app/shared/domain/student';
 
 @Component({
-  selector: 'fb-student-detail',
-  templateUrl: './student-detail.component.html',
-  styleUrls: ['./student-detail.component.scss']
+    selector: 'fb-student-detail',
+    templateUrl: './student-detail.component.html',
+    styleUrls: ['./student-detail.component.scss'],
+    standalone: false
 })
 export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   @Input()

@@ -27,9 +27,10 @@ import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Subscription } from 'src/app/shared/domain/subscription';
 
 @Component({
-  selector: 'app-appointments',
-  templateUrl: './appointments.component.html',
-  styleUrls: ['./appointments.component.scss']
+    selector: 'app-appointments',
+    templateUrl: './appointments.component.html',
+    styleUrls: ['./appointments.component.scss'],
+    standalone: false
 })
 export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
 

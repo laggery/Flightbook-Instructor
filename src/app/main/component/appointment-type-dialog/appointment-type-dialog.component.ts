@@ -6,9 +6,10 @@ import { AppointmentType } from 'src/app/shared/domain/appointment-type-dto';
 import { User } from 'src/app/shared/domain/user';
 
 @Component({
-  selector: 'app-appointment-type-dialog',
-  templateUrl: './appointment-type-dialog.component.html',
-  styleUrls: ['./appointment-type-dialog.component.scss']
+    selector: 'app-appointment-type-dialog',
+    templateUrl: './appointment-type-dialog.component.html',
+    styleUrls: ['./appointment-type-dialog.component.scss'],
+    standalone: false
 })
 export class AppointmentTypeDialogComponent implements OnInit {
 

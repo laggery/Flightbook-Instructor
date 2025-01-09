@@ -14,9 +14,10 @@ import { GuestSubscription } from 'src/app/shared/domain/guest-subscription';
 import * as moment from 'moment';
 
 @Component({
-  selector: 'app-appointment-form-dialog',
-  templateUrl: './appointment-form-dialog.component.html',
-  styleUrls: ['./appointment-form-dialog.component.scss']
+    selector: 'app-appointment-form-dialog',
+    templateUrl: './appointment-form-dialog.component.html',
+    styleUrls: ['./appointment-form-dialog.component.scss'],
+    standalone: false
 })
 export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, AfterViewChecked {
 

@@ -13,9 +13,10 @@ import { AppointmentTypeDialogComponent } from '../appointment-type-dialog/appoi
 import { TeamMember } from 'src/app/shared/domain/team-member';
 
 @Component({
-  selector: 'fb-appointment-type',
-  templateUrl: './appointment-type.component.html',
-  styleUrls: ['./appointment-type.component.scss']
+    selector: 'fb-appointment-type',
+    templateUrl: './appointment-type.component.html',
+    styleUrls: ['./appointment-type.component.scss'],
+    standalone: false
 })
 export class AppointmentTypeComponent implements OnInit, OnDestroy {
 

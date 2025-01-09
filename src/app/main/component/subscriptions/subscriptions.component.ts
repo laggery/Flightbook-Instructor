@@ -4,9 +4,10 @@ import { Appointment } from 'src/app/shared/domain/appointment';
 import { Subscription } from 'src/app/shared/domain/subscription';
 
 @Component({
-  selector: 'app-subscriptions',
-  templateUrl: './subscriptions.component.html',
-  styleUrls: ['./subscriptions.component.scss']
+    selector: 'app-subscriptions',
+    templateUrl: './subscriptions.component.html',
+    styleUrls: ['./subscriptions.component.scss'],
+    standalone: false
 })
 export class SubscriptionsComponent implements OnInit {
 

@@ -4,9 +4,10 @@ import { Subject, takeUntil } from 'rxjs';
 import { DeviceSizeService } from 'src/app/core/services/device-size.service';
 
 @Component({
-  selector: 'app-configuration',
-  templateUrl: './configuration.component.html',
-  styleUrls: ['./configuration.component.scss']
+    selector: 'app-configuration',
+    templateUrl: './configuration.component.html',
+    styleUrls: ['./configuration.component.scss'],
+    standalone: false
 })
 export class ConfigurationComponent implements OnInit, OnDestroy {
 

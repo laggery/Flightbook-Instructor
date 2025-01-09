@@ -3,9 +3,10 @@ import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'fb-email-dialog',
-  templateUrl: './email-dialog.component.html',
-  styleUrls: ['./email-dialog.component.scss']
+    selector: 'fb-email-dialog',
+    templateUrl: './email-dialog.component.html',
+    styleUrls: ['./email-dialog.component.scss'],
+    standalone: false
 })
 export class EmailDialogComponent implements OnInit {
 

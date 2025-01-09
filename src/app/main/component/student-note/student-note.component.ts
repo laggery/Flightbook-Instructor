@@ -8,9 +8,10 @@ import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 import { Student } from 'src/app/shared/domain/student';
 
 @Component({
-  selector: 'fb-student-note',
-  templateUrl: './student-note.component.html',
-  styleUrls: ['./student-note.component.scss']
+    selector: 'fb-student-note',
+    templateUrl: './student-note.component.html',
+    styleUrls: ['./student-note.component.scss'],
+    standalone: false
 })
 export class StudentNoteComponent implements OnDestroy, OnChanges {
   @Input()

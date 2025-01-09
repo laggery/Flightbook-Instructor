@@ -118,7 +118,7 @@
                 [pageSizeOptions]="[10, 20, 50]" (page)="handlePage($event)">
             </mat-paginator>
         </mat-tab>
-        <mat-tab *ngIf="appointmentTypes.length > 0" label="{{ 'appointment.calendar'| translate }} (Beta)">
+        <mat-tab *ngIf="appointmentTypes.length > 0" label="{{ 'appointment.calendar'| translate }}">
             <ng-template matTabContent>
                 <div #draggableEvents id="draggable-events">
                     <div class="draggable-event-item" *ngFor='let type of appointmentTypes'[ngStyle]="{'background-color': type.color, 'border-color': type.color}">{{ type.name }}</div>

@@ -12,9 +12,10 @@ import { User } from 'src/app/shared/domain/user';
 import { EmailDialogComponent } from '../../component/email-dialog/email-dialog.component';
 
 @Component({
-  selector: 'fb-team',
-  templateUrl: './team.component.html',
-  styleUrls: ['./team.component.scss']
+    selector: 'fb-team',
+    templateUrl: './team.component.html',
+    styleUrls: ['./team.component.scss'],
+    standalone: false
 })
 export class TeamComponent implements OnInit, OnDestroy {
   @Output() backButtonClick = new EventEmitter();
