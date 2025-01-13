@@ -11,7 +11,7 @@ import { Subscription } from 'src/app/shared/domain/subscription';
 import { User } from 'src/app/shared/domain/user';
 import { AppointmentsComponent } from '../../pages/appointments/appointments.component';
 import { GuestSubscription } from 'src/app/shared/domain/guest-subscription';
-import * as moment from 'moment';
+import moment from 'moment';
 
 @Component({
     selector: 'app-appointment-form-dialog',
