@@ -4,28 +4,19 @@ import { TranslateService } from '@ngx-translate/core';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { Flight } from 'src/app/shared/domain/flight';
 import { User } from 'src/app/shared/domain/user';
+import * as pdfMake from "pdfmake/build/pdfmake.min";
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PdfExportService {
 
-  pdfMake: any;
-
-  constructor(private datePipe: DatePipe, private translate: TranslateService) { }
-
-  async loadPdfMaker() {
-    if (!this.pdfMake) {
-      const pdfMakeModule = await import('pdfmake/build/pdfmake');
-      const pdfFontsModule = await import('pdfmake/build/vfs_fonts');
-      this.pdfMake = pdfMakeModule;
-      this.pdfMake.vfs = pdfFontsModule.vfs;
-    }
+  constructor(private datePipe: DatePipe, private translate: TranslateService) {
+    (<any>pdfMake).addVirtualFileSystem(pdfFonts);
   }
 
   async generatePdf(flights: Flight[], user: User, generateFrom?: string): Promise<any> {
-    await this.loadPdfMaker();
-
     if (!generateFrom) {
       generateFrom = 'https://flightbook.ch';
     }
@@ -304,6 +295,6 @@ export class PdfExportService {
       }
     };
 
-    return this.pdfMake.createPdf(docDefinition, null, null, this.pdfMake.vfs).open();
+    return pdfMake.createPdf(docDefinition).open();
   }
 }

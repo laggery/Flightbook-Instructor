@@ -8,32 +8,23 @@ import { GuestSubscription } from 'src/app/shared/domain/guest-subscription';
 import { School } from 'src/app/shared/domain/school';
 import { Student } from 'src/app/shared/domain/student';
 import { User } from 'src/app/shared/domain/user';
+import * as pdfMake from "pdfmake/build/pdfmake.min";
+import * as pdfFonts from 'pdfmake/build/vfs_fonts';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentListPDFService {
 
-  pdfMake: any;
   datePipe: DatePipe;
   widthFlight = "100";
 
   constructor(private translate: TranslateService) {
+    (<any>pdfMake).addVirtualFileSystem(pdfFonts);
     this.datePipe = new DatePipe('en-US');
   }
 
-  async loadPdfMaker() {
-    if (!this.pdfMake) {
-      const pdfMakeModule = await import('pdfmake/build/pdfmake');
-      const pdfFontsModule = await import('pdfmake/build/vfs_fonts');
-      this.pdfMake = pdfMakeModule;
-      this.pdfMake.vfs = pdfFontsModule.vfs;
-    }
-  }
-
   async generatePdf(students: Student[], school: School, appointment?: Appointment): Promise<TCreatedPdf> {
-    await this.loadPdfMaker();
-
     appointment?.guestSubscriptions.forEach((guestSubscription: GuestSubscription) => {
       const user = new User();
       user.firstname = guestSubscription.firstname;
@@ -216,12 +207,10 @@ export class StudentListPDFService {
       }
     };
 
-    return this.pdfMake.createPdf(docDefinition, null, null, this.pdfMake.vfs);
+    return pdfMake.createPdf(docDefinition);
   }
 
   async generatePdf_V2(students: Student[], school: School, appointment?: Appointment): Promise<TCreatedPdf> {
-    await this.loadPdfMaker();
-
     appointment?.guestSubscriptions.forEach((guestSubscription: GuestSubscription) => {
       const user = new User();
       user.firstname = guestSubscription.firstname;
@@ -381,6 +370,6 @@ export class StudentListPDFService {
       }
     };
 
-    return this.pdfMake.createPdf(docDefinition, null, null, this.pdfMake.vfs);
+    return pdfMake.createPdf(docDefinition);
   }
 }
