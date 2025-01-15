@@ -11,7 +11,7 @@ RUN npm run build
 ### STAGE 2: Run ###
 FROM nginx:stable-alpine
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /usr/src/app/dist/flightbook-instructor-app /usr/share/nginx/html
+COPY --from=build /usr/src/app/dist/flightbook-instructor-app/browser /usr/share/nginx/html
 
 ## Copy the EntryPoint
 COPY ./entryPoint.sh /
