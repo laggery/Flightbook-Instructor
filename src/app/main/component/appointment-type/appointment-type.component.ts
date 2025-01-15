@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, effect, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
@@ -40,13 +40,13 @@ export class AppointmentTypeComponent implements OnInit, OnDestroy {
   ) {
     this.appointmentTypes = [];
     this.teamMembers = [];
+
+    effect(() => {
+      this.isMobile = this.deviceSize.isMobile();
+    });
   }
 
   ngOnInit(): void {
-    this.deviceSize.isMobile.pipe(takeUntil(this.unsubscribe$)).subscribe((val: boolean) => {
-      this.isMobile = val;
-    });
-
     this.school = this.accountService.currentSelectedSchool;
     if (this.school) {
       this.syncAppoiontmentTypeList();

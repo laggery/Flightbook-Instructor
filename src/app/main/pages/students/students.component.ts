@@ -1,4 +1,4 @@
-import { Component, NgZone, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, effect } from '@angular/core';
 import { MatCheckboxChange } from '@angular/material/checkbox';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AccountService } from 'src/app/core/services/account.service';
@@ -43,15 +43,15 @@ export class StudentsComponent implements OnInit, OnDestroy {
     this.studentList = [];
     this.students = [];
     this.archivedStudents = [];
-  }
 
-  ngOnInit(): void {
-    this.deviceSize.isMobile.pipe(takeUntil(this.unsubscribe$)).subscribe((mobile: boolean) => {
-      if (!mobile) {
+    effect(() => {
+      if (!this.deviceSize.isMobile()) {
         this.sidenav?.open();
       }
     });
+  }
 
+  ngOnInit(): void {
     this.school = this.accountService.currentSelectedSchool;
     if (this.school) {
       this.syncStudentList(false);
@@ -88,7 +88,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
   }
 
   studentDetail(student: Student) {
-    if (this.deviceSize.isMobile.getValue()) {
+    if (this.deviceSize.isMobile()) {
       this.sidenav?.close();
     }
     this.selectedStudent = student;

@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, effect, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -50,13 +50,12 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
     private snackBar: MatSnackBar
   ) {
     this.flights = [];
-  }
-
-  ngOnInit(): void {
-    this.deviceSize.isMobile.pipe(takeUntil(this.unsubscribe$)).subscribe((val: boolean) => {
-      this.isMobile = val;
+    effect(() => {
+      this.isMobile = this.deviceSize.isMobile();
     });
   }
+
+  ngOnInit(): void {}
 
   ngOnDestroy() {
     this.unsubscribe$.next();

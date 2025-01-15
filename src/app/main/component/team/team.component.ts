@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, effect, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
@@ -37,6 +37,9 @@ export class TeamComponent implements OnInit, OnDestroy {
     private deviceSize: DeviceSizeService
   ) {
     this.teamMembers = [];
+    effect(() => {
+      this.isMobile = this.deviceSize.isMobile();
+    });
   }
 
   ngOnInit(): void {
@@ -52,11 +55,7 @@ export class TeamComponent implements OnInit, OnDestroy {
     this.accountService.changeSelectedSchool$.pipe(takeUntil(this.unsubscribe$)).subscribe((school: School) => {
       this.school = school;
       this.syncTeamMemberList();
-    });
-
-    this.deviceSize.isMobile.pipe(takeUntil(this.unsubscribe$)).subscribe((val: boolean) => {
-      this.isMobile = val;
-    });
+    })
   }
 
   ngOnDestroy() {

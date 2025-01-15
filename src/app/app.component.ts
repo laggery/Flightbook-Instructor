@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { DeviceSizeService } from './core/services/device-size.service';
 import * as moment from 'moment';
@@ -27,21 +27,5 @@ export class AppComponent {
         dow: 1,
       },
     })
-  }
-
-  @HostListener('window:load', ['$event']) onLoad(event: any) {
-    if (event.currentTarget.innerWidth <= 768) {
-      this.devicesSizeService.isMobile.next(true);
-    } else {
-      this.devicesSizeService.isMobile.next(false);
-    }
-  }
-  
-  @HostListener('window:resize', ['$event']) onResize(event: any) {
-    if (event.currentTarget.innerWidth <= 768) {
-      this.devicesSizeService.isMobile.next(true);
-    } else {
-      this.devicesSizeService.isMobile.next(false);
-    }
   }
 }
