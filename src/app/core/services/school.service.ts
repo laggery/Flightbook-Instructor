@@ -8,7 +8,7 @@ import { Appointment } from 'src/app/shared/domain/appointment';
 import { Subscription } from 'src/app/shared/domain/subscription';
 import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 import { AppointmentFilter } from 'src/app/shared/domain/appointment-filter';
-import * as moment from 'moment';
+import moment from 'moment';
 import { TeamMember } from 'src/app/shared/domain/team-member';
 import { School } from 'src/app/shared/domain/school';
 import { AppointmentType } from 'src/app/shared/domain/appointment-type-dto';

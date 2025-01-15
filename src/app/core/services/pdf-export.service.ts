@@ -19,7 +19,7 @@ export class PdfExportService {
       const pdfMakeModule = await import('pdfmake/build/pdfmake');
       const pdfFontsModule = await import('pdfmake/build/vfs_fonts');
       this.pdfMake = pdfMakeModule;
-      this.pdfMake.vfs = pdfFontsModule.pdfMake.vfs;
+      this.pdfMake.vfs = pdfFontsModule.vfs;
     }
   }
 

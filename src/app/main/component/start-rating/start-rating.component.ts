@@ -1,9 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 
 @Component({
-  selector: 'app-start-rating',
-  templateUrl: './start-rating.component.html',
-  styleUrls: ['./start-rating.component.scss']
+    selector: 'app-start-rating',
+    templateUrl: './start-rating.component.html',
+    styleUrls: ['./start-rating.component.scss'],
+    standalone: false
 })
 export class StartRatingComponent implements OnInit {
 

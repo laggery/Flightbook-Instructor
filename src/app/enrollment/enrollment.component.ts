@@ -8,9 +8,10 @@ import { Enrollment } from '../shared/domain/enrollment';
 import { EnrollmentType } from '../shared/domain/enrollmentType';
 
 @Component({
-  selector: 'fb-enrollment',
-  templateUrl: './enrollment.component.html',
-  styleUrls: ['./enrollment.component.scss']
+    selector: 'fb-enrollment',
+    templateUrl: './enrollment.component.html',
+    styleUrls: ['./enrollment.component.scss'],
+    standalone: false
 })
 export class EnrollmentComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject<void>();

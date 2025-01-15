@@ -24,8 +24,8 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule, Ma
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { NgxMatDateFormats, NgxMatDatetimePickerModule, NGX_MAT_DATE_FORMATS } from '@angular-material-components/datetime-picker';
-import { NgxMatMomentModule, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular-material-components/moment-adapter';
+import { NgxMatDateFormats, NGX_MAT_DATE_FORMATS, NgxMatDatetimepicker, NgxMatDatepickerInput, NgxMatDatepickerApply, NgxMatDatepickerActions } from '@ngxmc/datetime-picker';
+import { NgxMatMomentModule, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@ngxmc/moment-adapter';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatPaginationIntlService } from '../core/services/mat-pagination-intl.service';
 import { NgxColorsModule } from 'ngx-colors';
@@ -92,7 +92,10 @@ export class CustomDateAdapter extends NativeDateAdapter {
     MatPaginatorModule,
     MatSlideToggleModule,
 
-    NgxMatDatetimePickerModule,
+    NgxMatDatepickerActions,
+    NgxMatDatepickerApply,
+    NgxMatDatepickerInput,
+    NgxMatDatetimepicker,
     NgxColorsModule
   ],
   exports: [
@@ -123,7 +126,10 @@ export class CustomDateAdapter extends NativeDateAdapter {
     MatPaginatorModule,
     MatSlideToggleModule,
 
-    NgxMatDatetimePickerModule,
+    NgxMatDatepickerActions,
+    NgxMatDatepickerApply,
+    NgxMatDatepickerInput,
+    NgxMatDatetimepicker,
     NgxMatMomentModule,
     NgxColorsModule
   ],

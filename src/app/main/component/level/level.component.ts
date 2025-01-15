@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, NgZone, OnInit, Output } from '@angular
 import { Level } from 'src/app/shared/domain/level';
 
 @Component({
-  selector: 'fb-level',
-  templateUrl: './level.component.html',
-  styleUrl: './level.component.scss'
+    selector: 'fb-level',
+    templateUrl: './level.component.html',
+    styleUrl: './level.component.scss',
+    standalone: false
 })
 export class LevelComponent implements OnInit{
   @Input()

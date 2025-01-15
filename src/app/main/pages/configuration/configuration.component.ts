@@ -1,12 +1,13 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, effect, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { DeviceSizeService } from 'src/app/core/services/device-size.service';
 
 @Component({
-  selector: 'app-configuration',
-  templateUrl: './configuration.component.html',
-  styleUrls: ['./configuration.component.scss']
+    selector: 'app-configuration',
+    templateUrl: './configuration.component.html',
+    styleUrls: ['./configuration.component.scss'],
+    standalone: false
 })
 export class ConfigurationComponent implements OnInit, OnDestroy {
 
@@ -16,15 +17,15 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
   constructor(
     private deviceSize: DeviceSizeService
-  ) { }
-
-  ngOnInit(): void {
-    this.deviceSize.isMobile.pipe(takeUntil(this.unsubscribe$)).subscribe((mobile: boolean) => {
-      if (!mobile) {
+  ) {
+    effect(() => {
+      if ((!this.deviceSize.isMobile())) {
         this.sidenav?.open();
       }
     });
   }
+
+  ngOnInit(): void {}
 
   ngOnDestroy() {
     this.unsubscribe$.next();
@@ -32,7 +33,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
   }
 
   openDetail(type: string){
-    if (this.deviceSize.isMobile.getValue()) {
+    if (this.deviceSize.isMobile()) {
       this.sidenav?.close();
     }
     this.type = type;

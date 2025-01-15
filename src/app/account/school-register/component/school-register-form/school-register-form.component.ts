@@ -6,9 +6,10 @@ import { SchoolService } from 'src/app/core/services/school.service';
 import { School } from 'src/app/shared/domain/school';
 
 @Component({
-  selector: 'fb-school-register-form',
-  templateUrl: './school-register-form.component.html',
-  styleUrls: ['./school-register-form.component.scss']
+    selector: 'fb-school-register-form',
+    templateUrl: './school-register-form.component.html',
+    styleUrls: ['./school-register-form.component.scss'],
+    standalone: false
 })
 export class SchoolRegisterFormComponent implements OnInit, OnDestroy {
 

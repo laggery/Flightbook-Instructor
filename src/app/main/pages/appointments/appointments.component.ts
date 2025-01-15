@@ -22,14 +22,15 @@ import { Calendar, CalendarOptions, EventClickArg } from '@fullcalendar/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import { FullCalendarComponent } from '@fullcalendar/angular';
 import interactionPlugin, { Draggable, EventReceiveArg } from '@fullcalendar/interaction';
-import * as moment from 'moment';
+import moment from 'moment';
 import { MatTabChangeEvent } from '@angular/material/tabs';
 import { Subscription } from 'src/app/shared/domain/subscription';
 
 @Component({
-  selector: 'app-appointments',
-  templateUrl: './appointments.component.html',
-  styleUrls: ['./appointments.component.scss']
+    selector: 'app-appointments',
+    templateUrl: './appointments.component.html',
+    styleUrls: ['./appointments.component.scss'],
+    standalone: false
 })
 export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
 

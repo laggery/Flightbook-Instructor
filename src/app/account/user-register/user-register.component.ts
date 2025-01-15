@@ -5,9 +5,10 @@ import { AccountService } from 'src/app/core/services/account.service';
 import { User } from 'src/app/shared/domain/user';
 
 @Component({
-  selector: 'fb-user-register',
-  templateUrl: './user-register.component.html',
-  styleUrls: ['./user-register.component.scss']
+    selector: 'fb-user-register',
+    templateUrl: './user-register.component.html',
+    styleUrls: ['./user-register.component.scss'],
+    standalone: false
 })
 export class UserRegisterComponent implements OnInit, OnDestroy {
   @Input() email: string | undefined;

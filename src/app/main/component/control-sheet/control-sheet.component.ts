@@ -3,9 +3,10 @@ import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { ControlSheet } from 'src/app/shared/domain/control-sheet';
 
 @Component({
-  selector: 'fb-control-sheet',
-  templateUrl: './control-sheet.component.html',
-  styleUrls: ['./control-sheet.component.scss']
+    selector: 'fb-control-sheet',
+    templateUrl: './control-sheet.component.html',
+    styleUrls: ['./control-sheet.component.scss'],
+    standalone: false
 })
 export class ControlSheetComponent implements OnInit {
   @Input()
