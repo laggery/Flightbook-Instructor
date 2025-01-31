@@ -1,4 +1,4 @@
-import { Component, effect, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, Signal } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { TranslateService } from '@ngx-translate/core';
@@ -12,21 +12,24 @@ import { User } from 'src/app/shared/domain/user';
 import { EmailDialogComponent } from '../../component/email-dialog/email-dialog.component';
 
 @Component({
-    selector: 'fb-team',
-    templateUrl: './team.component.html',
-    styleUrls: ['./team.component.scss'],
-    standalone: false
+  selector: 'fb-team',
+  templateUrl: './team.component.html',
+  styleUrls: ['./team.component.scss'],
+  standalone: false
 })
 export class TeamComponent implements OnInit, OnDestroy {
   @Output() backButtonClick = new EventEmitter();
   school?: School;
   teamMembers: TeamMember[];
   currentUser?: User;
-  isMobile = false;
 
   unsubscribe$ = new Subject<void>();
 
   displayedColumns: string[] = ['firstname', 'lastname', 'email', 'remove'];
+
+  get isMobile(): Signal<boolean> {
+    return this.deviceSize.isMobile;
+  }
 
   constructor(
     private translate: TranslateService,
@@ -37,9 +40,6 @@ export class TeamComponent implements OnInit, OnDestroy {
     private deviceSize: DeviceSizeService
   ) {
     this.teamMembers = [];
-    effect(() => {
-      this.isMobile = this.deviceSize.isMobile();
-    });
   }
 
   ngOnInit(): void {
@@ -119,8 +119,8 @@ export class TeamComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const confirmationMessage = this.translate.instant('team.removeMessage').replace("$REPLACE_NAME", `${teamMember.user?.firstname} ${teamMember.user?.lastname}`); 
-    if(!confirm(confirmationMessage)) {
+    const confirmationMessage = this.translate.instant('team.removeMessage').replace("$REPLACE_NAME", `${teamMember.user?.firstname} ${teamMember.user?.lastname}`);
+    if (!confirm(confirmationMessage)) {
       return;
     }
 

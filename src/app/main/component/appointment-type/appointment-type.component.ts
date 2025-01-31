@@ -1,4 +1,4 @@
-import { Component, effect, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, Signal } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
@@ -13,10 +13,10 @@ import { AppointmentTypeDialogComponent } from '../appointment-type-dialog/appoi
 import { TeamMember } from 'src/app/shared/domain/team-member';
 
 @Component({
-    selector: 'fb-appointment-type',
-    templateUrl: './appointment-type.component.html',
-    styleUrls: ['./appointment-type.component.scss'],
-    standalone: false
+  selector: 'fb-appointment-type',
+  templateUrl: './appointment-type.component.html',
+  styleUrls: ['./appointment-type.component.scss'],
+  standalone: false
 })
 export class AppointmentTypeComponent implements OnInit, OnDestroy {
 
@@ -25,9 +25,11 @@ export class AppointmentTypeComponent implements OnInit, OnDestroy {
   color: ThemePalette = 'primary';
   school?: School;
   appointmentTypes: AppointmentType[];
-  displayedColumns: string[] = ['name','color' , 'archived', 'edit'];
-  isMobile = false;
+  displayedColumns: string[] = ['name', 'color', 'archived', 'edit'];
   teamMembers: TeamMember[];
+  get isMobile(): Signal<boolean> {
+    return this.deviceSize.isMobile;
+  }
 
   unsubscribe$ = new Subject<void>();
 
@@ -40,10 +42,6 @@ export class AppointmentTypeComponent implements OnInit, OnDestroy {
   ) {
     this.appointmentTypes = [];
     this.teamMembers = [];
-
-    effect(() => {
-      this.isMobile = this.deviceSize.isMobile();
-    });
   }
 
   ngOnInit(): void {
@@ -104,7 +102,6 @@ export class AppointmentTypeComponent implements OnInit, OnDestroy {
         } else {
           this.updateAppointmentType(response.value);
         }
-        
       }
     });
   }

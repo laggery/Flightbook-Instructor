@@ -1,5 +1,5 @@
 <div class='data' *ngIf='student; else noStudentSelected'>
-    <button class="menu-button" *ngIf="isMobile" mat-mini-fab color="primary" (click)=backButton()>
+    <button class="menu-button" *ngIf="isMobile()" mat-mini-fab color="primary" (click)=backButton()>
         <mat-icon>arrow_back</mat-icon>
     </button>
     <h2>{{ student.user?.firstname }} {{ student.user?.lastname }}

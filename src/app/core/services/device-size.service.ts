@@ -17,10 +17,6 @@ export class DeviceSizeService {
     this.renderer.listen('window', 'resize', (event) => {
       this.checkDeviceSize(event.target.innerWidth);
     });
-
-    this.renderer.listen('window', 'load', (event) => {
-      this.checkDeviceSize(event.target.innerWidth);
-    });
   }
 
   private checkDeviceSize(width: number) {

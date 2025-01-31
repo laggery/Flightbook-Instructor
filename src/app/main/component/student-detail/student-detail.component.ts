@@ -1,4 +1,4 @@
-import { Component, effect, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Signal, SimpleChanges, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -14,10 +14,10 @@ import { School } from 'src/app/shared/domain/school';
 import { Student } from 'src/app/shared/domain/student';
 
 @Component({
-    selector: 'fb-student-detail',
-    templateUrl: './student-detail.component.html',
-    styleUrls: ['./student-detail.component.scss'],
-    standalone: false
+  selector: 'fb-student-detail',
+  templateUrl: './student-detail.component.html',
+  styleUrls: ['./student-detail.component.scss'],
+  standalone: false
 })
 export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   @Input()
@@ -35,12 +35,15 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('paginator') paginator: MatPaginator | undefined;
 
   displayedColumns: string[] = ['nb', 'date', 'start', 'landing', 'glider', 'time', 'km', 'description', 'alone'];
-  isMobile = false;
 
   controlSheet: ControlSheet | undefined;
   @ViewChild('table', { read: ElementRef }) table: ElementRef | undefined;
 
   unsubscribe$ = new Subject<void>();
+
+  get isMobile(): Signal<boolean> {
+    return this.deviceSize.isMobile;
+  }
 
   constructor(
     private studentService: StudentService,
@@ -50,12 +53,9 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
     private snackBar: MatSnackBar
   ) {
     this.flights = [];
-    effect(() => {
-      this.isMobile = this.deviceSize.isMobile();
-    });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   ngOnDestroy() {
     this.unsubscribe$.next();
@@ -132,7 +132,7 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
 
-    const flights = await firstValueFrom(this.studentService.getFlightsByStudentId({limit: 2000}, this.student?.id!))
+    const flights = await firstValueFrom(this.studentService.getFlightsByStudentId({ limit: 2000 }, this.student?.id!))
 
     this.pdfExportService.generatePdf(flights.entity!, this.student?.user);
   }
