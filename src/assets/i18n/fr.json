@@ -290,5 +290,10 @@
     "paginator": {
         "itemPerPage": "Par page:",
         "of": "de"
+    },
+    "noSchool": {
+        "title": "Aucune école liée à ton compte",
+        "message": "Actuellement, tu ne travailles pour aucune école. Tu peux soit créer une école, soit passer à l'application Flightbook.",
+        "flightbookApp": "Flightbook-App"
     }
 }

@@ -20,6 +20,8 @@ const routes: Routes = [
     path: 'enrollments',
     loadChildren: () => import('./enrollment/enrollment.module').then(m => m.EnrollmentModule),
   },
+  { path: 'no-school',
+    loadComponent: () => import('./account/no-school/no-school.component').then(m => m.NoSchoolComponent) },
 ];
 
 @NgModule({

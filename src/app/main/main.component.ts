@@ -25,6 +25,9 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.accountService.getSchoolsByUserId().pipe(takeUntil(this.unsubscribe$)).subscribe((schools: School[]) => {
       this.schools = schools;
+      if (this.schools.length == 0){
+        this.router.navigate(['no-school']);
+      }
       this.selectedSchool = schools[0];
       this.accountService.setCurrentSchool(this.selectedSchool);
     })

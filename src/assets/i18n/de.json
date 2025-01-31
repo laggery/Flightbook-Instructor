@@ -290,5 +290,10 @@
     "paginator": {
         "itemPerPage": "Pro Seite:",
         "of": "von"
+    },
+    "noSchool": {
+        "title": "Keine Flugschule gefunden",
+        "message": "Aktuell arbeitest du für keine Flugshule. Du kannst entwerder eine Flugschule erstellen oder auf die Flightbook Applikation wechseln.",
+        "flightbookApp": "Flightbook-App"
     }
 }
