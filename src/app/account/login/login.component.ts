@@ -5,12 +5,15 @@ import { takeUntil } from 'rxjs/operators';
 import { AccountService } from '../../core/services/account.service';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material/dialog';
+import { EmailDialogComponent } from 'src/app/main/component/email-dialog/email-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
-    selector: 'fb-login',
-    templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss'],
-    standalone: false
+  selector: 'fb-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
+  standalone: false
 })
 export class LoginComponent implements OnInit, OnDestroy {
   @Input() loginPageRedirect: boolean = true;
@@ -28,7 +31,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     private fb: UntypedFormBuilder,
     private router: Router,
     private accountService: AccountService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
     if (!this.email) {
       this.email = '';
@@ -40,7 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.form.setValue({email: this.email, password: ''})
+    this.form.setValue({ email: this.email, password: '' })
     if (this.email) {
       this.form.controls["email"].disable();
     }
@@ -84,5 +89,26 @@ export class LoginComponent implements OnInit, OnDestroy {
   setLanguage(lang: string) {
     localStorage.setItem('language', lang);
     this.translate.use(lang);
+  }
+
+  async forgotPassword() {
+    const dialogRef = this.dialog.open(EmailDialogComponent, {
+      data: {
+        title: this.translate.instant('login.passwordlost')
+      },
+      width: "500px"
+    });
+
+    dialogRef.afterClosed().subscribe(response => {
+      if (response?.event === "send") {
+        this.accountService.resetPassword(response.value).pipe(takeUntil(this.unsubscribe$)).subscribe((resp: any) => {
+          this.snackBar.open(this.translate.instant('formMessage.requestSent'), this.translate.instant('buttons.done'), {
+            duration: 2000,
+            horizontalPosition: 'center',
+            verticalPosition: 'top',
+          });
+        });
+      }
+    });
   }
 }

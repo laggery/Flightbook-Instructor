@@ -16,7 +16,8 @@
     "login": {
         "title": "Log In",
         "email": "E-Mail",
-        "password": "Passwort"
+        "password": "Passwort",
+        "passwordlost": "Passwort vergessen?"
     },
     "account": {
         "title": "Konto",
