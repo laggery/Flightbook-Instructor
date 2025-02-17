@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { AccountService } from '../core/services/account.service';
 import { School } from '../shared/domain/school';
+import { MatDialog } from '@angular/material/dialog';
+import { PasswordComponent } from '../account/password/password.component';
 
 @Component({
     selector: 'app-main',
@@ -18,9 +20,9 @@ export class MainComponent implements OnInit {
 
   constructor(
     private accountService: AccountService,
-    private router: Router
-  ) {
-   }
+    private router: Router,
+    private dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.accountService.getSchoolsByUserId().pipe(takeUntil(this.unsubscribe$)).subscribe((schools: School[]) => {
@@ -31,6 +33,12 @@ export class MainComponent implements OnInit {
       this.selectedSchool = schools[0];
       this.accountService.setCurrentSchool(this.selectedSchool);
     })
+  }
+
+  openPasswordDialog(): void {
+    const dialogRef = this.dialog.open(PasswordComponent, {
+      width: '700px'
+    });
   }
 
   logout() {

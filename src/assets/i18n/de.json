@@ -239,7 +239,8 @@
         "cancel": "Abbrechen",
         "send": "Senden",
         "yes": "Ja",
-        "no": "Nein"
+        "no": "Nein",
+        "change_password": "Passwort ändern"
     },
     "appointment": {
         "appointment": "Termin",
@@ -296,5 +297,23 @@
         "title": "Keine Flugschule gefunden",
         "message": "Aktuell arbeitest du für keine Flugshule. Du kannst entwerder eine Flugschule erstellen oder auf die Flightbook Applikation wechseln.",
         "flightbookApp": "Flightbook-App"
+    },
+    "password": {
+        "oldPassword": "Altes Passwort",
+        "newPassword": "Neues Passwort",
+        "confirmPassword": "Passwort bestätigen",
+        "errors": {
+            "oldPasswordRequired": "Altes Passwort ist erforderlich",
+            "newPasswordRequired": "Neues Passwort ist erforderlich",
+            "newPasswordMinLength": "Das neue Passwort muss mindestens 6 Zeichen lang sein",
+            "confirmPasswordRequired": "Passwort bestätigen ist erforderlich",
+            "passwordsMismatch": "Die Passwörter stimmen nicht überein",
+            "incorrectOldPassword": "Das alte Passwort ist nicht korrekt",
+            "changeFailed": "Fehler beim Ändern des Passworts",
+            "oldPasswordInvalid": "Das alte Passwort ist nicht korrekt"
+        },
+        "success": {
+            "changed": "Passwort wurde erfolgreich geändert"
+        }
     }
 }

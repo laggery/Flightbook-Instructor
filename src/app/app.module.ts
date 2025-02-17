@@ -16,11 +16,13 @@ export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
-@NgModule({ declarations: [
+@NgModule({ 
+    declarations: [
         AppComponent
     ],
     bootstrap: [AppComponent],
-    imports: [BrowserModule,
+    imports: [
+        BrowserModule,
         TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
@@ -35,5 +37,6 @@ export function createTranslateLoader(http: HttpClient) {
         { provide: HTTP_INTERCEPTORS, useClass: HttpAuthInterceptor, multi: true },
         { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true },
         provideHttpClient(withInterceptorsFromDi())
-    ] })
+    ]
+})
 export class AppModule { }
