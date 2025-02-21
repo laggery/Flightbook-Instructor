@@ -41,7 +41,7 @@ export class AccountService {
   }
 
   currentUser(): Observable<any> {
-    return this.http.get<User>(`${environment.baseUrl}/users`);
+    return this.http.get<User>(`${environment.baseUrl}/v2/users`);
   }
 
   updateUser(user: User): Observable<User> {
