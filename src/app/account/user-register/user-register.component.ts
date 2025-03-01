@@ -28,7 +28,8 @@ export class UserRegisterComponent implements OnInit, OnDestroy {
       firstname: ['', Validators.required],
       lastname: ['', Validators.required],
       email: [this.email, Validators.email],
-      password: ['', Validators.required]
+      password: ['', Validators.required],
+      phone: ['', Validators.nullValidator]
     });
   }
 
@@ -40,7 +41,8 @@ export class UserRegisterComponent implements OnInit, OnDestroy {
       firstname: '',
       lastname: '',
       email: this.email,
-      password: ''
+      password: '',
+      phone: ''
     })
 
     if (this.email) {
@@ -56,6 +58,7 @@ export class UserRegisterComponent implements OnInit, OnDestroy {
       user.firstname = this.form.get('firstname')?.value;
       user.lastname = this.form.get('lastname')?.value;
       user.password = this.form.get('password')?.value;
+      user.phone = this.form.get('phone')?.value || null;
 
       const loginData = {
         email: this.form.get('email')?.value,

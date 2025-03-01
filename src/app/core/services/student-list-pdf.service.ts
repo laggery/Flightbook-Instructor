@@ -231,7 +231,8 @@ export class StudentListPDFService {
         {
           stack: [
             { text: `${student.user?.firstname} ${student.user?.lastname}`, bold: true,  fontSize: 10},
-            { text: `${student.lastFlight?.glider?.brand || ''} ${student.lastFlight?.glider?.name || ''}`}
+            { text: `${student.lastFlight?.glider?.brand || ''} ${student.lastFlight?.glider?.name || ''}`},
+            { text: `${student.user?.phone || ''}`}
           ]
         },
         { stack: [

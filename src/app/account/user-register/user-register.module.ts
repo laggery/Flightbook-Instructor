@@ -4,6 +4,7 @@ import { UserRegisterComponent } from './user-register.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { PhoneNumberComponent } from 'src/app/main/component/phone-number/phone-number.component';
 
 
 
@@ -16,7 +17,8 @@ import { TranslateModule } from '@ngx-translate/core';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule.forChild(),
-    SharedModule
+    SharedModule,
+    PhoneNumberComponent
   ],
   exports: [
     UserRegisterComponent

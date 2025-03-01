@@ -23,13 +23,16 @@
                     {{ 'formMessage.lastnameRequired'| translate }}
                 </mat-error>
             </mat-form-field>
+            
+            <app-phone-number formControlName="phone" class="full-width-input"></app-phone-number>
+
             <mat-form-field class="full-width-input">
                 <input matInput type="password" placeholder="{{ 'login.password' | translate }}" formControlName="password" required>
                 <mat-error>
                     {{ 'formMessage.invalidPassword'| translate }}
                 </mat-error>
             </mat-form-field>
-            <button mat-raised-button color="primary">{{ 'buttons.createAccount' | translate }}</button>
+            <button mat-raised-button [disabled]="form.invalid" color="primary">{{ 'buttons.createAccount' | translate }}</button>
         </form>
     </mat-card-content>
 </mat-card>

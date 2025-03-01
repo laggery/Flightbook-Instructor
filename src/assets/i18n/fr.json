@@ -13,6 +13,14 @@
         "en": "Anglais",
         "it": "Italien"
     },
+    "country": {
+        "switzerland": "Suisse",
+        "france": "France",
+        "germany": "Allemagne",
+        "austria": "Autriche",
+        "italy": "Italie",
+        "other": "Autre"
+    },
     "login": {
         "title": "Log In",
         "email": "E-Mail",
@@ -26,6 +34,8 @@
         "lastname": "Nom",
         "name": "Nom",
         "email": "E-Mail",
+        "phone": "Téléphone",
+        "prefix": "Préfixe",
         "delete": "Effacer",
         "has": "As-tu déjà un compte Flightbook?"
     },
@@ -220,7 +230,8 @@
         "cityRequired": "La ville est obligatoire",
         "phoneRequired": "La téléphone est obligatoire",
         "emailRequired": "L'email est obligatoire",
-        "requestSent": "La demande a été envoyée"
+        "requestSent": "La demande a été envoyée",
+        "phoneInvalidFormat": "Telefonnummer muss folgendes Format haben: {{format}}"
     },
     "message": {
         "error": "Une erreur est survenue. Veuillez réessayer plus tard ou envoyer un email a : yannick.lagger@flightbook.ch",
