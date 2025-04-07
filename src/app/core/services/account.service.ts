@@ -33,7 +33,7 @@ export class AccountService {
   }
 
   register(user: User): Observable<any> {
-    return this.http.post<any>(`${environment.baseUrl}/users`, user);
+    return this.http.post<any>(`${environment.baseUrl}/v2/users`, user);
   }
 
   logout(): Observable<any> {
@@ -42,7 +42,7 @@ export class AccountService {
   }
 
   currentUser(): Observable<any> {
-    return this.http.get<User>(`${environment.baseUrl}/v2/users`);
+    return this.http.get<User>(`${environment.baseUrl}/users`);
   }
 
   updateUser(user: User): Observable<User> {
