@@ -110,5 +110,28 @@
             [pageSizeOptions]="[20, 50]" (page)="handleFlightPage($event)">
         </mat-paginator>
     </mat-expansion-panel>
+    <mat-expansion-panel class='card'>
+        <mat-expansion-panel-header>
+          <mat-panel-title><h3>{{ 'emergencyContact.title'| translate }}</h3></mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="emergency-contact-details" *ngIf="emergencyContact">
+          <div>
+            <label>{{ 'emergencyContact.firstname' | translate }}:</label>
+            <span>{{ emergencyContact.firstname || '-' }}</span>
+          </div>
+          <div>
+            <label>{{ 'emergencyContact.lastname' | translate }}:</label>
+            <span>{{ emergencyContact.lastname || '-' }}</span>
+          </div>
+          <div>
+            <label>{{ 'emergencyContact.phone' | translate }}:</label>
+            <span>{{ emergencyContact.phone || '-' }}</span>
+          </div>
+          <div>
+            <label>{{ 'emergencyContact.additionalInformation' | translate }}:</label>
+            <span>{{ emergencyContact.additionalInformation || '-' }}</span>
+          </div>
+        </div>
+    </mat-expansion-panel>
 </div>
 <ng-template #noStudentSelected><p class="no-student-selcted">{{ 'student.noStudentSelected'| translate }}</p></ng-template>

@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ControlSheet } from 'src/app/shared/domain/control-sheet';
+import { EmergencyContact } from 'src/app/shared/domain/emergency-contact';
 import { Flight } from 'src/app/shared/domain/flight';
 import { Note } from 'src/app/shared/domain/note';
 import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
@@ -43,6 +44,10 @@ export class StudentService {
 
   getControlSheetByStudentId(id: number): Observable<ControlSheet> {
     return this.http.get<ControlSheet>(`${environment.baseUrl}/instructor/students/${id}/control-sheet`);
+  }
+
+  getEmergencyContactsByStudentId(id: number): Observable<EmergencyContact[]> {
+    return this.http.get<EmergencyContact[]>(`${environment.baseUrl}/instructor/students/${id}/emergency-contacts`);
   }
 
   getControlSheetByArchivedStudentId(id: number): Observable<ControlSheet> {

@@ -215,6 +215,14 @@
             "landing": "Landung"
         }
     },
+    "emergencyContact": {
+        "title": "Notfallkontakt",
+        "firstname": "Vorname",
+        "lastname": "Nachname",
+        "phone": "Telefon",
+        "email": "E-Mail",
+        "additionalInformation": "Zusatzinformation"
+    },
     "formMessage": {
         "emailExist": "Diese E-Mail-Adresse wird bereits verwendet!",
         "schoolExist": "Diese Flugschule gibt es bereits!",

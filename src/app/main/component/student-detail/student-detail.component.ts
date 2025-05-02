@@ -8,6 +8,7 @@ import { DeviceSizeService } from 'src/app/core/services/device-size.service';
 import { PdfExportService } from 'src/app/core/services/pdf-export.service';
 import { StudentService } from 'src/app/core/services/student.service';
 import { ControlSheet } from 'src/app/shared/domain/control-sheet';
+import { EmergencyContact } from 'src/app/shared/domain/emergency-contact';
 import { Flight } from 'src/app/shared/domain/flight';
 import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 import { School } from 'src/app/shared/domain/school';
@@ -37,6 +38,7 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   displayedColumns: string[] = ['nb', 'date', 'start', 'landing', 'glider', 'time', 'km', 'description', 'alone'];
 
   controlSheet: ControlSheet | undefined;
+  emergencyContact: EmergencyContact = new EmergencyContact();
   @ViewChild('table', { read: ElementRef }) table: ElementRef | undefined;
 
   unsubscribe$ = new Subject<void>();
@@ -67,6 +69,11 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
       this.loadStudentFLights(changes['student'].currentValue.id);
       this.studentService.getControlSheetByStudentId(changes['student'].currentValue.id).pipe(takeUntil(this.unsubscribe$)).subscribe((controlSheet: ControlSheet) => {
         this.controlSheet = controlSheet;
+      });
+      this.studentService.getEmergencyContactsByStudentId(changes['student'].currentValue.id).pipe(takeUntil(this.unsubscribe$)).subscribe((emergencyContacts: EmergencyContact[]) => {
+        if (emergencyContacts?.length > 0) {
+          this.emergencyContact = emergencyContacts[0];
+        }
       });
     }
   }

@@ -232,7 +232,10 @@ export class StudentListPDFService {
           stack: [
             { text: `${student.user?.firstname} ${student.user?.lastname}`, bold: true,  fontSize: 10},
             { text: `${student.lastFlight?.glider?.brand || ''} ${student.lastFlight?.glider?.name || ''}`},
-            { text: `${student.user?.phone || ''}`}
+            { text: `${student.user?.phone || ''}`},
+            { text: `${student.emergencyContacts && student.emergencyContacts.length > 0 ? this.translate.instant('student.emergencyContact') : ''}`, bold: true,  fontSize: 10, margin: [0, 3, 0, 0]},
+            { text: `${student.emergencyContacts && student.emergencyContacts.length > 0 ? (student.emergencyContacts[0].firstname || '-') + ' ' + (student.emergencyContacts[0].lastname || '-') : ''}`},
+            { text: `${student.emergencyContacts && student.emergencyContacts.length > 0 ? (student.emergencyContacts[0].phone || '-') : ''}`},
           ]
         },
         { stack: [

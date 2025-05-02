@@ -215,6 +215,14 @@
             "landing": "Atterrissage"
         }
     },
+    "emergencyContact": {
+        "title": "Contact d'urgence",
+        "firstname": "Prénom",
+        "lastname": "Nom",
+        "phone": "Téléphone",
+        "email": "E-Mail",
+        "additionalInformation": "Information complémentaires"
+    },
     "formMessage": {
         "emailExist": "Cette adresse e-mail est déjà utilisée!",
         "schoolExist": "Cette école existe déjà!",
