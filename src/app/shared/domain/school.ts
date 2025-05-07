@@ -1,3 +1,5 @@
+import { SchoolConfiguration } from "./school-configuration";
+
 export class School {
     id: number | undefined;
     name: string | undefined;
@@ -8,5 +10,5 @@ export class School {
     phone: string | undefined;
     email: string | undefined;
     language: string | undefined;
-    userCanEditControlSheet: boolean | undefined;
+    configuration: SchoolConfiguration | undefined;
 }

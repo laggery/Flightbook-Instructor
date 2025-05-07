@@ -25,6 +25,10 @@ export class StudentService {
     return this.http.put<Flight>(`${environment.baseUrl}/instructor/students/${studentId}/flights/${flight.id}`, flight);
   }
 
+  validateFlightSchoolIdAndStudentId(studentId: number, schoolId: number, flight: Flight): Observable<Flight> {
+    return this.http.put<Flight>(`${environment.baseUrl}/instructor/schools/${schoolId}/students/${studentId}/flights/${flight.id}`, flight);
+  }
+
   getNotesByStudentId({ limit = undefined, offset = undefined}: { limit?: number, offset?: number} = {}, studentId: number): Observable<PagerEntity<Note[]>> {
     let params: HttpParams = this.createFilterParams(limit, offset);
     return this.http.get<PagerEntity<Note[]>>(`${environment.baseUrl}/instructor/students/${studentId}/notes`, { params });

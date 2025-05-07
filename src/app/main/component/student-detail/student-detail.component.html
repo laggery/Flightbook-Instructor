@@ -103,8 +103,15 @@
                 <td class="alone" mat-cell *matCellDef="let element"><mat-slide-toggle [(ngModel)]="element.shvAlone" color="primary" (change)="changeAloneValue(element)"></mat-slide-toggle></td>
             </ng-container>
 
+            <!-- Validation Column -->
+            <ng-container matColumnDef="validation" *ngIf="school?.configuration?.validateFlights">
+                <th class="validation" mat-header-cell *matHeaderCellDef>{{ 'student.flight.validation'| translate }}</th>
+                <td class="validation" mat-cell *matCellDef="let element"><mat-slide-toggle [checked]="element.validation && element.validation.timestamp ? true : false" color="primary" (change)="changeValidationValue(element)"></mat-slide-toggle></td>
+            </ng-container>
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;" 
+                [ngClass]="{'not-validated-row': school?.configuration?.validateFlights && !isFlightValidated(row)}"></tr>
         </table>
         <mat-paginator #paginator [length]="flightPagerEntity.totalItems" [pageSize]="flightPagerEntity.itemsPerPage"
             [pageSizeOptions]="[20, 50]" (page)="handleFlightPage($event)">

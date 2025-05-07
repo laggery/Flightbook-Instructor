@@ -18,7 +18,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { MatChipsModule } from '@angular/material/chips'
+import { MatChipsModule } from '@angular/material/chips';
+import { MatBadgeModule } from '@angular/material/badge';
 import { HoursFormatPipe } from './pipes/hours-format/hours-format.pipe';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule, MatOptionModule, NativeDateAdapter } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
@@ -91,6 +92,7 @@ export class CustomDateAdapter extends NativeDateAdapter {
     MatNativeDateModule,
     MatPaginatorModule,
     MatSlideToggleModule,
+    MatBadgeModule,
 
     NgxMatDatepickerActions,
     NgxMatDatepickerApply,
@@ -125,6 +127,7 @@ export class CustomDateAdapter extends NativeDateAdapter {
     MatNativeDateModule,
     MatPaginatorModule,
     MatSlideToggleModule,
+    MatBadgeModule,
 
     NgxMatDatepickerActions,
     NgxMatDatepickerApply,

@@ -86,6 +86,17 @@ export class StudentsComponent implements OnInit, OnDestroy {
     }
   }
 
+  updateFlightsBadge(event: string) {
+    if (this.selectedStudent?.countNotValidatedFlights == undefined) {
+      return;
+    }
+    if (event == "validated") {
+      this.selectedStudent.countNotValidatedFlights--;
+    } else {
+      this.selectedStudent.countNotValidatedFlights++;
+    }
+  }
+
   studentDetail(student: Student) {
     if (this.deviceSize.isMobile()) {
       this.sidenav?.close();

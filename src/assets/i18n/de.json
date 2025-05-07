@@ -98,7 +98,8 @@
             "description": "Beschreibung",
             "diff": "Diff.",
             "alone": "Allein",
-            "maneuver": "Manöver"
+            "maneuver": "Manöver",
+            "validation": "Validiert"
         },
         "phone": "Tel",
         "emergencyContact": "Notfallkontakt",
@@ -246,7 +247,7 @@
         "403": "Du hast keine Berechtigung für diese Abfrage",
         "noFlight": "Dieser Schüler hat keinen Flug",
         "pdfDownloaded": "Das PDF wurde heruntergeladen",
-        "aloneFlight": "Flug wurde gespeichert"
+        "changeSaved": "Änderung gespeichert"
     },
     "buttons": {
         "login": "Anmelden",

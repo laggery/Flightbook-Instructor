@@ -30,6 +30,7 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   @Output() backButtonClick = new EventEmitter();
 
   @Output() removeUserButtonClick = new EventEmitter();
+  @Output() validateFlightsButtonClick = new EventEmitter();
 
   flights: Flight[];
   flightPagerEntity = new PagerEntity<Flight[]>;
@@ -75,6 +76,17 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
           this.emergencyContact = emergencyContacts[0];
         }
       });
+    }
+
+    // Update displayedColumns when school changes
+    if (changes['school'] && changes['school'].currentValue) {
+      // Reset to base columns first to avoid duplicates
+      this.displayedColumns = ['nb', 'date', 'start', 'landing', 'glider', 'time', 'km', 'description', 'alone'];
+      
+      // Add validation column if needed
+      if (changes['school'].currentValue.configuration?.validateFlights) {
+        this.displayedColumns.push('validation');
+      }
     }
   }
 
@@ -146,11 +158,35 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
 
   changeAloneValue(flight: Flight) {
     this.studentService.putFlightByStudentId(this.student?.id!, flight).pipe(takeUntil(this.unsubscribe$)).subscribe((flight: Flight) => {
-      this.snackBar.open(this.translate.instant('message.aloneFlight'), this.translate.instant('buttons.done'), {
+      this.snackBar.open(this.translate.instant('message.changeSaved'), this.translate.instant('buttons.done'), {
         horizontalPosition: 'center',
         verticalPosition: 'top',
+        duration: 2000
       });
     });
+  }
+
+  changeValidationValue(flight: Flight) {
+    this.studentService.validateFlightSchoolIdAndStudentId(this.student?.id!, this.school?.id!, flight).pipe(takeUntil(this.unsubscribe$)).subscribe((updatedFlight: Flight) => {
+      flight.validation = updatedFlight.validation;
+      this.snackBar.open(this.translate.instant('message.changeSaved'), this.translate.instant('buttons.done'), {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 2000
+      });
+      if (flight.validation?.timestamp) {
+        this.validateFlightsButtonClick.emit("validated");
+      } else {
+        this.validateFlightsButtonClick.emit("unvalidated");
+      }
+    });
+  }
+
+  /**
+   * Checks if a flight is validated
+   */
+  isFlightValidated(flight: Flight): boolean {
+    return !!flight.validation?.timestamp;
   }
 
   async changeStudentIsTandem(event: MatSlideToggleChange) {

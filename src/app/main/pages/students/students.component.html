@@ -11,7 +11,17 @@
                 <mat-tab label="{{ 'student.actif'| translate }}">
                     <mat-list-item class="student-info" *ngFor='let student of students' (click)=studentDetail(student)>
                         <!-- <mat-checkbox (change)=checkboxChange($event,student) (click)=$event.stopPropagation() color="primary"></mat-checkbox> -->
-                        <p class="student-name"><span>{{ student.user?.firstname }} {{ student.user?.lastname }}</span><mat-icon>{{student.isTandem ? "people" : "person"}}</mat-icon></p>
+                        @if(school?.configuration?.validateFlights){
+                            <p class="student-name"><span>{{ student.user?.firstname }} {{ student.user?.lastname }}</span>
+                                @if (student.countNotValidatedFlights && student.countNotValidatedFlights > 0){
+                                    <mat-icon matBadge="{{student.countNotValidatedFlights}}" matBadgeColor="warn" matBadgePosition="above after" matBadgeSize="small" aria-hidden="false">{{student.isTandem ? "people" : "person"}}</mat-icon>
+                                } @else {
+                                    <mat-icon>{{student.isTandem ? "people" : "person"}}</mat-icon>
+                                }
+                            </p>
+                        } @else{
+                            <p class="student-name"><span>{{ student.user?.firstname }} {{ student.user?.lastname }}</span><mat-icon>{{student.isTandem ? "people" : "person"}}</mat-icon></p>
+                        }
                         <p>{{ 'student.lastflight'| translate }}: {{ student.lastFlight?.date | date:'dd.MM.YYYY' }}</p>
                         <p>{{ 'student.amountofflights'| translate }}: {{ student.statistic?.nbFlights }}</p>
                         <p>{{ 'student.flight.glider'| translate }}: {{ student.lastFlight?.glider?.brand }} {{
@@ -33,6 +43,6 @@
 
     <mat-sidenav-content>
         <fb-student-detail [student]="selectedStudent" [school]="school" (backButtonClick)=backButton()
-            (removeUserButtonClick)=syncStudentList(false)></fb-student-detail>
+            (removeUserButtonClick)=syncStudentList(false) (validateFlightsButtonClick)=updateFlightsBadge($event)></fb-student-detail>
     </mat-sidenav-content>
 </mat-sidenav-container>
