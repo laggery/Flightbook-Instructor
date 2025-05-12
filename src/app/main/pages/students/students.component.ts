@@ -92,6 +92,8 @@ export class StudentsComponent implements OnInit, OnDestroy {
     }
     if (event == "validated") {
       this.selectedStudent.countNotValidatedFlights--;
+    } else if (event == "validatedAll") {
+      this.selectedStudent.countNotValidatedFlights = 0;
     } else {
       this.selectedStudent.countNotValidatedFlights++;
     }

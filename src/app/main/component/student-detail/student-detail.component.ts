@@ -10,6 +10,7 @@ import { StudentService } from 'src/app/core/services/student.service';
 import { ControlSheet } from 'src/app/shared/domain/control-sheet';
 import { EmergencyContact } from 'src/app/shared/domain/emergency-contact';
 import { Flight } from 'src/app/shared/domain/flight';
+import { FlightValidationState } from 'src/app/shared/domain/flight-validation-state';
 import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 import { School } from 'src/app/shared/domain/school';
 import { Student } from 'src/app/shared/domain/student';
@@ -37,12 +38,15 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('paginator') paginator: MatPaginator | undefined;
 
   displayedColumns: string[] = ['nb', 'date', 'start', 'landing', 'glider', 'time', 'km', 'description', 'alone'];
-
   controlSheet: ControlSheet | undefined;
   emergencyContact: EmergencyContact = new EmergencyContact();
   @ViewChild('table', { read: ElementRef }) table: ElementRef | undefined;
-
   unsubscribe$ = new Subject<void>();
+
+  // For reject comment modal
+  showRejectCommentBox = false;
+  rejectComment: string = '';
+  flightToReject: Flight | null = null;
 
   get isMobile(): Signal<boolean> {
     return this.deviceSize.isMobile;
@@ -85,7 +89,8 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
       
       // Add validation column if needed
       if (changes['school'].currentValue.configuration?.validateFlights) {
-        this.displayedColumns.push('validation');
+        this.displayedColumns.push('validationState');
+        this.displayedColumns.push('validationButton');
       }
     }
   }
@@ -166,7 +171,37 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  changeValidationValue(flight: Flight) {
+  validateFlight(flight: Flight) {
+    flight.validation = {
+      state: FlightValidationState.VALIDATED
+    }
+    this.changeValidationValue(flight);
+  }
+
+  rejectFlight(flight: Flight) {
+    this.flightToReject = flight;
+    this.rejectComment = '';
+    this.showRejectCommentBox = true;
+  }
+
+  submitRejectComment() {
+    if (this.flightToReject) {
+      this.flightToReject.validation = {
+        state: FlightValidationState.REJECTED,
+        comment: this.rejectComment != '' ? this.rejectComment : undefined
+      };
+      this.changeValidationValue(this.flightToReject);
+    }
+    this.closeRejectCommentBox();
+  }
+
+  closeRejectCommentBox() {
+    this.showRejectCommentBox = false;
+    this.rejectComment = '';
+    this.flightToReject = null;
+  }
+
+  private changeValidationValue(flight: Flight) {
     this.studentService.validateFlightSchoolIdAndStudentId(this.student?.id!, this.school?.id!, flight).pipe(takeUntil(this.unsubscribe$)).subscribe((updatedFlight: Flight) => {
       flight.validation = updatedFlight.validation;
       this.snackBar.open(this.translate.instant('message.changeSaved'), this.translate.instant('buttons.done'), {
@@ -174,11 +209,19 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
         verticalPosition: 'top',
         duration: 2000
       });
-      if (flight.validation?.timestamp) {
-        this.validateFlightsButtonClick.emit("validated");
-      } else {
-        this.validateFlightsButtonClick.emit("unvalidated");
-      }
+      this.validateFlightsButtonClick.emit("validated");
+    });
+  }
+
+  validateAllFlights() {
+    this.studentService.validateAllFlightsBySchoolIdAndStudentId(this.student?.id!, this.school?.id!).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+      this.loadStudentFLights(this.student?.id!);
+      this.snackBar.open(this.translate.instant('message.changeSaved'), this.translate.instant('buttons.done'), {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 2000
+      });
+      this.validateFlightsButtonClick.emit("validatedAll");
     });
   }
 
@@ -186,7 +229,14 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
    * Checks if a flight is validated
    */
   isFlightValidated(flight: Flight): boolean {
-    return !!flight.validation?.timestamp;
+    if (!flight.validation) {
+      return false;
+    }
+    if (flight.validation.state === FlightValidationState.REJECTED ||
+      flight.validation.state === FlightValidationState.VALIDATED) {
+      return true;
+    }
+    return false;
   }
 
   async changeStudentIsTandem(event: MatSlideToggleChange) {

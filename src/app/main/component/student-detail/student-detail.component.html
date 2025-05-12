@@ -47,6 +47,9 @@
     <mat-expansion-panel class='card'>
         <mat-expansion-panel-header>
           <mat-panel-title><h3>{{ 'student.flights'| translate }}</h3></mat-panel-title>
+          <mat-panel-description *ngIf="school?.configuration?.validateFlights">
+            <button [matTooltip]="'student.flight.validateAll'| translate" class="validate-all-button" mat-icon-button (click)="validateAllFlights(); $event.stopPropagation()"><mat-icon>check</mat-icon></button>
+          </mat-panel-description>
         </mat-expansion-panel-header>
         <table #table mat-table [dataSource]="flights">
             <!-- Number Column -->
@@ -104,9 +107,38 @@
             </ng-container>
 
             <!-- Validation Column -->
-            <ng-container matColumnDef="validation" *ngIf="school?.configuration?.validateFlights">
-                <th class="validation" mat-header-cell *matHeaderCellDef>{{ 'student.flight.validation'| translate }}</th>
-                <td class="validation" mat-cell *matCellDef="let element"><mat-slide-toggle [checked]="element.validation && element.validation.timestamp ? true : false" color="primary" (change)="changeValidationValue(element)"></mat-slide-toggle></td>
+            <ng-container matColumnDef="validationState" *ngIf="school?.configuration?.validateFlights">
+                <th class="validation-state" mat-header-cell *matHeaderCellDef>{{ 'student.flight.validationState.label'| translate }}</th>
+                <td class="validation-state" mat-cell *matCellDef="let element">
+                  <span [matTooltip]="element.validation?.comment ? element.validation.comment : ''"
+                        [matTooltipDisabled]="!element.validation?.comment">
+                    @if (!element.validation || !element.validation.state || element.validation.state === '') {
+                        {{ 'student.flight.validationState.PENDING'| translate }}
+                    } @else {
+                        {{ 'student.flight.validationState.' + element.validation.state| translate }}
+                    }
+                  </span>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="validationButton" *ngIf="school?.configuration?.validateFlights">
+                <th class="validation-actions" mat-header-cell *matHeaderCellDef>{{ 'student.flight.validationActions'| translate }}</th>
+                <td class="validation-actions" mat-cell *matCellDef="let element">
+                    <ng-container *ngIf="!(showRejectCommentBox && flightToReject === element)">
+                      <button mat-icon-button (click)="validateFlight(element)"><mat-icon>check</mat-icon></button>
+                      <button mat-icon-button (click)="rejectFlight(element)"><mat-icon>close</mat-icon></button>
+                    </ng-container>
+                    <!-- Reject Comment Modal: only show if flightToReject is this element -->
+                    <div class="modal-overlay" *ngIf="showRejectCommentBox && flightToReject === element">
+                      <div class="modal-box">
+                        <textarea [(ngModel)]="rejectComment" rows="4" placeholder="{{ 'student.flight.validationState.comment' | translate }}"></textarea>
+                        <div class="modal-actions">
+                          <button mat-raised-button color="primary" (click)="submitRejectComment()">{{ 'buttons.done' | translate }}</button>
+                          <button mat-button (click)="closeRejectCommentBox()">{{ 'buttons.cancel' | translate }}</button>
+                        </div>
+                      </div>
+                    </div>
+                </td>
             </ng-container>
 
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -117,6 +149,7 @@
             [pageSizeOptions]="[20, 50]" (page)="handleFlightPage($event)">
         </mat-paginator>
     </mat-expansion-panel>
+
     <mat-expansion-panel class='card'>
         <mat-expansion-panel-header>
           <mat-panel-title><h3>{{ 'emergencyContact.title'| translate }}</h3></mat-panel-title>

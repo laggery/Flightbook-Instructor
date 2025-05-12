@@ -99,7 +99,15 @@
             "diff": "Diff.",
             "alone": "Allein",
             "maneuver": "Manöver",
-            "validation": "Validiert"
+            "validationState": {
+                "label": "Status",
+                "comment": "Kommentar",
+                "VALIDATED": "Validiert",
+                "REJECTED": "Abgelehnt",
+                "PENDING": "Angefragt"
+            },
+            "validationActions": "Aktionen",
+            "validateAll": "Alle Flüge im Status \"Angefragt\" validieren"
         },
         "phone": "Tel",
         "emergencyContact": "Notfallkontakt",

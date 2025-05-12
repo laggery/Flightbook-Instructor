@@ -99,7 +99,15 @@
             "diff": "Diff.",
             "alone": "Seul",
             "maneuver": "Manoeuvre",
-            "validation": "Validé"
+            "validationState": {
+                "label": "Statut",
+                "comment": "Commentaire",
+                "VALIDATED": "Validé",
+                "REJECTED": "Refusé",
+                "PENDING": "En attente"
+            },
+            "validationActions": "Actions",
+            "validateAll": "Valide tous les vols avec le statut \"En attente\""
         },
         "phone": "Tél",
         "emergencyContact": "No. d'urgence",
