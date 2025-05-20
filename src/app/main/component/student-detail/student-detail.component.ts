@@ -10,6 +10,7 @@ import { StudentService } from 'src/app/core/services/student.service';
 import { ControlSheet } from 'src/app/shared/domain/control-sheet';
 import { EmergencyContact } from 'src/app/shared/domain/emergency-contact';
 import { Flight } from 'src/app/shared/domain/flight';
+import { FlightValidationState } from 'src/app/shared/domain/flight-validation-state';
 import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 import { School } from 'src/app/shared/domain/school';
 import { Student } from 'src/app/shared/domain/student';
@@ -30,18 +31,22 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   @Output() backButtonClick = new EventEmitter();
 
   @Output() removeUserButtonClick = new EventEmitter();
+  @Output() validateFlightsButtonClick = new EventEmitter();
 
   flights: Flight[];
   flightPagerEntity = new PagerEntity<Flight[]>;
   @ViewChild('paginator') paginator: MatPaginator | undefined;
 
   displayedColumns: string[] = ['nb', 'date', 'start', 'landing', 'glider', 'time', 'km', 'description', 'alone'];
-
   controlSheet: ControlSheet | undefined;
   emergencyContact: EmergencyContact = new EmergencyContact();
   @ViewChild('table', { read: ElementRef }) table: ElementRef | undefined;
-
   unsubscribe$ = new Subject<void>();
+
+  // For reject comment modal
+  showRejectCommentBox = false;
+  rejectComment: string = '';
+  flightToReject: Flight | null = null;
 
   get isMobile(): Signal<boolean> {
     return this.deviceSize.isMobile;
@@ -75,6 +80,18 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
           this.emergencyContact = emergencyContacts[0];
         }
       });
+    }
+
+    // Update displayedColumns when school changes
+    if (changes['school'] && changes['school'].currentValue) {
+      // Reset to base columns first to avoid duplicates
+      this.displayedColumns = ['nb', 'date', 'start', 'landing', 'glider', 'time', 'km', 'description', 'alone'];
+      
+      // Add validation column if needed
+      if (changes['school'].currentValue.configuration?.validateFlights) {
+        this.displayedColumns.push('validationState');
+        this.displayedColumns.push('validationButton');
+      }
     }
   }
 
@@ -141,16 +158,88 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
 
     const flights = await firstValueFrom(this.studentService.getFlightsByStudentId({ limit: 2000 }, this.student?.id!))
 
+    if (this.school?.configuration?.validateFlights) {
+      flights.entity = flights.entity!.filter((flight: Flight) => flight.validation?.state == FlightValidationState.VALIDATED);
+    }
     this.pdfExportService.generatePdf(flights.entity!, this.student?.user);
   }
 
   changeAloneValue(flight: Flight) {
     this.studentService.putFlightByStudentId(this.student?.id!, flight).pipe(takeUntil(this.unsubscribe$)).subscribe((flight: Flight) => {
-      this.snackBar.open(this.translate.instant('message.aloneFlight'), this.translate.instant('buttons.done'), {
+      this.snackBar.open(this.translate.instant('message.changeSaved'), this.translate.instant('buttons.done'), {
         horizontalPosition: 'center',
         verticalPosition: 'top',
+        duration: 2000
       });
     });
+  }
+
+  validateFlight(flight: Flight) {
+    flight.validation = {
+      state: FlightValidationState.VALIDATED
+    }
+    this.changeValidationValue(flight);
+  }
+
+  rejectFlight(flight: Flight) {
+    this.flightToReject = flight;
+    this.rejectComment = '';
+    this.showRejectCommentBox = true;
+  }
+
+  submitRejectComment() {
+    if (this.flightToReject) {
+      this.flightToReject.validation = {
+        state: FlightValidationState.REJECTED,
+        comment: this.rejectComment != '' ? this.rejectComment : undefined
+      };
+      this.changeValidationValue(this.flightToReject);
+    }
+    this.closeRejectCommentBox();
+  }
+
+  closeRejectCommentBox() {
+    this.showRejectCommentBox = false;
+    this.rejectComment = '';
+    this.flightToReject = null;
+  }
+
+  private changeValidationValue(flight: Flight) {
+    this.studentService.validateFlightSchoolIdAndStudentId(this.student?.id!, this.school?.id!, flight).pipe(takeUntil(this.unsubscribe$)).subscribe((updatedFlight: Flight) => {
+      flight.validation = updatedFlight.validation;
+      this.snackBar.open(this.translate.instant('message.changeSaved'), this.translate.instant('buttons.done'), {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 2000
+      });
+      this.validateFlightsButtonClick.emit("validated");
+    });
+  }
+
+  validateAllFlights() {
+    this.studentService.validateAllFlightsBySchoolIdAndStudentId(this.student?.id!, this.school?.id!).pipe(takeUntil(this.unsubscribe$)).subscribe(() => {
+      this.loadStudentFLights(this.student?.id!);
+      this.snackBar.open(this.translate.instant('message.changeSaved'), this.translate.instant('buttons.done'), {
+        horizontalPosition: 'center',
+        verticalPosition: 'top',
+        duration: 2000
+      });
+      this.validateFlightsButtonClick.emit("validatedAll");
+    });
+  }
+
+  /**
+   * Checks if a flight is validated
+   */
+  isFlightValidated(flight: Flight): boolean {
+    if (!flight.validation) {
+      return false;
+    }
+    if (flight.validation.state === FlightValidationState.REJECTED ||
+      flight.validation.state === FlightValidationState.VALIDATED) {
+      return true;
+    }
+    return false;
   }
 
   async changeStudentIsTandem(event: MatSlideToggleChange) {

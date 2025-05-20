@@ -21,6 +21,32 @@
     float: right;
 }
 
+/* Override Angular Material's default overflow hidden to show badges properly */
+::ng-deep {
+    .student-list {
+        /* Target all list item elements and their children that might have overflow: hidden */
+        .mdc-list-item, 
+        .mdc-list-item__content,
+        .mat-mdc-list-item,
+        .mat-mdc-list-item-content,
+        .mat-mdc-list-item-unscoped-content,
+        .mat-list-item-content,
+        .mat-list-text {
+            overflow: visible !important;
+        }
+    }
+    
+    /* Ensure badge is visible */
+    .mat-badge {
+        overflow: visible !important;
+    }
+    
+    .mat-badge-content {
+        z-index: 10 !important; /* Higher z-index to ensure visibility */
+        color: white !important; /* Set badge text color to white */
+    }
+}
+
 mat-list mat-list-item.student-info {
     height: auto;
     padding: 16px;

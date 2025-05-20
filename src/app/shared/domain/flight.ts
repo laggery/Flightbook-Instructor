@@ -1,5 +1,6 @@
 import { Place } from './place'
 import { Glider } from './glider'
+import { FlightValidation } from './flight-validation';
 
 export class Flight {
     id: number | undefined;
@@ -14,4 +15,5 @@ export class Flight {
     price?: number;
     timestamp?: Date;
     shvAlone?: boolean;
+    validation?: FlightValidation;
 }

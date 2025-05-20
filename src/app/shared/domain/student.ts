@@ -15,4 +15,5 @@ export class Student {
     public lastNote: Note | undefined;
     public controlSheet: ControlSheet | undefined;
     public emergencyContacts: EmergencyContact[] | undefined;
+    public countNotValidatedFlights: number | undefined;
 }

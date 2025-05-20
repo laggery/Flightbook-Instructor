@@ -98,7 +98,16 @@
             "description": "Beschreibung",
             "diff": "Diff.",
             "alone": "Allein",
-            "maneuver": "Manöver"
+            "maneuver": "Manöver",
+            "validationState": {
+                "label": "Status",
+                "comment": "Kommentar",
+                "VALIDATED": "Validiert",
+                "REJECTED": "Abgelehnt",
+                "PENDING": "Angefragt"
+            },
+            "validationActions": "Aktionen",
+            "validateAll": "Alle Flüge im Status \"Angefragt\" validieren"
         },
         "phone": "Tel",
         "emergencyContact": "Notfallkontakt",
@@ -246,7 +255,7 @@
         "403": "Du hast keine Berechtigung für diese Abfrage",
         "noFlight": "Dieser Schüler hat keinen Flug",
         "pdfDownloaded": "Das PDF wurde heruntergeladen",
-        "aloneFlight": "Flug wurde gespeichert"
+        "changeSaved": "Änderung gespeichert"
     },
     "buttons": {
         "login": "Anmelden",

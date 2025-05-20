@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { ControlSheet } from 'src/app/shared/domain/control-sheet';
 import { EmergencyContact } from 'src/app/shared/domain/emergency-contact';
 import { Flight } from 'src/app/shared/domain/flight';
+import { FlightValidation } from 'src/app/shared/domain/flight-validation';
+import { FlightValidationState } from 'src/app/shared/domain/flight-validation-state';
 import { Note } from 'src/app/shared/domain/note';
 import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 import { Student } from 'src/app/shared/domain/student';
@@ -23,6 +25,16 @@ export class StudentService {
 
   putFlightByStudentId(studentId: number, flight: Flight): Observable<Flight> {
     return this.http.put<Flight>(`${environment.baseUrl}/instructor/students/${studentId}/flights/${flight.id}`, flight);
+  }
+
+  validateFlightSchoolIdAndStudentId(studentId: number, schoolId: number, flight: Flight): Observable<Flight> {
+    return this.http.put<Flight>(`${environment.baseUrl}/instructor/schools/${schoolId}/students/${studentId}/flights/${flight.id}`, flight.validation);
+  }
+  validateAllFlightsBySchoolIdAndStudentId(studentId: number, schoolId: number): Observable<any> {
+    let validation: FlightValidation = {
+      state: FlightValidationState.VALIDATED
+    }
+    return this.http.put<any>(`${environment.baseUrl}/instructor/schools/${schoolId}/students/${studentId}/flights/validate-all`, validation);
   }
 
   getNotesByStudentId({ limit = undefined, offset = undefined}: { limit?: number, offset?: number} = {}, studentId: number): Observable<PagerEntity<Note[]>> {
