@@ -7,11 +7,15 @@
             <mat-list-item class="config-item" (click)="openDetail('appointmentType')">
                 <p matLine>{{ 'appointment.appointment'| translate }}</p>
             </mat-list-item>
+            <mat-list-item class="config-item" (click)="openDetail('schoolSetting')">
+                <p matLine>{{ 'setting.title'| translate }}</p>
+            </mat-list-item>
         </mat-list>
     </mat-sidenav>
 
     <mat-sidenav-content>
         <fb-team *ngIf="type=='team'" (backButtonClick)=backButton()></fb-team>
         <fb-appointment-type *ngIf="type=='appointmentType'" (backButtonClick)=backButton()></fb-appointment-type>
+        <fb-school-setting *ngIf="type=='schoolSetting'" (backButtonClick)=backButton()></fb-school-setting>
     </mat-sidenav-content>
 </mat-sidenav-container>

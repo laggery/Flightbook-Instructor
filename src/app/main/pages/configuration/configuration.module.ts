@@ -9,6 +9,7 @@ import { TeamComponent } from '../../component/team/team.component';
 import { AppointmentTypeComponent } from '../../component/appointment-type/appointment-type.component';
 import { AppointmentTypeDialogComponent } from '../../component/appointment-type-dialog/appointment-type-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { SchoolSettingComponent } from '../../component/school-setting/school-setting.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ConfigurationComponent,
     TeamComponent,
     AppointmentTypeComponent,
-    AppointmentTypeDialogComponent
+    AppointmentTypeDialogComponent,
+    SchoolSettingComponent
   ],
   imports: [
     CommonModule,

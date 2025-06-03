@@ -12,6 +12,7 @@ import moment from 'moment';
 import { TeamMember } from 'src/app/shared/domain/team-member';
 import { School } from 'src/app/shared/domain/school';
 import { AppointmentType } from 'src/app/shared/domain/appointment-type-dto';
+import { SchoolConfiguration } from 'src/app/shared/domain/school-configuration';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class SchoolService {
 
   createSchool(school: School): Observable<School> {
     return this.http.post<School>(`${environment.baseUrl}/schools`, school);
+  }
+
+  updateSchoolConfiguration(id: number, configuration: SchoolConfiguration): Observable<School> {
+    return this.http.put<School>(`${environment.baseUrl}/schools/${id}/configuration`, configuration);
   }
 
   getStudentsBySchoolId(id: number, archived: boolean): Observable<Student[]> {

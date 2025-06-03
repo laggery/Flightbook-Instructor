@@ -306,6 +306,14 @@
         "addMember": "Ajouter un membre",
         "removeMessage": "Veux-tu vraiment supprimer $REPLACE_NAME de ton équipe?"
     },
+    "setting": {
+        "title": "Configurations",
+        "option": "Option",
+        "value": "Aktiviert",
+        "types": {
+            "validateFlights": "Valider les vols"
+        }
+    },
     "appointmentType": {
         "tite": "Type de rdv",
         "addType": "Ajouter",

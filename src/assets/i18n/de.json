@@ -306,6 +306,14 @@
         "addMember": "Mitglied hinzufügen",
         "removeMessage": "Möchtest du $REPLACE_NAME wirklich aus dem Team entfernen?"
     },
+    "setting": {
+        "title": "Einstellungen",
+        "option": "Option",
+        "value": "Aktiviert",
+        "types": {
+            "validateFlights": "Flüge validieren"
+        }
+    },
     "appointmentType": {
         "title": "Terminart",
         "addType": "Hinzufügen",
