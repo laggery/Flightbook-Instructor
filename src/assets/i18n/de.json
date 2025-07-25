@@ -113,7 +113,14 @@
         "emergencyContact": "Notfallkontakt",
         "actif": "Aktiv",
         "archived": "Archiviert",
-        "tandem": "Tandem"
+        "tandem": "Tandem",
+        "sort": {
+            "sortBy": "Sortieren nach",
+            "firstname": "Vorname",
+            "lastname": "Nachname",
+            "nbFlightsAsc": "Anzahl Flüge (aufsteigend)",
+            "nbFlightsDesc": "Anzahl Flüge (absteigend)"
+        }
     },
     "studentList": {
         "date": "Datum",

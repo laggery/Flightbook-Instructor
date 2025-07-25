@@ -9,6 +9,23 @@
             </mat-list-item> -->
             <mat-tab-group mat-align-tabs="start" (selectedTabChange)="tabChange($event)">
                 <mat-tab label="{{ 'student.actif'| translate }}">
+                    <mat-form-field class="sort-select">
+                        <mat-label>{{ 'student.sort.sortBy' | translate }}</mat-label>
+                        <mat-select value="firstname" (selectionChange)="selectSort($event.value)">
+                            <mat-option value="firstname">
+                                {{ 'student.sort.firstname' | translate }}
+                            </mat-option>
+                            <mat-option value="lastname">
+                                {{ 'student.sort.lastname' | translate }}
+                            </mat-option>
+                            <mat-option value="nbFlightsAsc">
+                                {{ 'student.sort.nbFlightsAsc' | translate }}
+                            </mat-option>
+                            <mat-option value="nbFlightsDesc">
+                                {{ 'student.sort.nbFlightsDesc' | translate }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
                     <mat-list-item class="student-info" *ngFor='let student of students' (click)=studentDetail(student)>
                         <!-- <mat-checkbox (change)=checkboxChange($event,student) (click)=$event.stopPropagation() color="primary"></mat-checkbox> -->
                         @if(school?.configuration?.validateFlights){

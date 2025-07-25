@@ -30,6 +30,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
 
   students: Student[];
   archivedStudents: Student[];
+  sortBy: string = 'firstname';
 
   constructor(
     private translate: TranslateService,
@@ -79,7 +80,8 @@ export class StudentsComponent implements OnInit, OnDestroy {
           this.archivedStudents = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
           this.selectedStudent = this.archivedStudents[0];
         } else {
-          this.students = students.sort(((obj1, obj2) => (obj1.user?.firstname && obj2.user?.firstname && obj1.user?.firstname > obj2.user?.firstname ? 1 : -1)));
+          this.students = students
+          this.selectSort(this.sortBy);
           this.selectedStudent = this.students[0];
         }
       })
@@ -163,5 +165,21 @@ export class StudentsComponent implements OnInit, OnDestroy {
     } else {
       this.syncStudentList(true);
     } 
- } 
+ }
+
+  selectSort(sortBy: string) {
+    this.sortBy = sortBy;
+    this.students = this.students.sort((a, b) => {
+      if (sortBy === 'firstname') {
+        return (a.user?.firstname || '').localeCompare(b.user?.firstname || '');
+      } else if (sortBy === 'lastname') {
+        return (a.user?.lastname || '').localeCompare(b.user?.lastname || '');
+      } else if (sortBy === 'nbFlightsAsc') {
+        return (a.statistic?.nbFlights || 0) - (b.statistic?.nbFlights || 0);
+      } else if (sortBy === 'nbFlightsDesc') {
+        return (b.statistic?.nbFlights || 0) - (a.statistic?.nbFlights || 0);
+      }
+      return 0;
+    });
+  }
 }

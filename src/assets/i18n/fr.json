@@ -113,7 +113,14 @@
         "emergencyContact": "No. d'urgence",
         "actif": "Actif",
         "archived": "Archivé",
-        "tandem": "Biplace"
+        "tandem": "Biplace",
+        "sort": {
+            "sortBy": "Trier par",
+            "firstname": "Prénom",
+            "lastname": "Nom",
+            "nbFlightsAsc": "Nombre de vols (ascendant)",
+            "nbFlightsDesc": "Nombre de vols (descendant)"
+        }
     },
     "studentList": {
         "date": "Date",

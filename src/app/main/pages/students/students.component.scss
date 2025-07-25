@@ -70,3 +70,12 @@ mat-list mat-list-item.student-info {
         width: 100%;
     }
 }
+
+// Sort
+.sort-select {
+    width: 100%;
+}
+
+::ng-deep .sort-select .mat-mdc-form-field-subscript-wrapper {
+    display: none !important;
+}
