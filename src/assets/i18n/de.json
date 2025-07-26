@@ -162,6 +162,11 @@
     "controlSheet": {
         "title": "Kontrollblatt",
         "userCanEdit": "Darf der Schüler das Kontrollblatt bearbeiten?",
+        "exam": {
+            "title": "Prüfungen",
+            "theory": "Theorie bestanden am",
+            "practice": "Praxis bestanden am"
+        },
         "trainingHill": {
             "title": "Übungshang",
             "auslegen": "Auslegen",

@@ -40,6 +40,20 @@ export class ControlSheetComponent implements OnInit {
     }
   }
 
+  saveExamTheory(value: Date) {
+    if (this.controlSheet) {
+      this.controlSheet.passTheoryExam = value;
+      this.saveControlSheetEvent.emit(this.controlSheet);
+    }
+  }
+
+  saveExamPractice(value: Date) {
+    if (this.controlSheet) {
+      this.controlSheet.passPracticeExam = value;
+      this.saveControlSheetEvent.emit(this.controlSheet);
+    }
+  }
+
   addControlSheet() {
     this.controlSheet = new ControlSheet();
     this.saveControlSheetEvent.emit(this.controlSheet);
