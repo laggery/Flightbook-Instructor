@@ -61,3 +61,24 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
     background-color: rgb(56, 128, 255) !important;
     border: 1px solid rgb(56, 128, 255) !important;
 }
+
+// Filter container
+.filter-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+
+    mat-form-field {
+        width: 250px;
+        
+        ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+            display: none !important;
+        }         
+    }
+
+    mat-chip-listbox {
+        display: flex;
+        align-items: center;
+    }
+}

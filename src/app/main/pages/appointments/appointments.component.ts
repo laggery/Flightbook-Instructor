@@ -44,6 +44,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   pagerEntity = new PagerEntity<Appointment[]>;
   states = State;
   currentAppointmentFilter: AppointmentFilter;
+  showAdvancedFilters = false;
   @ViewChild('paginator') paginator: MatPaginator | undefined;
   @ViewChild('calendar') calendarComponent: FullCalendarComponent | undefined;
   @ViewChild('draggableEvents') draggableEvents: ElementRef | undefined;
@@ -240,6 +241,18 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     if (this.school?.id) {
       this.loadAppointments(this.school.id);
     }
+  }
+
+  changeInstructor(newInstructorId: any) {
+    this.currentAppointmentFilter.instructorId = newInstructorId;
+    this.schoolService.filter = this.currentAppointmentFilter;
+    if (this.school?.id) {
+      this.loadAppointments(this.school.id);
+    }
+  }
+
+  toggleAdvancedFilters() {
+    this.showAdvancedFilters = !this.showAdvancedFilters;
   }
 
   tabChanged(tabChangeEvent: MatTabChangeEvent) {

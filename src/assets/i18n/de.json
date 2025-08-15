@@ -308,7 +308,8 @@
         "student": "Schüler",
         "waitingList": "Warteliste",
         "noSubscription": "Zurzeit hat es keine Anmeldungen",
-        "type": "Terminart"
+        "type": "Terminart",
+        "allInstructors": "Alle"
     },
     "fullcalendar": {
         "today": "Heute"

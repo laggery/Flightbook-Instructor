@@ -308,7 +308,8 @@
         "student": "Élève",
         "waitingList": "Liste d'attente",
         "noSubscription": "Il n'y a actuellement pas d'inscriptions",
-        "type": "Type"
+        "type": "Type",
+        "allInstructors": "Tous"
     },
     "fullcalendar": {
         "today": "Aujourd'hui"

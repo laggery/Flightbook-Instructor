@@ -116,6 +116,10 @@ export class SchoolService {
       params = params.append('state', this.filter.state);
     }
 
+    if (this.filter.instructorId) {
+      params = params.append('instructorId', this.filter.instructorId?.toString() || '');
+    }
+
     if (limit) {
       params = params.append('limit', limit.toString());
     }
