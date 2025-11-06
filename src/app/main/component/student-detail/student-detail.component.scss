@@ -48,6 +48,11 @@
     max-width: 413px;
 }
 
+.table-container {
+    overflow-x: auto;
+    width: 100%;
+}
+
 // ---- statistics ---- 
 .basic-stat label {
     display: inline-block;
