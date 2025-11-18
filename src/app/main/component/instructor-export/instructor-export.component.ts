@@ -57,6 +57,14 @@ export class InstructorExportComponent implements OnInit {
             const state = this.form.get('state')?.value || undefined;
             const schoolId = this.form.get('school')?.value || undefined;
             const appointments = await firstValueFrom(this.accountService.getAppointmentsByUserId(startDate, endDate, state, schoolId));
+            if (appointments?.itemCount === 0) {
+                this.snackBar.open(this.translate.instant('appointmentExport.noData'), this.translate.instant('buttons.done'), {
+                    horizontalPosition: 'center',
+                    verticalPosition: 'top',
+                    duration: 3000
+                });
+                return;
+            }
             const currentUser = await firstValueFrom(this.accountService.currentUser());
             const pdf = await this.instructorExportPDFService.generateAppointmentExportPdf(currentUser, appointments.entity, startDate, endDate);
             try {

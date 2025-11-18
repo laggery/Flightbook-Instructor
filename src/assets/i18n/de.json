@@ -321,7 +321,8 @@
         "unknownType": "Terminart unbekannt",
         "day":  "Tag",
         "date": "Datum",
-        "noFlights": "Keine Flüge"
+        "noFlights": "Keine Flüge",
+        "noData": "Keine Termine in diesem Zeitraum"
     },
     "fullcalendar": {
         "today": "Heute"

@@ -321,7 +321,8 @@
         "unknownType": "Type de rendez-vous inconnu",
         "day": "Jour",
         "date": "Date",
-        "noFlights": "Aucun vol"
+        "noFlights": "Aucun vol",
+        "noData": "Aucun rendez-vous pendant cette période"
     },
     "fullcalendar": {
         "today": "Aujourd'hui"
