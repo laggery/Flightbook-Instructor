@@ -83,7 +83,7 @@
         "flighthour": "Flugstunden",
         "average": "Durchschnittszeit",
         "list": "Teilnehmerliste",
-        "noStudentSelected": "Kein Schüler wurde ausgewählt.",
+        "noStudentSelected": "Kein Schüler*in wurde ausgewählt.",
         "flights": "Flüge",
         "flight": {
             "number": "Nr",
@@ -161,7 +161,7 @@
     },
     "controlSheet": {
         "title": "Kontrollblatt",
-        "userCanEdit": "Darf der Schüler das Kontrollblatt bearbeiten?",
+        "userCanEdit": "Darf der Schüler*in das Kontrollblatt bearbeiten?",
         "exam": {
             "title": "Prüfungen",
             "theory": "Theorie bestanden am",
@@ -251,6 +251,7 @@
         "invalidEmail": "Bitte gib eine gültige E-Mail-Adresse ein.",
         "invalidPassword": "Bitte gib ein gültiges Passwort ein.",
         "emailpwdnotcorrect": "E-Mail-Adresse oder Password ist nicht korrekt!",
+        "required": "Dieses Feld ist erforderlich",
         "firstnameRequired": "Vorname ist erforderlich",
         "lastnameRequired": "Nachname ist erforderlich",
         "nameRequired": "Name ist erforderlich",
@@ -260,12 +261,12 @@
         "phoneRequired": "Telefon ist erforderlich",
         "emailRequired": "E-Mail-Adresse ist erforderlich",
         "requestSent": "Die Anfrage wurde gesendet",
-        "phoneInvalidFormat": "Le numéro de téléphone doit avoir le format suivant: {{format}}"
+        "phoneInvalidFormat": "Telefonnummer muss folgendes Format haben: {{format}}"
     },
     "message": {
         "error": "Ein Fehler ist aufgetreten. Bitte versuche es später erneut oder sende eine E-Mail an: yannick.lagger@flightbook.ch",
         "403": "Du hast keine Berechtigung für diese Abfrage",
-        "noFlight": "Dieser Schüler hat keinen Flug",
+        "noFlight": "Dieser Schüler*in hat keinen Flug",
         "pdfDownloaded": "Das PDF wurde heruntergeladen",
         "changeSaved": "Änderung gespeichert"
     },
@@ -280,7 +281,8 @@
         "send": "Senden",
         "yes": "Ja",
         "no": "Nein",
-        "change_password": "Passwort ändern"
+        "change_password": "Passwort ändern",
+        "export": "Exportieren"
     },
     "appointment": {
         "appointment": "Termin",
@@ -289,12 +291,12 @@
         "new": "Neuer Termin",
         "dateTime": "Datum und Zeit",
         "meetingPoint": "Treffpunkt",
-        "maxPeople": "Max Teilnehmer",
+        "maxPeople": "Max Teilnehmer*in",
         "registrations": "Anmeldungen",
         "guestRegistrations": "Gast",
         "state": "Status",
-        "instructor": "Fluglehrer",
-        "takeOffCoordinator": "Starthelfer",
+        "instructor": "Fluglehrer*in",
+        "takeOffCoordinator": "Starthelfer*in",
         "description": "Beschreibung",
         "stateValue": {
             "ANNOUNCED": "Angesagt",
@@ -302,14 +304,24 @@
             "CANCELED": "Abgesagt"
         },
         "passed": "Vergangene Termine",
-        "subscribeStudent": "Schüler anmelden",
-        "guestSubscribeStudent": "Gastschüler anmelden",
-        "guestStudent": "Gastschüler",
-        "student": "Schüler",
+        "subscribeStudent": "Schüler*in anmelden",
+        "guestSubscribeStudent": "Gastschüler*in anmelden",
+        "guestStudent": "Gastschüler*in",
+        "student": "Schüler*in",
         "waitingList": "Warteliste",
         "noSubscription": "Zurzeit hat es keine Anmeldungen",
         "type": "Terminart",
         "allInstructors": "Alle"
+    },
+    "appointmentExport": {
+        "title": "Schulungstage Exportieren",
+        "school": "Flugschule",
+        "startDate": "Von",
+        "endDate": "Bis",
+        "unknownType": "Terminart unbekannt",
+        "day":  "Tag",
+        "date": "Datum",
+        "noFlights": "Keine Flüge"
     },
     "fullcalendar": {
         "today": "Heute"

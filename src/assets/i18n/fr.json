@@ -251,6 +251,7 @@
         "invalidEmail": "Veuillez saisir une adresse e-mail valide.",
         "invalidPassword": "Veuillez saisir un mot de passe valide.",
         "emailpwdnotcorrect": "L'e-mail ou le mot de passe n'est pas correct!",
+        "required": "Ce champ est obligatoire",
         "firstnameRequired": "Le prénom est obligatoire",
         "lastnameRequired": "Le nom de famille est obligatoire",
         "nameRequired": "Le nom est obligatoire",
@@ -260,7 +261,7 @@
         "phoneRequired": "La téléphone est obligatoire",
         "emailRequired": "L'email est obligatoire",
         "requestSent": "La demande a été envoyée",
-        "phoneInvalidFormat": "Telefonnummer muss folgendes Format haben: {{format}}"
+        "phoneInvalidFormat": "Le numéro de téléphone doit avoir le format suivant: {{format}}"
     },
     "message": {
         "error": "Une erreur est survenue. Veuillez réessayer plus tard ou envoyer un email a : yannick.lagger@flightbook.ch",
@@ -280,7 +281,8 @@
         "send": "Envoyer",
         "yes": "Oui",
         "no": "Non",
-        "change_password": "Changer le mot de passe"
+        "change_password": "Changer le mot de passe",
+        "export": "Exporter"
     },
     "appointment": {
         "appointment": "Rendez-vous",
@@ -310,6 +312,16 @@
         "noSubscription": "Il n'y a actuellement pas d'inscriptions",
         "type": "Type",
         "allInstructors": "Tous"
+    },
+    "appointmentExport": {
+        "title": "Export des journées de formation",
+        "school": "Ecole",
+        "startDate": "Du",
+        "endDate": "Au",
+        "unknownType": "Type de rendez-vous inconnu",
+        "day": "Jour",
+        "date": "Date",
+        "noFlights": "Aucun vol"
     },
     "fullcalendar": {
         "today": "Aujourd'hui"

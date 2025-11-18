@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { firstValueFrom, Observable, Subject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { User } from '../../shared/domain/user';
 import { environment } from 'src/environments/environment';
 import { School } from 'src/app/shared/domain/school';
 import { PaymentStatus } from 'src/app/shared/domain/payment-status';
+import { Appointment } from 'src/app/shared/domain/appointment';
+import moment from 'moment';
+import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 
 @Injectable({
   providedIn: 'root'
@@ -60,6 +63,19 @@ export class AccountService {
   getSchoolsByUserId(): Observable<School[]> {
     return this.http.get<School[]>(`${environment.baseUrl}/instructor/schools`);
   }
+
+  getAppointmentsByUserId(from: Date, to: Date, state?: string, schoolId?: number): Observable<PagerEntity<Appointment[]>> {
+    let params = new HttpParams();
+    params = params.append('from', moment(from).format('YYYY-MM-DD'));
+    params = params.append('to', moment(to).format('YYYY-MM-DD'));
+    if (state !== undefined) {
+      params = params.append('state', state);
+    }
+    if (schoolId !== undefined) {
+      params = params.append('school_id', schoolId);
+    }
+    return this.http.get<PagerEntity<Appointment[]>>(`${environment.baseUrl}/instructor/appointments`, { params });
+    }
 
   getStripeSession(enrollmentToken: string): Observable<any> {
     return this.http.get<any>(`${environment.baseUrl}/payments/stripe/session/${enrollmentToken}`);

@@ -5,6 +5,7 @@ import { AccountService } from '../core/services/account.service';
 import { School } from '../shared/domain/school';
 import { MatDialog } from '@angular/material/dialog';
 import { PasswordComponent } from '../account/password/password.component';
+import { InstructorExportComponent } from './component/instructor-export/instructor-export.component';
 
 @Component({
     selector: 'app-main',
@@ -38,6 +39,13 @@ export class MainComponent implements OnInit {
   openPasswordDialog(): void {
     const dialogRef = this.dialog.open(PasswordComponent, {
       width: '700px'
+    });
+  }
+
+  openExportDialog(): void {
+    const dialogRef = this.dialog.open(InstructorExportComponent, {
+      width: '700px',
+      data: { schools: this.schools }
     });
   }
 

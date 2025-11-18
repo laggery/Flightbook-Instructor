@@ -50,11 +50,28 @@ export class CustomDateAdapter extends NativeDateAdapter {
   override getFirstDayOfWeek(): number {
     return 1; // Monday is the first day of the week
   }
+  
   override format(date: Date, displayFormat: Object): string {
     let day = date.getDate();
     let month = date.getMonth() + 1;
     let year = date.getFullYear();
     return this._to2digit(day) + '.' + this._to2digit(month) + '.' + year;
+  }
+
+  override parse(value: any): Date | null {
+    if (typeof value === 'string') {
+      const parts = value.split('.');
+      if (parts.length === 3) {
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10) - 1; // Month is 0-indexed
+        const year = parseInt(parts[2], 10);
+        
+        if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
+          return new Date(year, month, day);
+        }
+      }
+    }
+    return super.parse(value);
   }
 
   private _to2digit(n: number) {
