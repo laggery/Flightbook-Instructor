@@ -106,14 +106,14 @@ table mat-chip {
 
 // Canceled state chip style
 table .canceled-chip {
-    background-color: transparent !important;
-    border: 1px solid red !important;
-    color: red !important;
+    background-color: #ffebee !important;
+    border: 1px solid #ef5350 !important;
+    color: #c62828 !important;
 }
 
 // Confirmed state chip style
 table .confirmed-chip {
-    background-color: transparent !important;
-    border: 1px solid green !important;
-    color: green !important;
+    background-color: #e8f5e9 !important;
+    border: 1px solid #66bb6a !important;
+    color: #2e7d32 !important;
 }
