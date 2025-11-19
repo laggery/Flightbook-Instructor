@@ -32,12 +32,28 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
     cursor: pointer;
 }
 
+.mat-column-scheduling {
+    width: 138px;
+    min-width: 120px;
+}
+
+.mat-column-state {
+    width: 100px;
+    min-width: 92px;
+}
+
 .mat-column-meetingPoint {
     width: 200px;
+    min-width: 120px;
 }
 
 .mat-column-instructor {
-    padding-right: 20px;
+    min-width: 120px;
+    // padding-right: 20px;
+}
+
+.mat-column-takeOffCoordinator {
+    min-width: 120px;
 }
 
 // Calendar CSS
@@ -81,4 +97,23 @@ th.mat-header-cell:last-of-type, td.mat-cell:last-of-type, td.mat-footer-cell:la
         display: flex;
         align-items: center;
     }
+}
+
+table mat-chip {
+    background-color: transparent !important;
+    border: 1px solid rgb(98, 98, 98) !important;
+}
+
+// Canceled state chip style
+table .canceled-chip {
+    background-color: transparent !important;
+    border: 1px solid red !important;
+    color: red !important;
+}
+
+// Confirmed state chip style
+table .confirmed-chip {
+    background-color: transparent !important;
+    border: 1px solid green !important;
+    color: green !important;
 }

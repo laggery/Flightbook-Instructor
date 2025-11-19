@@ -40,7 +40,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   appointmentTypes: AppointmentType[] = [];
   teamMembers: TeamMember[] = [];
   students: Student[] = [];
-  displayedColumns: string[] = ['edit', 'subscription', 'list', 'scheduling', 'meetingPoint', 'instructor', 'takeOffCoordinator', 'countSubscription', 'countGuestSubscription', 'countWaitinglist', 'state'];
+  displayedColumns: string[] = ['edit', 'subscription', 'list', 'scheduling', 'state', 'meetingPoint', 'instructor', 'takeOffCoordinator', 'countSubscription', 'countGuestSubscription', 'countWaitinglist', 'type'];
   pagerEntity = new PagerEntity<Appointment[]>;
   states = State;
   currentAppointmentFilter: AppointmentFilter;
@@ -111,7 +111,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.schoolService.getAppointmentTypesBySchoolId(this.school.id, { archived: false }).pipe(takeUntil(this.unsubscribe$)).subscribe((appointmentTypes: AppointmentType[]) => {
         this.appointmentTypes = appointmentTypes;
-        if (this.displayedColumns.length == 11) {
+        if (this.displayedColumns.length == 12) {
           this.displayedColumns.splice(-1);
         }
         if (appointmentTypes.length > 0) {
