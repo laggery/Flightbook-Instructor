@@ -47,7 +47,7 @@ export class StudentService {
   }
 
   putNotesByStudentId(studentId: number, note: Note): Observable<Note> {
-    return this.http.post<Note>(`${environment.baseUrl}/instructor/students/${studentId}/notes/${note.id}`, note);
+    return this.http.put<Note>(`${environment.baseUrl}/instructor/students/${studentId}/notes/${note.id}`, note);
   }
 
   removeNoteByStudentId(id: number, studentId: number) {
