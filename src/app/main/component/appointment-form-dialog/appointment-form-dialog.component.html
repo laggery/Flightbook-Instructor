@@ -17,11 +17,30 @@
         </mat-select>
     </mat-form-field>
     <mat-form-field>
+        <mat-label>{{ 'appointment.dateTime'| translate }}</mat-label>
         <input matInput [ngxMatDatetimePicker]="picker" 
                         placeholder="{{ 'appointment.dateTime'| translate }}" 
                         formControlName="date">
         <mat-datepicker-toggle matSuffix [for]="$any(picker)"></mat-datepicker-toggle>
         <ngx-mat-datetime-picker #picker 
+          [showSpinners]="showSpinners" 
+          [showSeconds]="showSeconds"
+          [stepHour]="stepHour" [stepMinute]="stepMinute" 
+          [stepSecond]="stepSecond"
+          [touchUi]="touchUi"
+          [color]="color">
+          <ngx-mat-datepicker-actions>
+            <button ngxMatDatepickerApply><mat-icon>check</mat-icon></button>
+          </ngx-mat-datepicker-actions>
+        </ngx-mat-datetime-picker>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>{{ 'appointment.deadline'| translate }}</mat-label>
+        <input matInput [ngxMatDatetimePicker]="deadlinePicker" 
+                        placeholder="{{ 'appointment.deadline'| translate }}" 
+                        formControlName="deadline">
+        <mat-datepicker-toggle matSuffix [for]="$any(deadlinePicker)"></mat-datepicker-toggle>
+        <ngx-mat-datetime-picker #deadlinePicker 
           [showSpinners]="showSpinners" 
           [showSeconds]="showSeconds"
           [stepHour]="stepHour" [stepMinute]="stepMinute" 

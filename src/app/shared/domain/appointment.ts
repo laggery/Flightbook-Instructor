@@ -9,6 +9,7 @@ export class Appointment {
     id: number | undefined;
     type: AppointmentType | undefined;
     scheduling: Date | undefined;
+    deadline: Date | undefined;
     meetingPoint: string | undefined;
     maxPeople: number | undefined;
     description: string | undefined;

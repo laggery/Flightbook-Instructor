@@ -14,10 +14,10 @@ import { GuestSubscription } from 'src/app/shared/domain/guest-subscription';
 import moment from 'moment';
 
 @Component({
-    selector: 'app-appointment-form-dialog',
-    templateUrl: './appointment-form-dialog.component.html',
-    styleUrls: ['./appointment-form-dialog.component.scss'],
-    standalone: false
+  selector: 'app-appointment-form-dialog',
+  templateUrl: './appointment-form-dialog.component.html',
+  styleUrls: ['./appointment-form-dialog.component.scss'],
+  standalone: false
 })
 export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, AfterViewChecked {
 
@@ -72,6 +72,7 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
       state: [this.appointment.state, Validators.required],
       type: [this.appointment.type?.id, Validators.nullValidator],
       date: [this.appointment.scheduling, Validators.required],
+      deadline: [this.appointment.deadline, Validators.nullValidator],
       meetingPoint: [this.appointment.meetingPoint, Validators.nullValidator],
       maxPeople: [this.appointment.maxPeople, Validators.nullValidator],
       instructor: [this.appointment.instructor?.email, Validators.nullValidator],
@@ -91,6 +92,10 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
   }
 
   ngOnInit(): void {
+    // Listen for date changes to update deadline
+    this.form.get('date')?.valueChanges.subscribe((newDate) => {
+      this.updateDeadlineFromDate(newDate);
+    });
   }
 
   isSelected(email: string | undefined) {
@@ -129,6 +134,7 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
       this.appointment.state = this.form.get("state")?.value;
       this.appointment.type.id = this.form.get("type")?.value;
       this.appointment.scheduling = this.form.get("date")?.value;
+      this.appointment.deadline = this.form.get("deadline")?.value;
       this.appointment.instructor.email = this.form.get("instructor")?.value;
       this.appointment.takeOffCoordinator.email = this.form.get("takeOffCoordinator")?.value;
       this.appointment.takeOffCoordinatorText = this.form.get("takeOffCoordinatorText")?.value;
@@ -224,12 +230,25 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
     if (type?.time) {
       const time = moment(type.time, 'HH:mm');
       date.utc().set({
-        hour:   time.get('hour'),
+        hour: time.get('hour'),
         minute: time.get('minute'),
         second: time.get('second')
-    });
+      });
       this.form.get("date")?.setValue(date.toDate());
     }
   }
 
+  updateDeadlineFromDate(dateValue: Date | null) {
+    if (!dateValue) {
+      return;
+    }
+    const type = this.appointmentTypes.find((appointmentType: AppointmentType) => appointmentType.id == this.form.get("type")?.value);
+    if (type?.deadlineOffsetHours) {
+      const schedulingDate = moment(dateValue);
+      const deadline = schedulingDate.subtract(type.deadlineOffsetHours, 'hours');
+      this.form.get("deadline")?.setValue(deadline.toDate());
+    } else {
+      this.form.get("deadline")?.setValue(dateValue);
+    }
+  }
 }

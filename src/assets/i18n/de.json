@@ -290,6 +290,7 @@
         "list": "Liste",
         "new": "Neuer Termin",
         "dateTime": "Datum und Zeit",
+        "deadline": "An / Abmeldefrist",
         "meetingPoint": "Treffpunkt",
         "maxPeople": "Max Teilnehmer*in",
         "registrations": "Anmeldungen",
@@ -349,7 +350,10 @@
         "color": "Farbe",
         "invalidColor": "Bitte gib eine gültige Farbe ein.",
         "default": "Standardwerte",
-        "time": "Zeit"
+        "time": "Zeit",
+        "deadlineOffsetHours": "An / Abmeldeschluss vor Beginn",
+        "deadlineDays": "Tage",
+        "deadlineHours": "Stunden"
     },
     "paginator": {
         "itemPerPage": "Pro Seite:",
