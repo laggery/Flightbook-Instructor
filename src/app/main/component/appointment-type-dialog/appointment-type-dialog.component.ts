@@ -23,6 +23,11 @@ export class AppointmentTypeDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) {
       this.title = data.title;
       this.appointmentType = data.type;
+      // Convert deadlineOffsetHours to days and hours
+      const totalHours = this.appointmentType.deadlineOffsetHours || 0;
+      const days = Math.floor(totalHours / 24);
+      const hours = totalHours % 24;
+
       this.form = this.fb.group({
         name: [this.appointmentType.name, Validators.required],
         meetingPoint: [this.appointmentType.meetingPoint, Validators.nullValidator],
@@ -31,6 +36,8 @@ export class AppointmentTypeDialogComponent implements OnInit {
         pickerCtrl: new FormControl(this.appointmentType.color || "#3880ff"),
         instructor: [this.appointmentType.instructor?.email, Validators.nullValidator],
         time: [this.appointmentType.time, Validators.nullValidator],
+        deadlineDays: [days > 0 ? days : null, Validators.nullValidator],
+        deadlineHours: [hours > 0 ? hours : null, Validators.nullValidator],
       });
     }
 
@@ -70,6 +77,11 @@ export class AppointmentTypeDialogComponent implements OnInit {
       } else {
         this.appointmentType.time = time;
       }
+      // Convert days and hours back to total hours
+      const days = this.form.get('deadlineDays')?.value || 0;
+      const hours = this.form.get('deadlineHours')?.value || 0;
+      const totalHours = (days * 24) + hours;
+      this.appointmentType.deadlineOffsetHours = totalHours > 0 ? totalHours : null
       this.appointmentType.instructor.email = this.form.get("instructor")?.value;
 
       this.dialogRef.close({

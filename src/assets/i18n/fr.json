@@ -290,6 +290,7 @@
         "list": "Liste",
         "new": "Nouveau rendez-vous",
         "dateTime": "Date et heure",
+        "deadline": "Délai d'inscription",
         "meetingPoint": "Point de rencontre",
         "maxPeople": "Max participants",
         "registrations": "Inscriptions",
@@ -349,7 +350,10 @@
         "color": "Couleur",
         "invalidColor": "Veuillez saisir une couleur valide",
         "default": "Valeur par défaut",
-        "time": "Heure"
+        "time": "Heure",
+        "deadlineOffsetHours": "Délai d’inscription avant le début",
+        "deadlineDays": "Jours",
+        "deadlineHours": "Heures"
     },
     "paginator": {
         "itemPerPage": "Par page:",

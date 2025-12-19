@@ -9,4 +9,5 @@ export class AppointmentType {
     color?: string;
     instructor?: User
     time?: string;
+    deadlineOffsetHours?: number;
 }
