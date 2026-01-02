@@ -12,6 +12,7 @@ import { User } from 'src/app/shared/domain/user';
 import { AppointmentsComponent } from '../../pages/appointments/appointments.component';
 import { GuestSubscription } from 'src/app/shared/domain/guest-subscription';
 import moment from 'moment';
+import { combineLatest, skip, startWith } from 'rxjs';
 
 @Component({
   selector: 'app-appointment-form-dialog',
@@ -31,15 +32,7 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
   @ViewChildren('subscriptionFormList') subscriptionFormList?: QueryList<ElementRef>
   @ViewChildren('guestSubscriptionFormList') guestSubscriptionFormList?: QueryList<ElementRef>
   @ViewChildren("selectStudent") selectStudent?: QueryList<MatSelect>;
-  @ViewChild('picker') picker: any;
 
-  public showSpinners = true;
-  public showSeconds = false;
-  public touchUi = true;
-  public enableMeridian = true;
-  public stepHour = 1;
-  public stepMinute = 1;
-  public stepSecond = 1;
   public color: ThemePalette = 'primary';
 
   constructor(
@@ -68,11 +61,19 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
       }));
     });
 
+    // Extract time from scheduling date (UTC)
+    const schedulingTime = this.appointment.scheduling ? 
+      moment.utc(this.appointment.scheduling).format('HH:mm') : '';
+    const deadlineTime = this.appointment.deadline ? 
+      moment.utc(this.appointment.deadline).format('HH:mm') : '';
+
     this.form = this.fb.group({
       state: [this.appointment.state, Validators.required],
       type: [this.appointment.type?.id, Validators.nullValidator],
       date: [this.appointment.scheduling, Validators.required],
+      time: [schedulingTime, Validators.required],
       deadline: [this.appointment.deadline, Validators.nullValidator],
+      deadlineTime: [deadlineTime, Validators.nullValidator],
       meetingPoint: [this.appointment.meetingPoint, Validators.nullValidator],
       maxPeople: [this.appointment.maxPeople, Validators.nullValidator],
       instructor: [this.appointment.instructor?.email, Validators.nullValidator],
@@ -92,9 +93,14 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
   }
 
   ngOnInit(): void {
-    // Listen for date changes to update deadline
-    this.form.get('date')?.valueChanges.subscribe((newDate) => {
-      this.updateDeadlineFromDate(newDate);
+    // Listen for date and time changes to update deadline
+    combineLatest([
+      this.form.get('date')!.valueChanges.pipe(startWith(this.form.get('date')!.value)),
+      this.form.get('time')!.valueChanges.pipe(startWith(this.form.get('time')!.value))
+    ]).pipe(
+      skip(1) // Skip the initial emission from startWith
+    ).subscribe(([date, time]) => {
+      this.updateDeadlineFromDateTime(date, time);
     });
   }
 
@@ -133,8 +139,44 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
     if (this.form.valid) {
       this.appointment.state = this.form.get("state")?.value;
       this.appointment.type.id = this.form.get("type")?.value;
-      this.appointment.scheduling = this.form.get("date")?.value;
-      this.appointment.deadline = this.form.get("deadline")?.value;
+      
+      // Combine date and time for scheduling (UTC)
+      const dateValue = this.form.get("date")?.value;
+      const timeValue = this.form.get("time")?.value;
+      if (dateValue && timeValue) {
+        const [hours, minutes] = timeValue.split(':');
+        const localDate = moment(dateValue);
+        const combined = moment.utc({
+          year: localDate.year(),
+          month: localDate.month(),
+          date: localDate.date(),
+          hour: parseInt(hours),
+          minute: parseInt(minutes),
+          second: 0
+        });
+        this.appointment.scheduling = combined.toDate();
+      } else {
+        this.appointment.scheduling = dateValue;
+      }
+      
+      // Combine date and time for deadline (UTC)
+      const deadlineValue = this.form.get("deadline")?.value;
+      const deadlineTimeValue = this.form.get("deadlineTime")?.value;
+      if (deadlineValue && deadlineTimeValue) {
+        const [hours, minutes] = deadlineTimeValue.split(':');
+        const localDeadline = moment(deadlineValue);
+        const combined = moment.utc({
+          year: localDeadline.year(),
+          month: localDeadline.month(),
+          date: localDeadline.date(),
+          hour: parseInt(hours),
+          minute: parseInt(minutes),
+          second: 0
+        });
+        this.appointment.deadline = combined.toDate();
+      } else {
+        this.appointment.deadline = deadlineValue;
+      }
       this.appointment.instructor.email = this.form.get("instructor")?.value;
       this.appointment.takeOffCoordinator.email = this.form.get("takeOffCoordinator")?.value;
       this.appointment.takeOffCoordinatorText = this.form.get("takeOffCoordinatorText")?.value;
@@ -226,29 +268,36 @@ export class AppointmentFormDialogComponent implements OnInit, AfterViewInit, Af
     this.form.get("meetingPoint")?.setValue(type?.meetingPoint);
     this.form.get("maxPeople")?.setValue(type?.maxPeople);
     this.form.get("instructor")?.setValue(type?.instructor?.email);
-    const date = moment(this.form.get("date")?.value);
     if (type?.time) {
-      const time = moment(type.time, 'HH:mm');
-      date.utc().set({
-        hour: time.get('hour'),
-        minute: time.get('minute'),
-        second: time.get('second')
-      });
-      this.form.get("date")?.setValue(date.toDate());
+      const time = moment.utc(type.time, 'HH:mm');
+      this.form.get("time")?.setValue(time.format('HH:mm'));
     }
   }
 
-  updateDeadlineFromDate(dateValue: Date | null) {
-    if (!dateValue) {
+  updateDeadlineFromDateTime(dateValue: Date | null, timeValue: string | null) {
+    if (!dateValue || !timeValue) {
       return;
     }
     const type = this.appointmentTypes.find((appointmentType: AppointmentType) => appointmentType.id == this.form.get("type")?.value);
     if (type?.deadlineOffsetHours) {
-      const schedulingDate = moment(dateValue);
+      const [hours, minutes] = timeValue.split(':');
+      // Use moment() to get local date components, then create UTC moment with those components
+      const localDate = moment(dateValue);
+      const schedulingDate = moment.utc({
+        year: localDate.year(),
+        month: localDate.month(),
+        date: localDate.date(),
+        hour: parseInt(hours),
+        minute: parseInt(minutes),
+        second: 0
+      });
+
       const deadline = schedulingDate.subtract(type.deadlineOffsetHours, 'hours');
       this.form.get("deadline")?.setValue(deadline.toDate());
+      this.form.get("deadlineTime")?.setValue(deadline.format('HH:mm'));
     } else {
       this.form.get("deadline")?.setValue(dateValue);
+      this.form.get("deadlineTime")?.setValue(timeValue);
     }
   }
 }

@@ -22,19 +22,17 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { HoursFormatPipe } from './pipes/hours-format/hours-format.pipe';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule, MatOptionModule, NativeDateAdapter } from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatDateFormats, MatNativeDateModule, MatOptionModule, NativeDateAdapter } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
-import { NgxMatDateFormats, NGX_MAT_DATE_FORMATS, NgxMatDatetimepicker, NgxMatDatepickerInput, NgxMatDatepickerApply, NgxMatDatepickerActions } from '@ngxmc/datetime-picker';
-import { NgxMatMomentModule, NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@ngxmc/moment-adapter';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatPaginationIntlService } from '../core/services/mat-pagination-intl.service';
 import { NgxColorsModule } from 'ngx-colors';
 
 export const MOMENT_DATETIME_FORMAT = 'DD.MM.YYYY HH:mm';
 
-const CUSTOM_MOMENT_FORMATS: NgxMatDateFormats = {
+const CUSTOM_MOMENT_FORMATS: MatDateFormats = {
   parse: {
     dateInput: MOMENT_DATETIME_FORMAT,
   },
@@ -112,11 +110,6 @@ export class CustomDateAdapter extends NativeDateAdapter {
     MatSlideToggleModule,
     MatBadgeModule,
     MatTooltipModule,
-
-    NgxMatDatepickerActions,
-    NgxMatDatepickerApply,
-    NgxMatDatepickerInput,
-    NgxMatDatetimepicker,
     NgxColorsModule
   ],
   exports: [
@@ -148,18 +141,11 @@ export class CustomDateAdapter extends NativeDateAdapter {
     MatSlideToggleModule,
     MatBadgeModule,
     MatTooltipModule,
-
-    NgxMatDatepickerActions,
-    NgxMatDatepickerApply,
-    NgxMatDatepickerInput,
-    NgxMatDatetimepicker,
-    NgxMatMomentModule,
     NgxColorsModule
   ],
   providers: [
     // values
-    {provide: NGX_MAT_DATE_FORMATS, useValue: CUSTOM_MOMENT_FORMATS},
-    {provide: NGX_MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: {useUtc: true}},
+    {provide: MAT_DATE_FORMATS, useValue: CUSTOM_MOMENT_FORMATS},
     {provide: DateAdapter, useClass: CustomDateAdapter, deps: [MAT_DATE_LOCALE, MAT_DATE_FORMATS]},
     {provide: MatPaginatorIntl, useClass: MatPaginationIntlService}
   ],

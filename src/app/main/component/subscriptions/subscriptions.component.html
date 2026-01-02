@@ -1,4 +1,4 @@
-@if (appointment?.subscriptions?.length == 0 && appointment?.guestSubscriptions?.length == 0) {
+@if (appointment.subscriptions.length == 0 && appointment.guestSubscriptions.length == 0) {
   <p class="no-subscriptions">{{ 'appointment.noSubscription' | translate }}</p>
 } @else {
   <mat-dialog-content>
@@ -32,7 +32,7 @@
   <div>
     <h1 mat-dialog-title class="guest-list">{{ 'appointment.guestStudent' | translate }}</h1>
     <p class="item-value subscriptions">
-      @for (guestSubscription of appointment?.guestSubscriptions; track guestSubscription) {
+      @for (guestSubscription of appointment.guestSubscriptions; track guestSubscription) {
         <span class="subscription-item">
           {{ guestSubscription.firstname }} {{ guestSubscription.lastname }}
         </span>

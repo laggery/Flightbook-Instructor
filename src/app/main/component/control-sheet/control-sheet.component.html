@@ -2,7 +2,7 @@
   <!-- <mat-label>{{ 'controlSheet.userCanEdit'| translate }} </mat-label><mat-slide-toggle (change)="canEditChange($event)" [checked]="controlSheet.userCanEdit" color="primary"></mat-slide-toggle> -->
   <h4>{{ 'controlSheet.trainingHill.title' | translate }}</h4>
   <ul>
-    @for (item of controlSheet?.trainingHill | keyvalue; track item) {
+    @for (item of controlSheet.trainingHill | keyvalue; track item) {
       @if (item.key != 'id') {
         <li>
           <app-start-rating [selectedRating]="item.value" (clickRating)="saveTrainingHill($event, item.key)"></app-start-rating><span class="definition">{{ ('controlSheet.trainingHill.' + item.key) | translate }}</span>
@@ -12,7 +12,7 @@
   </ul>
   <h4>{{ 'controlSheet.theory.title' | translate }}</h4>
   <ul>
-    @for (item of controlSheet?.theory | keyvalue; track item) {
+    @for (item of controlSheet.theory | keyvalue; track item) {
       @if (item.key != 'id') {
         <li>
           <app-start-rating [selectedRating]="item.value" (clickRating)="saveTheory($event, item.key)"></app-start-rating><span class="definition">{{ ('controlSheet.theory.' + item.key) | translate }}</span>
@@ -22,7 +22,7 @@
   </ul>
   <h4>{{ 'controlSheet.altitudeFlight.title' | translate }}</h4>
   <ul>
-    @for (item of controlSheet?.altitudeFlight | keyvalue; track item) {
+    @for (item of controlSheet.altitudeFlight | keyvalue; track item) {
       @if (item.key != 'id') {
         <li>
           <app-start-rating [selectedRating]="item.value" (clickRating)="saveAltitudeFlight($event, item.key)"></app-start-rating><span class="definition">{{ ('controlSheet.altitudeFlight.' + item.key) | translate }}</span>
