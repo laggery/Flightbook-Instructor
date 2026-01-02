@@ -33,7 +33,7 @@
 <mat-list>
   @for (note of notes; track note; let last = $last) {
     <mat-list-item class="noteList">
-      <span matListItemTitle>{{ note.date | date:'dd.MM.YYYY' }} {{ note.title }}
+      <span matListItemTitle>{{ note.date | date:'dd.MM.yyyy' }} {{ note.title }}
         @if (!student?.isArchived) {
           <div class="icon-list">
             <mat-icon class="edit-note" (click)="editNote(note)">edit</mat-icon>

@@ -40,7 +40,7 @@
           } @else{
             <p class="student-name"><span>{{ student.user?.firstname }} {{ student.user?.lastname }}</span><mat-icon>{{student.isTandem ? "people" : "person"}}</mat-icon></p>
           }
-          <p>{{ 'student.lastflight'| translate }}: {{ student.lastFlight?.date | date:'dd.MM.YYYY' }}</p>
+          <p>{{ 'student.lastflight'| translate }}: {{ student.lastFlight?.date | date:'dd.MM.yyyy' }}</p>
           <p>{{ 'student.amountofflights'| translate }}: {{ student.statistic?.nbFlights }}</p>
           <p>{{ 'student.flight.glider'| translate }}: {{ student.lastFlight?.glider?.brand }} {{
           student.lastFlight?.glider?.name }}</p>
@@ -51,7 +51,7 @@
       @for (student of archivedStudents; track student) {
         <mat-list-item class="student-info" (click)=studentDetail(student)>
           <p class="student-name"><span>{{ student.user?.firstname }} {{ student.user?.lastname }}</span><mat-icon>{{student.isTandem ? "people" : "person"}}</mat-icon></p>
-          <p>{{ 'student.lastflight'| translate }}: {{ student.lastFlight?.date | date:'dd.MM.YYYY' }}</p>
+          <p>{{ 'student.lastflight'| translate }}: {{ student.lastFlight?.date | date:'dd.MM.yyyy' }}</p>
           <p>{{ 'student.amountofflights'| translate }}: {{ student.statistic?.nbFlights }}</p>
           <p>{{ 'student.flight.glider'| translate }}: {{ student.lastFlight?.glider?.brand }} {{
           student.lastFlight?.glider?.name }}</p>

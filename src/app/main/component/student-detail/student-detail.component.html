@@ -20,7 +20,7 @@
       </mat-expansion-panel-header>
       @if (student.statistic) {
         <div class="basic-stat">
-          <div><label>{{ 'student.lastflight'| translate }}:</label><span>{{ student.lastFlight?.date | date:'dd.MM.YYYY' }}</span></div>
+          <div><label>{{ 'student.lastflight'| translate }}:</label><span>{{ student.lastFlight?.date | date:'dd.MM.yyyy' }}</span></div>
           <div><label>{{ 'student.flight.glider'| translate }}:</label><span>{{ student.lastFlight?.glider?.brand }} {{ student.lastFlight?.glider?.name }}</span></div>
           <div><label>{{ 'student.amountofflights'| translate }}:</label><span id="nbFlights">{{ student.statistic.nbFlights || "0" }}</span></div>
           <div><label>{{ 'student.flighthour'| translate }}:</label><span>{{ student.statistic.time || "0" | hoursFormat }}</span></div>
@@ -32,7 +32,7 @@
       <mat-expansion-panel-header>
         <mat-panel-title><h3>{{ 'controlSheet.level.title'| translate }}</h3></mat-panel-title>
       </mat-expansion-panel-header>
-      <fb-level [level]="controlSheet?.level" (saveLevelEvent)="saveControlSheet()"></fb-level>
+      <fb-level [level]="controlSheet?.level" (saveLevelEvent)="saveControlSheet(controlSheet)"></fb-level>
     </mat-expansion-panel>
     <mat-expansion-panel class='card'>
       <mat-expansion-panel-header>
@@ -45,7 +45,7 @@
         <mat-expansion-panel-header>
           <mat-panel-title><h3>{{ 'controlSheet.title'| translate }}</h3></mat-panel-title>
         </mat-expansion-panel-header>
-        <fb-control-sheet [controlSheet]="controlSheet" (saveControlSheetEvent)="saveControlSheet()"></fb-control-sheet>
+        <fb-control-sheet [controlSheet]="controlSheet" (saveControlSheetEvent)="saveControlSheet($event)"></fb-control-sheet>
       </mat-expansion-panel>
     }
     <mat-expansion-panel class='card'>
