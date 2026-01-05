@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
@@ -50,6 +50,7 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
   @ViewChild('draggableEvents') draggableEvents: ElementRef | undefined;
   calendarApi: Calendar | undefined;
   draggable: any;
+  isCalendarTabActive = false;
 
   datePipe: DatePipe;
   calendarOptions: CalendarOptions = {
@@ -70,7 +71,8 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
     private studentListPDFService: StudentListPDFService,
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private cdr: ChangeDetectorRef
   ) {
     this.currentAppointmentFilter = this.schoolService.filter;
     this.appointments = [];
@@ -116,6 +118,9 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
         }
         if (appointmentTypes.length > 0) {
           this.displayedColumns.push('type');
+        }
+        if (this.isCalendarTabActive) {
+          this.initializeDraggable();
         }
       });
     }
@@ -257,18 +262,17 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
 
   tabChanged(tabChangeEvent: MatTabChangeEvent) {
     if (tabChangeEvent.index === 1) {
-      // Make the element draggable
-      if (this.draggableEvents?.nativeElement) {
-        this.draggable = new Draggable(this.draggableEvents?.nativeElement, {
-          itemSelector: '.draggable-event-item',
-          eventData: function (eventEl) {
-            return {
-              title: eventEl.innerText
-            };
-          }
-        });
+      this.isCalendarTabActive = true;
+      if (this.appointmentTypes.length > 0) {
+        this.initializeDraggable();
       }
     } else {
+      this.isCalendarTabActive = false;
+      // Destroy draggable when leaving calendar tab since DOM will be recreated
+      if (this.draggable) {
+        this.draggable.destroy();
+        this.draggable = null;
+      }
       if (!this.school?.id) {
         return;
       }
@@ -277,6 +281,57 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
       this.schoolService.limit = 10;
       this.loadAppointments(this.school?.id);
     }
+  }
+
+  initializeDraggable() {
+    // Destroy existing instance if it exists
+    if (this.draggable) {
+      this.draggable.destroy();
+      this.draggable = null;
+    }
+
+    // Use requestAnimationFrame to wait for the next render cycle
+    requestAnimationFrame(() => {
+      this.cdr.detectChanges();
+      
+      // Try to get the element, if not available, use MutationObserver
+      const draggableEl = document.getElementById('draggable-events');
+      if (draggableEl) {
+        this.createDraggable(draggableEl);
+      } else {
+        // Element not yet in DOM, observe for it
+        this.observeForDraggableElement();
+      }
+    });
+  }
+
+  private observeForDraggableElement() {
+    const observer = new MutationObserver((mutations, obs) => {
+      const draggableEl = document.getElementById('draggable-events');
+      if (draggableEl) {
+        this.createDraggable(draggableEl);
+        obs.disconnect();
+      }
+    });
+
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true
+    });
+
+    // Disconnect after 5 seconds to prevent memory leaks
+    setTimeout(() => observer.disconnect(), 5000);
+  }
+
+  private createDraggable(element: HTMLElement) {
+    this.draggable = new Draggable(element, {
+      itemSelector: '.draggable-event-item',
+      eventData: function (eventEl) {
+        return {
+          title: eventEl.innerText
+        };
+      }
+    });
   }
 
   handleCalendarEventClick(arg: EventClickArg) {
@@ -293,12 +348,24 @@ export class AppointmentsComponent implements OnInit, OnDestroy, AfterViewInit {
 
     const schoolId = this.school.id;
     const appointment = new Appointment();
-    appointment.scheduling = moment(arg.event.start).utc().hours(8).minutes(0).seconds(0).millisecond(0).toDate();
+    const schedulingMoment = moment(arg.event.start).utc().hours(8).minutes(0).seconds(0).millisecond(0);
     appointment.state = State.ANNOUNCED;
     appointment.type = this.appointmentTypes.find((appointmentType: AppointmentType) => appointmentType.name == arg.event.title);
     appointment.meetingPoint = appointment.type?.meetingPoint;
     appointment.maxPeople = appointment.type?.maxPeople;
     appointment.instructor = appointment.type?.instructor;
+    if (appointment.type?.time) {
+      const [hours, minutes] = appointment.type.time.split(':');
+      schedulingMoment.hours(parseInt(hours)).minutes(parseInt(minutes));
+    }
+
+    if (appointment.type?.deadlineOffsetHours) {
+      const deadline = schedulingMoment.clone();
+      deadline.subtract(appointment.type.deadlineOffsetHours, 'hours');
+      appointment.deadline = deadline.toDate();
+    }
+    
+    appointment.scheduling = schedulingMoment.toDate();
     this.schoolService.postAppointment(schoolId, appointment).pipe(takeUntil(this.unsubscribe$)).subscribe((appointment: Appointment) => {
       this.loadAppointments(schoolId);
     });

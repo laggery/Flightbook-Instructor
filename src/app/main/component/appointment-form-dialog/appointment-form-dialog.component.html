@@ -97,7 +97,7 @@
       </button>
       <mat-form-field class="subscription-form-field">
         <mat-label>{{ 'appointment.student'| translate }}</mat-label>
-        <mat-select #selectStudent FormArrayName="subscriptions" formControlName="user" (selectionChange)="selected()">
+        <mat-select #selectStudent formControlName="user" (selectionChange)="selected()">
           @for (student of students; track student) {
             @if (subscription.value.user === student.user?.email || !isSelected(student.user?.email)) {
               <mat-option [value]="student.user?.email">

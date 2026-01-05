@@ -42,7 +42,6 @@ export class ControlSheetComponent implements OnInit {
   }
 
   saveExamTheory(value: Date) {
-    console.log(value);
     if (this.controlSheet) {
       // Convert local date to UTC date (preserving the date components)
       const localDate = moment(value);
