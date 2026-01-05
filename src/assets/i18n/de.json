@@ -290,6 +290,8 @@
         "list": "Liste",
         "new": "Neuer Termin",
         "dateTime": "Datum und Zeit",
+        "date": "Datum",
+        "time": "Zeit",
         "deadline": "An / Abmeldefrist",
         "meetingPoint": "Treffpunkt",
         "maxPeople": "Max Teilnehmer*in",

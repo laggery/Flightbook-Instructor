@@ -6,6 +6,7 @@ import { StudentService } from 'src/app/core/services/student.service';
 import { Note } from 'src/app/shared/domain/note';
 import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 import { Student } from 'src/app/shared/domain/student';
+import moment from 'moment';
 
 @Component({
     selector: 'fb-student-note',
@@ -75,9 +76,18 @@ export class StudentNoteComponent implements OnDestroy, OnChanges {
 
   saveNote() {
     if (this.form.valid) {
+      // Convert local date to UTC date (preserving the date components)
+      const dateValue = this.form.get('date')?.value;
+      const localDate = moment(dateValue);
+      const utcDate = moment.utc({
+        year: localDate.year(),
+        month: localDate.month(),
+        date: localDate.date()
+      });
+
       if (this.mode == 'new') {
         const note = new Note();
-        note.date = this.form.get('date')?.value;
+        note.date = utcDate.toDate();
         note.title = this.form.get('title')?.value;
         note.text = this.form.get('text')?.value;
         this.studentService.postNotesByStudentId(this.student?.id!, note).pipe(takeUntil(this.unsubscribe$)).subscribe((note: Note) => {
@@ -86,7 +96,7 @@ export class StudentNoteComponent implements OnDestroy, OnChanges {
       } else {
           const note = this.notes.find((note: Note) => note.id == this.form.get('id')?.value);
           if (note){
-            note.date = this.form.get('date')?.value;
+            note.date = utcDate.toDate();
             note.title = this.form.get('title')?.value;
             note.text = this.form.get('text')?.value;
             this.studentService.putNotesByStudentId(this.student?.id!, note).pipe(takeUntil(this.unsubscribe$)).subscribe((note: Note) => {

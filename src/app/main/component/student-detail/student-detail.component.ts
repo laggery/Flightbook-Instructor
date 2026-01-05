@@ -115,11 +115,11 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  saveControlSheet() {
-    if (!this.student?.id || !this.controlSheet) {
+  saveControlSheet(controlSheet?: ControlSheet) {
+    if (!this.student?.id || !controlSheet) {
       return;
     }
-    this.studentService.postControlSheetByStudentId(this.student?.id, this.controlSheet).pipe(takeUntil(this.unsubscribe$)).subscribe((controlSheet: ControlSheet) => {
+    this.studentService.postControlSheetByStudentId(this.student?.id, controlSheet).pipe(takeUntil(this.unsubscribe$)).subscribe((controlSheet: ControlSheet) => {
       this.controlSheet = controlSheet;
     });
   }

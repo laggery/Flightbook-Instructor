@@ -1,7 +1,6 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { FormControl, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { validColorValidator } from 'ngx-colors';
 import { AppointmentType } from 'src/app/shared/domain/appointment-type-dto';
 import { User } from 'src/app/shared/domain/user';
 
@@ -32,8 +31,7 @@ export class AppointmentTypeDialogComponent implements OnInit {
         name: [this.appointmentType.name, Validators.required],
         meetingPoint: [this.appointmentType.meetingPoint, Validators.nullValidator],
         maxPeople: [this.appointmentType.maxPeople, Validators.nullValidator],
-        color: new FormControl(this.appointmentType.color, validColorValidator()),
-        pickerCtrl: new FormControl(this.appointmentType.color || "#3880ff"),
+        color: [this.appointmentType.color || "#3880ff", Validators.nullValidator],
         instructor: [this.appointmentType.instructor?.email, Validators.nullValidator],
         time: [this.appointmentType.time, Validators.nullValidator],
         deadlineDays: [days > 0 ? days : null, Validators.nullValidator],
@@ -41,20 +39,7 @@ export class AppointmentTypeDialogComponent implements OnInit {
       });
     }
 
-  ngOnInit(): void {
-    this.form.controls["color"].valueChanges.subscribe((color) => {
-      if (this.form.controls["pickerCtrl"].valid) {
-        this.form.controls["pickerCtrl"].setValue(color, {
-          emitEvent: false,
-        });
-      }
-    }); 
-    this.form.controls["pickerCtrl"].valueChanges.subscribe((color) =>
-      this.form.controls["color"].setValue(color, {
-        emitEvent: false,
-      })
-    );
-  }
+  ngOnInit(): void {}
 
   onCancel() {
     this.dialogRef.close({ event: "cancel" });

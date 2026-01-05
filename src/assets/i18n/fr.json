@@ -290,6 +290,8 @@
         "list": "Liste",
         "new": "Nouveau rendez-vous",
         "dateTime": "Date et heure",
+        "date": "Date",
+        "time": "Heure",
         "deadline": "Délai d'inscription",
         "meetingPoint": "Point de rencontre",
         "maxPeople": "Max participants",

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { AccountService } from '../../core/services/account.service';
-import { CommonModule } from '@angular/common';
+
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -19,11 +19,10 @@ interface PasswordForm {
   styleUrls: ['./password.component.scss'],
   standalone: true,
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     TranslateModule,
     SharedModule
-  ]
+]
 })
 export class PasswordComponent implements OnInit {
   passwordForm: FormGroup<PasswordForm>;
