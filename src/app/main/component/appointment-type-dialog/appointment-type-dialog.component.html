@@ -9,15 +9,7 @@
   </mat-form-field>
   <mat-form-field>
     <mat-label>{{ 'appointmentType.color' | translate }}</mat-label>
-    <input matInput formControlName="color" />
-    <ngx-colors
-      class="suffix"
-      matSuffix
-      ngx-colors-trigger
-      formControlName="pickerCtrl"
-      acceptLabel="{{ 'buttons.done'| translate }}"
-      cancelLabel="{{ 'buttons.cancel'| translate }}"
-    ></ngx-colors>
+    <input matInput type="color" formControlName="color" />
     @if (this.form.controls['color'].hasError('invalidColor')) {
       <mat-error
         >

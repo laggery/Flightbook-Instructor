@@ -21,7 +21,12 @@
       <ng-container matColumnDef="color">
         <th mat-header-cell *matHeaderCellDef>{{ 'appointmentType.color'| translate }}</th>
         <td mat-cell *matCellDef="let element">
-          <ngx-colors ngx-colors-trigger [ngModel]="element.color || '#3880ff'" (ngModelChange)="changeColor($event, element)"></ngx-colors>
+          <input 
+            type="color" 
+            class="color-picker-circle"
+            [value]="element.color || '#3880ff'" 
+            (change)="changeColor($event.target.value, element)"
+          />
         </td>
       </ng-container>
 
