@@ -73,7 +73,7 @@ export class StudentsComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
-  syncStudentList(archived: boolean) {
+  syncStudentList(archived: boolean, onlyChangeStatistics: boolean = false) {
     if (this.school?.id) {
       this.schoolService.getStudentsBySchoolId(this.school.id, archived).pipe(takeUntil(this.unsubscribe$)).subscribe((students: Student[]) => {
         if (archived) {
@@ -82,7 +82,16 @@ export class StudentsComponent implements OnInit, OnDestroy {
         } else {
           this.students = students
           this.selectSort(this.sortBy);
-          this.selectedStudent = this.students[0];
+          if (onlyChangeStatistics) {
+            // Only update statistic and last flight without changing the selected student
+            const student = this.students.find((student: Student) => student.id === this.selectedStudent?.id);
+            if (student) {
+              this.selectedStudent!.statistic = student.statistic;
+              this.selectedStudent!.lastFlight = student.lastFlight;
+            }
+          } else {
+            this.selectedStudent = this.students[0];
+          }
         }
       })
     }
@@ -92,12 +101,11 @@ export class StudentsComponent implements OnInit, OnDestroy {
     if (this.selectedStudent?.countNotValidatedFlights == undefined) {
       return;
     }
-    if (event == "validated") {
-      this.selectedStudent.countNotValidatedFlights--;
-    } else if (event == "validatedAll") {
-      this.selectedStudent.countNotValidatedFlights = 0;
+
+    if (this.tabGroup?.selectedIndex == 0) {
+      this.syncStudentList(false, true);
     } else {
-      this.selectedStudent.countNotValidatedFlights++;
+      this.syncStudentList(true, true);
     }
   }
 

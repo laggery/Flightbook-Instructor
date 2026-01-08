@@ -23,6 +23,8 @@
           <div><label>{{ 'student.lastflight'| translate }}:</label><span>{{ student.lastFlight?.date | date:'dd.MM.yyyy' }}</span></div>
           <div><label>{{ 'student.flight.glider'| translate }}:</label><span>{{ student.lastFlight?.glider?.brand }} {{ student.lastFlight?.glider?.name }}</span></div>
           <div><label>{{ 'student.amountofflights'| translate }}:</label><span id="nbFlights">{{ student.statistic.nbFlights || "0" }}</span></div>
+          <div><label>{{ 'student.nbStartplaces' | translate }}:</label><span id="nbStartplaces">{{ student.statistic.nbStartplaces || "0" }}</span></div>
+          <div><label>{{ 'student.nbLandingplaces' | translate }}:</label><span id="nbLandingplaces">{{ student.statistic.nbLandingplaces || "0" }}</span></div>
           <div><label>{{ 'student.flighthour'| translate }}:</label><span>{{ student.statistic.time || "0" | hoursFormat }}</span></div>
           <div><label>{{ 'student.average'| translate }}:</label><span>{{ student.statistic.average || "0" | hoursFormat }}</span></div>
         </div>

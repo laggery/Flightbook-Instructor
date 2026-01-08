@@ -79,6 +79,8 @@
         "addStudent": "Ajouter un élève",
         "archiveStudentMessage": "Veux-tu vraiment archiver $REPLACE_NAME?",
         "amountofflights": "Nb. de vols",
+        "nbStartplaces": "Nb. décollages",
+        "nbLandingplaces": "Nb. atterrissages",
         "lastflight": "Dernier vol",
         "flighthour": "Heures de vol",
         "average": "Temps moyen",

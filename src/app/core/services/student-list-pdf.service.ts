@@ -285,7 +285,7 @@ export class StudentListPDFService {
         { width: 10, image: 'unchecked'},
         { width: 10, image: 'unchecked', fillColor: '#d9d9d9'},
         { stack: [
-          {text:`${student.lastNote ? this.datePipe.transform(student.lastNote?.date, 'dd.MM.yyyy') :''} // ${student.statistic?.nbFlights} ${this.translate.instant('export.flights')}`, bold: true },
+          {text:`${student.lastNote ? this.datePipe.transform(student.lastNote?.date, 'dd.MM.yyyy') + " //" :''} ${student.statistic ? student.statistic?.nbFlights + " " + this.translate.instant('export.flights') : ""}`, bold: true },
           {text:`${student.lastNote ? student.lastNote?.text :''}`, fontSize: 8},
         ]},
       ]);

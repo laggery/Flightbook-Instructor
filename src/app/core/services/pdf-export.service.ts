@@ -27,7 +27,13 @@ export class PdfExportService {
     let aloneFlights: any = [];
     let startPlaces = new Set();
     let landingPlaces = new Set();
+
+    let flightNumer = 0;
     flights.forEach((flight: Flight) => {
+
+      // Override flight number
+      flightNumer++;
+      flight.number = flightNumer;
 
       if (flight.start && flight.start.name) {
         startPlaces.add(JSON.stringify(flight.start));

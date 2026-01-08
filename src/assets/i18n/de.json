@@ -79,6 +79,8 @@
         "addStudent": "Schüler hinzufügen",
         "archiveStudentMessage": "Möchtest du $REPLACE_NAME wirklich archivieren?",
         "amountofflights": "Anzahl Flüge",
+        "nbStartplaces": "Anzahl Startplätze",
+        "nbLandingplaces": "Anzahl Landeplätze",
         "lastflight": "Letzter Flug",
         "flighthour": "Flugstunden",
         "average": "Durchschnittszeit",
