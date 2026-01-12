@@ -35,14 +35,14 @@
                 <mat-icon matBadge="{{student.countNotValidatedFlights}}" matBadgeColor="warn" matBadgePosition="above after" matBadgeSize="small" aria-hidden="false">{{student.isTandem ? "people" : "person"}}</mat-icon>
               } @else {
                 <mat-icon 
-                [class.exam-ready]="student.statistic && student.statistic.nbFlights && student.statistic.nbFlights > 50 && student.statistic.nbStartplaces && student.statistic.nbStartplaces >=5 && student.statistic.nbLandingplaces && student.statistic.nbLandingplaces >=5">
+                [class.exam-ready]="student.statistic && student.statistic.nbFlights && student.statistic.nbFlights > 50 && student.statistic.nbStartplaces && student.statistic.nbStartplaces >=5 && student.statistic.nbLandingplaces && student.statistic.nbLandingplaces >=5 && student.statistic.nbFlightsAlone && student.statistic.nbFlightsAlone >=1 && student.controlSheet && student.controlSheet.passTheoryExam">
                 {{student.isTandem ? "people" : "person"}}
               </mat-icon>
               }
             </p>
           } @else{
             <p class="student-name"><span>{{ student.user?.firstname }} {{ student.user?.lastname }}</span>
-              <mat-icon [class.exam-ready]="student.statistic && student.statistic.nbFlights && student.statistic.nbFlights > 50 && student.statistic.nbStartplaces && student.statistic.nbStartplaces >=5 && student.statistic.nbLandingplaces && student.statistic.nbLandingplaces >=5">
+              <mat-icon [class.exam-ready]="student.statistic && student.statistic.nbFlights && student.statistic.nbFlights > 50 && student.statistic.nbStartplaces && student.statistic.nbStartplaces >=5 && student.statistic.nbLandingplaces && student.statistic.nbLandingplaces >=5 && student.statistic.nbFlightsAlone && student.statistic.nbFlightsAlone >=1 && student.controlSheet && student.controlSheet.passTheoryExam">
                 {{student.isTandem ? "people" : "person"}}
               </mat-icon>
             </p>

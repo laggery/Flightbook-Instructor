@@ -38,7 +38,6 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   @ViewChild('paginator') paginator: MatPaginator | undefined;
 
   displayedColumns: string[] = ['nb', 'date', 'start', 'landing', 'glider', 'time', 'km', 'description', 'alone'];
-  controlSheet: ControlSheet | undefined;
   emergencyContact: EmergencyContact = new EmergencyContact();
   @ViewChild('table', { read: ElementRef }) table: ElementRef | undefined;
   unsubscribe$ = new Subject<void>();
@@ -72,9 +71,6 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['student'] && changes['student'].currentValue) {
       this.loadStudentFLights(changes['student'].currentValue.id);
-      this.studentService.getControlSheetByStudentId(changes['student'].currentValue.id).pipe(takeUntil(this.unsubscribe$)).subscribe((controlSheet: ControlSheet) => {
-        this.controlSheet = controlSheet;
-      });
       this.studentService.getEmergencyContactsByStudentId(changes['student'].currentValue.id).pipe(takeUntil(this.unsubscribe$)).subscribe((emergencyContacts: EmergencyContact[]) => {
         if (emergencyContacts?.length > 0) {
           this.emergencyContact = emergencyContacts[0];
@@ -120,7 +116,7 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
       return;
     }
     this.studentService.postControlSheetByStudentId(this.student?.id, controlSheet).pipe(takeUntil(this.unsubscribe$)).subscribe((controlSheet: ControlSheet) => {
-      this.controlSheet = controlSheet;
+      this.student!.controlSheet = controlSheet;
     });
   }
 
@@ -166,6 +162,15 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
 
   changeAloneValue(flight: Flight) {
     this.studentService.putFlightByStudentId(this.student?.id!, flight).pipe(takeUntil(this.unsubscribe$)).subscribe((flight: Flight) => {
+      if (flight.shvAlone) {
+        if (!this.student!.statistic!.nbFlightsAlone) {
+          this.student!.statistic!.nbFlightsAlone = 0;
+        }
+        this.student!.statistic!.nbFlightsAlone++;
+      } else if (this.student?.statistic?.nbFlightsAlone) {
+        this.student!.statistic!.nbFlightsAlone--;
+      }
+      
       this.snackBar.open(this.translate.instant('message.changeSaved'), this.translate.instant('buttons.done'), {
         horizontalPosition: 'center',
         verticalPosition: 'top',

@@ -81,6 +81,7 @@
         "amountofflights": "Anzahl Flüge",
         "nbStartplaces": "Anzahl Startplätze",
         "nbLandingplaces": "Anzahl Landeplätze",
+        "nbFlightsAlone": "Anzahl Alleinflüge",
         "lastflight": "Letzter Flug",
         "flighthour": "Flugstunden",
         "average": "Durchschnittszeit",

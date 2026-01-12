@@ -81,6 +81,7 @@
         "amountofflights": "Nb. de vols",
         "nbStartplaces": "Nb. décollages",
         "nbLandingplaces": "Nb. atterrissages",
+        "nbFlightsAlone": "Nb. vols solo",
         "lastflight": "Dernier vol",
         "flighthour": "Heures de vol",
         "average": "Temps moyen",

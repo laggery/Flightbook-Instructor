@@ -25,6 +25,7 @@
           <div><label>{{ 'student.amountofflights'| translate }}:</label><span id="nbFlights">{{ student.statistic.nbFlights || "0" }}</span></div>
           <div><label>{{ 'student.nbStartplaces' | translate }}:</label><span id="nbStartplaces">{{ student.statistic.nbStartplaces || "0" }}</span></div>
           <div><label>{{ 'student.nbLandingplaces' | translate }}:</label><span id="nbLandingplaces">{{ student.statistic.nbLandingplaces || "0" }}</span></div>
+          <div><label>{{ 'student.nbFlightsAlone' | translate }}:</label><span id="nbFlightsAlone">{{ student.statistic.nbFlightsAlone || "0" }}</span></div>
           <div><label>{{ 'student.flighthour'| translate }}:</label><span>{{ student.statistic.time || "0" | hoursFormat }}</span></div>
           <div><label>{{ 'student.average'| translate }}:</label><span>{{ student.statistic.average || "0" | hoursFormat }}</span></div>
         </div>
@@ -34,7 +35,7 @@
       <mat-expansion-panel-header>
         <mat-panel-title><h3>{{ 'controlSheet.level.title'| translate }}</h3></mat-panel-title>
       </mat-expansion-panel-header>
-      <fb-level [level]="controlSheet?.level" (saveLevelEvent)="saveControlSheet(controlSheet)"></fb-level>
+      <fb-level [level]="student.controlSheet?.level" (saveLevelEvent)="saveControlSheet(student.controlSheet)"></fb-level>
     </mat-expansion-panel>
     <mat-expansion-panel class='card'>
       <mat-expansion-panel-header>
@@ -42,12 +43,12 @@
       </mat-expansion-panel-header>
       <fb-student-note [student]="student"></fb-student-note>
     </mat-expansion-panel>
-    @if ((student.isArchived && controlSheet) || !student.isArchived) {
+    @if ((student.isArchived && student.controlSheet) || !student.isArchived) {
       <mat-expansion-panel class='card'>
         <mat-expansion-panel-header>
           <mat-panel-title><h3>{{ 'controlSheet.title'| translate }}</h3></mat-panel-title>
         </mat-expansion-panel-header>
-        <fb-control-sheet [controlSheet]="controlSheet" (saveControlSheetEvent)="saveControlSheet($event)"></fb-control-sheet>
+        <fb-control-sheet [controlSheet]="student.controlSheet" (saveControlSheetEvent)="saveControlSheet($event)"></fb-control-sheet>
       </mat-expansion-panel>
     }
     <mat-expansion-panel class='card'>
