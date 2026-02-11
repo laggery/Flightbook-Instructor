@@ -1,0 +1,20 @@
+@if (tandemPilot) {
+  <div class='data'>
+    @if (isMobile()) {
+      <button class="menu-button" mat-mini-fab color="primary" (click)=backButton()>
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+    }
+    <h2>{{ tandemPilot.user?.firstname }} {{ tandemPilot.user?.lastname }}
+      <div class="icon-list">
+        @if (!tandemPilot.isArchived) {
+          <mat-icon color="warn" class="archive-tandem-pilot" (click)="archiveTandemPilot()">archive</mat-icon>
+        }
+      </div>
+    </h2>
+  </div>
+} @else {
+  <div class='data'>
+    <p>{{ 'tandemPilot.noTandemPilotSelected'| translate }}</p>
+  </div>
+}

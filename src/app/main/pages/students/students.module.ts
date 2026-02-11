@@ -18,7 +18,6 @@ import { LevelComponent } from '../../component/level/level.component';
   declarations: [
     StudentsComponent,
     StudentDetailComponent,
-    EmailDialogComponent,
     ControlSheetComponent,
     LevelComponent,
     StudentNoteComponent,
@@ -31,7 +30,8 @@ import { LevelComponent } from '../../component/level/level.component';
     TranslateModule.forChild(),
     SharedModule,
     StudentsRoutingModule,
-    FormsModule
+    FormsModule,
+    EmailDialogComponent
   ]
 })
 export class StudentsModule { }

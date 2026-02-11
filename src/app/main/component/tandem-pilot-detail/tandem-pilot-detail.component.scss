@@ -1,0 +1,33 @@
+.data {
+    padding: 16px;
+}
+
+h2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+}
+
+.icon-list {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.archive-tandem-pilot {
+    cursor: pointer;
+}
+
+.menu-button {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    z-index: 10;
+}
+
+@media only screen and (max-width: 768px) {
+    h2 {
+        margin-top: 56px;
+    }
+}

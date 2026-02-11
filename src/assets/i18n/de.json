@@ -4,6 +4,7 @@
     "menu": {
         "students": "Schüler",
         "appointments": "Termine",
+        "tandemPilots": "Tandempiloten",
         "team": "Team",
         "configuration": "Konfiguration"
     },
@@ -124,6 +125,13 @@
             "nbFlightsAsc": "Anzahl Flüge (aufsteigend)",
             "nbFlightsDesc": "Anzahl Flüge (absteigend)"
         }
+    },
+    "tandemPilot": {
+        "addTandemPilot": "Tandempilot hinzufügen",
+        "archiveTandemPilotMessage": "Möchtest du $REPLACE_NAME wirklich archivieren?",
+        "actif": "Aktiv",
+        "archived": "Archiviert",
+        "noTandemPilotSelected": "Kein Tandempilot wurde ausgewählt."
     },
     "studentList": {
         "date": "Datum",

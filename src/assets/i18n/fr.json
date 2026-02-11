@@ -4,6 +4,7 @@
     "menu" : {
         "students": "Élèves",
         "appointments": "Rendez-vous",
+        "tandemPilots": "Pilote biplace",
         "team": "Équipe",
         "configuration": "Configuration"
     },
@@ -124,6 +125,13 @@
             "nbFlightsAsc": "Nombre de vols (ascendant)",
             "nbFlightsDesc": "Nombre de vols (descendant)"
         }
+    },
+    "tandemPilot": {
+        "addTandemPilot": "Ajouter un pilote biplace",
+        "archiveTandemPilotMessage": "Veux-tu vraiment archiver $REPLACE_NAME?",
+        "actif": "Actif",
+        "archived": "Archivé",
+        "noTandemPilotSelected": "Aucun pilote biplace n'a été sélectionné."
     },
     "studentList": {
         "date": "Date",

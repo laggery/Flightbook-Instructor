@@ -13,6 +13,7 @@ import { TeamMember } from 'src/app/shared/domain/team-member';
 import { School } from 'src/app/shared/domain/school';
 import { AppointmentType } from 'src/app/shared/domain/appointment-type-dto';
 import { SchoolConfiguration } from 'src/app/shared/domain/school-configuration';
+import { TandemPilot } from 'src/app/shared/domain/tandem-pilot';
 
 @Injectable({
   providedIn: 'root'
@@ -45,12 +46,24 @@ export class SchoolService {
     return this.http.get<Student[]>(`${environment.baseUrl}/instructor/schools/${id}/students/archived`);
   }
 
+  getTandemPilotsBySchoolId(id: number, archived: boolean): Observable<TandemPilot[]> {
+    let params = new HttpParams();
+    if (archived !== undefined) {
+      params = params.append('archived', archived);
+    }
+    return this.http.get<TandemPilot[]>(`${environment.baseUrl}/instructor/schools/${id}/tandem-pilots`, { params });
+  }
+
   getTeamMembers(id: number): Observable<TeamMember[]> {
     return this.http.get<TeamMember[]>(`${environment.baseUrl}/instructor/schools/${id}/team-members`);
   }
 
   postStudentsEnrollment(id: number, email: string) {
     return this.http.post<Enrollment>(`${environment.baseUrl}/instructor/schools/${id}/students/enrollment`, { email: email });
+  }
+
+  postTandemPilotEnrollment(id: number, email: string) {
+    return this.http.post<Enrollment>(`${environment.baseUrl}/instructor/schools/${id}/tandem-pilots/enrollment`, { email: email });
   }
 
   postTeamMemberEnrollment(id: number, email: string) {
