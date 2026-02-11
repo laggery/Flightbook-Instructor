@@ -69,8 +69,11 @@
         "wrongToken": "Ce token n'existe pas ou n'est pas valide",
         "payment": "Paiement",
         "paymentInformation": "Le carnet de vol coûte 12.- par an <br>Pour que le carnet de vol puisse être partagé avec une école, tu dois régler ce paiement.",
+        "tandemPaymentInformation": "Vous pouvez enregistrer jusqu’à 25 vols gratuitement. <br>Pour une utilisation illimitée, la cotisation annuelle s’élève à CHF 12.–. <br>Le paiement n’est actuellement pas requis.",
         "paymentResilation": "Une résiliation est possible à la fin de chaque année. Tu en seras informé(e) par e-mail 30 jours avant.",
-        "paymentButton": "Payer"
+        "paymentButton": "Payer",
+        "accessTandemFlights": "souhaite avoir accès aux vols biplaces qui sont liés à l'école.",
+        "hasTandemAccess": "a désormais accès aux vols biplaces"
     },
     "error": {
         "title": "Erreur"
@@ -293,7 +296,8 @@
         "yes": "Oui",
         "no": "Non",
         "change_password": "Changer le mot de passe",
-        "export": "Exporter"
+        "export": "Exporter",
+        "skip": "Passer"
     },
     "appointment": {
         "appointment": "Rendez-vous",

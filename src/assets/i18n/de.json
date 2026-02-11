@@ -69,8 +69,11 @@
         "wrongToken": "Dieses Token gibt es nicht oder ist ungültig",
         "payment": "Zahlung",
         "paymentInformation": "Das Flugbuch kostet pro Jahr 12.- <br>Damit das Flugbuch mit einer Flugschule geteilt werden kann, musst du diese Zahlung begleichen.",
+        "tandemPaymentInformation": "Sie können bis zu 25 Flüge kostenlos registrieren. <br>Für die uneingeschränkte Nutzung beträgt die Jahresgebühr CHF 12.–. <br>Eine Zahlung ist aktuell nicht erforderlich.",
         "paymentResilation": "Eine Kündigung ist jeweils per Ende Jahr möglich, worüber du jeweils 30 Tage zuvor per Mail informiert wirst.",
-        "paymentButton": "Bezahlen"
+        "paymentButton": "Bezahlen",
+        "accessTandemFlights": "möchte Zugriff auf deine Tandemflüge haben welche mit der Flugschule verknüpft sind.",
+        "hasTandemAccess": "hat nun Einsicht in deine Tandemflüge"
     },
     "error": {
         "title": "Fehler"
@@ -293,7 +296,8 @@
         "yes": "Ja",
         "no": "Nein",
         "change_password": "Passwort ändern",
-        "export": "Exportieren"
+        "export": "Exportieren",
+        "skip": "Überspringen"
     },
     "appointment": {
         "appointment": "Termin",

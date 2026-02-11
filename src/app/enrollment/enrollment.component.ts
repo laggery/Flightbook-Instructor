@@ -75,6 +75,9 @@ export class EnrollmentComponent implements OnInit, OnDestroy {
       if (status?.active && this.enrollment?.type == EnrollmentType.STUDENT) {
         stepper.next();
       }
+      if (status?.active && this.enrollment?.type == EnrollmentType.TANDEM_PILOT) {
+        stepper.next();
+      }
     }
   }
 
