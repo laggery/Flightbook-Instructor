@@ -14,6 +14,8 @@ import { School } from 'src/app/shared/domain/school';
 import { AppointmentType } from 'src/app/shared/domain/appointment-type-dto';
 import { SchoolConfiguration } from 'src/app/shared/domain/school-configuration';
 import { TandemPilot } from 'src/app/shared/domain/tandem-pilot';
+import { PassengerConfirmation } from 'src/app/shared/domain/passenger-confirmation';
+import { Flight } from 'src/app/shared/domain/flight';
 
 @Injectable({
   providedIn: 'root'
@@ -46,14 +48,6 @@ export class SchoolService {
     return this.http.get<Student[]>(`${environment.baseUrl}/instructor/schools/${id}/students/archived`);
   }
 
-  getTandemPilotsBySchoolId(id: number, archived: boolean): Observable<TandemPilot[]> {
-    let params = new HttpParams();
-    if (archived !== undefined) {
-      params = params.append('archived', archived);
-    }
-    return this.http.get<TandemPilot[]>(`${environment.baseUrl}/instructor/schools/${id}/tandem-pilots`, { params });
-  }
-
   getTeamMembers(id: number): Observable<TeamMember[]> {
     return this.http.get<TeamMember[]>(`${environment.baseUrl}/instructor/schools/${id}/team-members`);
   }
@@ -62,16 +56,12 @@ export class SchoolService {
     return this.http.post<Enrollment>(`${environment.baseUrl}/instructor/schools/${id}/students/enrollment`, { email: email });
   }
 
-  postTandemPilotEnrollment(id: number, email: string) {
-    return this.http.post<Enrollment>(`${environment.baseUrl}/instructor/schools/${id}/tandem-pilots/enrollment`, { email: email });
-  }
-
   postTeamMemberEnrollment(id: number, email: string) {
     return this.http.post<Enrollment>(`${environment.baseUrl}/instructor/schools/${id}/team-members/enrollment`, { email: email });
   }
 
   deleteTeamMember(id: number, teamMember: TeamMember) {
-    return this.http.delete<Enrollment>(`${environment.baseUrl}/instructor/schools/${id}/team-members/${teamMember.id}`);
+    return this.http.delete<TeamMember>(`${environment.baseUrl}/instructor/schools/${id}/team-members/${teamMember.id}`);
   }
 
   getAppointmentsBySchoolId({ limit = undefined, offset = undefined}: { limit?: number, offset?: number} = {}, id: number): Observable<PagerEntity<Appointment[]>> {
@@ -115,6 +105,36 @@ export class SchoolService {
 
   putAppointmentType(id: number, appointmentType: AppointmentType): Observable<AppointmentType> {
     return this.http.put<AppointmentType>(`${environment.baseUrl}/instructor/schools/${id}/appointment-types/${appointmentType.id}`, appointmentType);
+  }
+
+  // Tandem pilot requests
+  postTandemPilotEnrollment(id: number, email: string) {
+    return this.http.post<Enrollment>(`${environment.baseUrl}/schools/${id}/tandem-pilots/enrollment`, { email: email });
+  }
+
+  getTandemPilotsBySchoolId(id: number, archived: boolean): Observable<TandemPilot[]> {
+    let params = new HttpParams();
+    if (archived !== undefined) {
+      params = params.append('archived', archived);
+    }
+    return this.http.get<TandemPilot[]>(`${environment.baseUrl}/schools/${id}/tandem-pilots`, { params });
+  }
+
+  getPassengerConfirmationsBySchoolIdAndTandemPilotId({ limit = undefined, offset = undefined}: { limit?: number, offset?: number} = {}, id: number, tandemPilotId: number): Observable<PagerEntity<PassengerConfirmation[]>> {
+    let params: HttpParams = this.createFilterParams(limit, offset);
+    return this.http.get<PagerEntity<PassengerConfirmation[]>>(`${environment.baseUrl}/schools/${id}/tandem-pilots/${tandemPilotId}/passenger-confirmations`, { params });
+  }
+
+  getTandemPilotFlightsBySchoolIdAndTandemPilotId({ limit = undefined, offset = undefined}: { limit?: number, offset?: number} = {}, id: number, tandemPilotId: number): Observable<PagerEntity<Flight[]>> {
+    let params: HttpParams = this.createFilterParams(limit, offset);
+    return this.http.get<PagerEntity<Flight[]>>(`${environment.baseUrl}/schools/${id}/tandem-pilots/${tandemPilotId}/flights`, { params });
+  }
+
+  archiveTandemPilot(id: number, tandemPilot: TandemPilot) {
+    return this.http.delete<TandemPilot>(`${environment.baseUrl}/schools/${id}/tandem-pilots/${tandemPilot.id}`);
+  }
+  validateTandemPilotFlightSchoolIdAndStudentId(id: number, tandemPilot: TandemPilot, flight: Flight): Observable<Flight> {
+    return this.http.put<Flight>(`${environment.baseUrl}/schools/${id}/tandem-pilots/${tandemPilot.id}/flights/${flight.id}`, flight.tandemSchoolData);
   }
 
   private createFilterParams(limit: Number | undefined, offset: Number | undefined): HttpParams {

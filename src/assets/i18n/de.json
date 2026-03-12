@@ -113,8 +113,17 @@
                 "REJECTED": "Abgelehnt",
                 "PENDING": "Angefragt"
             },
+            "paymentState": {
+                "label": "Zahlungsstatus",
+                "amount": "Betrag",
+                "comment": "Kommentar",
+                "PAID": "Ausbezahlt",
+                "REJECTED": "Abgelehnt",
+                "PENDING": "Angefragt"
+            },
             "validationActions": "Aktionen",
-            "validateAll": "Alle Flüge im Status \"Angefragt\" validieren"
+            "validateAll": "Alle Flüge im Status \"Angefragt\" validieren",
+            "noData": "Keine Daten"
         },
         "phone": "Tel",
         "emergencyContact": "Notfallkontakt",
@@ -134,7 +143,19 @@
         "archiveTandemPilotMessage": "Möchtest du $REPLACE_NAME wirklich archivieren?",
         "actif": "Aktiv",
         "archived": "Archiviert",
-        "noTandemPilotSelected": "Kein Tandempilot wurde ausgewählt."
+        "noTandemPilotSelected": "Kein Tandempilot wurde ausgewählt.",
+        "passengerConfirmations": "Passagierbestätigungen"
+    },
+    "passengerConfirmation" : {
+        "date": "Datum",
+        "name": "Name",
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "place": "Ort",
+        "canUseData": "Werbung",
+        "noData": "Keine Daten",
+        "yes": "Ja",
+        "no": "Nein"
     },
     "studentList": {
         "date": "Datum",

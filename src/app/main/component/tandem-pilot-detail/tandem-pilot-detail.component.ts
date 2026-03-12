@@ -1,13 +1,26 @@
-import { Component, EventEmitter, Input, Output, Signal } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, Signal, SimpleChanges, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTableModule } from '@angular/material/table';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { TandemPilot } from 'src/app/shared/domain/tandem-pilot';
 import { School } from 'src/app/shared/domain/school';
+import { Flight } from 'src/app/shared/domain/flight';
 import { DeviceSizeService } from 'src/app/core/services/device-size.service';
-import { StudentService } from 'src/app/core/services/student.service';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Subject, takeUntil } from 'rxjs';
+import { SchoolService } from 'src/app/core/services/school.service';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { PassengerConfirmation } from 'src/app/shared/domain/passenger-confirmation';
+import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { TandemSchoolPaymentState } from 'src/app/shared/domain/tandem-school-payment-state';
+import { FormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { PaymentFormDialogComponent } from '../payment-form-dialog/payment-form-dialog.component';
 
 @Component({
   selector: 'fb-tandem-pilot-detail',
@@ -18,10 +31,18 @@ import { firstValueFrom } from 'rxjs';
     CommonModule,
     MatButtonModule,
     MatIconModule,
+    MatExpansionModule,
+    MatTableModule,
+    MatTooltipModule,
+    MatPaginatorModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    FormsModule,
     TranslateModule
   ]
 })
-export class TandemPilotDetailComponent {
+export class TandemPilotDetailComponent implements OnChanges {
   @Input()
   tandemPilot: TandemPilot | undefined;
 
@@ -31,15 +52,81 @@ export class TandemPilotDetailComponent {
   @Output() backButtonClick = new EventEmitter();
   @Output() removeUserButtonClick = new EventEmitter();
 
+  flights: Flight[] = [];
+  flightsPagerEntity: PagerEntity<Flight[]> = new PagerEntity<Flight[]>();
+
+  passengerConfirmations: PassengerConfirmation[] = [];
+  passengerConfirmationsPagerEntity: PagerEntity<PassengerConfirmation[]> = new PagerEntity<PassengerConfirmation[]>();
+  unsubscribe$ = new Subject<void>();
+
+  @ViewChild('passengerConfirmationsPaginator') passengerConfirmationsPaginator: MatPaginator | undefined;
+  @ViewChild('flightsPaginator') flightsPaginator: MatPaginator | undefined;
+
+  displayedFlightColumns: string[] = ['date', 'start', 'landing', 'time', 'description', 'paymentState', 'paymentAmount', 'paymentButtons'];
+  displayedPassengerColumns: string[] = ['date', 'name', 'place', 'phone', 'email', 'canUseData'];
+
+
   get isMobile(): Signal<boolean> {
     return this.deviceSize.isMobile;
   }
 
   constructor(
     private deviceSize: DeviceSizeService,
-    private studentService: StudentService,
-    private translate: TranslateService
+    private schoolService: SchoolService,
+    private translate: TranslateService,
+    private dialog: MatDialog
   ) {}
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['tandemPilot']  && changes['tandemPilot'].currentValue) {
+      this.loadFlights();
+      this.loadPassengerConfirmations(changes['tandemPilot'].currentValue.id);
+    }
+  }
+
+  loadFlights(offset: number | undefined = undefined, limit = 5) {
+    if (!this.tandemPilot?.id) return;
+
+    if (!offset && this.flightsPaginator) {
+      this.flightsPaginator.pageIndex = 0;
+    }
+    
+    this.schoolService.getTandemPilotFlightsBySchoolIdAndTandemPilotId({ limit, offset }, this.school!.id!, this.tandemPilot.id)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((pagerEntity) => {
+        this.flightsPagerEntity = pagerEntity;
+        this.flights = pagerEntity.entity || [];
+      });
+  }
+
+  loadPassengerConfirmations(tandemPilotId: number, offset: number | undefined = undefined, limit = 5) {
+    if (!offset && this.passengerConfirmationsPaginator) {
+      this.passengerConfirmationsPaginator.pageIndex = 0;
+    }
+    
+    this.schoolService.getPassengerConfirmationsBySchoolIdAndTandemPilotId({ limit, offset }, this.school!.id!, tandemPilotId)
+      .pipe(takeUntil(this.unsubscribe$))
+      .subscribe((pagerEntity) => {
+        this.passengerConfirmationsPagerEntity = pagerEntity;
+        if (pagerEntity.entity) {
+          this.passengerConfirmations = pagerEntity.entity;
+        }
+      });
+  }
+
+  handlePassengerConfirmationPage(event: any) {
+    let offset = event.pageIndex * event.pageSize;
+    if (this.tandemPilot?.id) {
+      this.loadPassengerConfirmations(this.tandemPilot?.id, offset, event.pageSize);
+    }
+  }
+
+  handleFlightsPage(event: any) {
+    let offset = event.pageIndex * event.pageSize;
+    if (this.tandemPilot?.id) {
+      this.loadFlights(offset, event.pageSize);
+    }
+  }
 
   backButton() {
     this.backButtonClick.emit();
@@ -55,8 +142,38 @@ export class TandemPilotDetailComponent {
       return;
     }
 
-    await firstValueFrom(this.studentService.archiveStudent(this.tandemPilot?.id));
+    await firstValueFrom(this.schoolService.archiveTandemPilot(this.school?.id!, this.tandemPilot!));
 
     this.removeUserButtonClick.emit("deleted");
+  }
+
+  payFlight(flight: Flight) {
+    const dialogRef = this.dialog.open(PaymentFormDialogComponent, {
+      width: '500px',
+      data: { flight }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && this.school?.id && this.tandemPilot?.id) {
+        flight.tandemSchoolData = {
+          paymentState: TandemSchoolPaymentState.PAID,
+          paymentAmount: result.amount,
+          paymentComment: result.comment
+        };
+
+        this.schoolService.validateTandemPilotFlightSchoolIdAndStudentId(
+          this.school.id,
+          this.tandemPilot,
+          flight
+        ).pipe(takeUntil(this.unsubscribe$))
+        .subscribe(() => {
+          this.loadFlights();
+        });
+      }
+    });
+  }
+
+  rejectPaymentFlight(flight: Flight) {
+    // open reject payment modal
   }
 }

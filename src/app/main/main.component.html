@@ -8,7 +8,9 @@
   <div class="toolbar-link" fxShow="true" fxHide.lt-md="true">
     <a mat-button [routerLink]="'/students'">{{ 'menu.students'| translate }}</a>
     <a mat-button [routerLink]="'/appointments'">{{ 'menu.appointments'| translate }}</a>
-    <a mat-button [routerLink]="'/tandem-pilots'">{{ 'menu.tandemPilots'| translate }}</a>
+    @if(selectedSchool?.configuration?.tandem) {
+      <a mat-button [routerLink]="'/tandem-pilots'">{{ 'menu.tandemPilots'| translate }}</a>
+    }
     <a mat-button [routerLink]="'/configuration'">{{ 'menu.configuration'| translate }}</a>
   </div>
   <span class="menu-spacer"></span>
@@ -46,6 +48,9 @@
     <mat-nav-list class="side-nav-menu">
       <a mat-list-item (click)="menuSidenav.toggle()" [routerLink]="'/students'">{{ 'menu.students'| translate }}</a>
       <a mat-list-item (click)="menuSidenav.toggle()" [routerLink]="'/appointments'">{{ 'menu.appointments'| translate }}</a>
+      @if(selectedSchool?.configuration?.tandem) {
+        <a mat-list-item (click)="menuSidenav.toggle()" [routerLink]="'/tandem-pilots'">{{ 'menu.tandemPilots'| translate }}</a>
+      }
       <a mat-list-item (click)="menuSidenav.toggle()" [routerLink]="'/configuration'">{{ 'menu.configuration'| translate }}</a>
     </mat-nav-list>
   </mat-sidenav>
