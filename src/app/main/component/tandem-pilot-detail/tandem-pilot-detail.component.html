@@ -74,8 +74,8 @@
           <ng-container matColumnDef="paymentButtons">
               <th class="payment-actions" mat-header-cell *matHeaderCellDef>{{ 'student.flight.validationActions'| translate }}</th>
               <td class="payment-actions" mat-cell *matCellDef="let element">
-                <button mat-icon-button (click)="payFlight(element)"><mat-icon>check</mat-icon></button>
-                <button mat-icon-button (click)="rejectPaymentFlight(element)"><mat-icon>close</mat-icon></button>
+                <button mat-icon-button (click)="managePaymentModal(element, TandemSchoolPaymentState.PAID)"><mat-icon>check</mat-icon></button>
+                <button mat-icon-button (click)="managePaymentModal(element, TandemSchoolPaymentState.REJECTED)"><mat-icon>close</mat-icon></button>
               </td>
           </ng-container>
 

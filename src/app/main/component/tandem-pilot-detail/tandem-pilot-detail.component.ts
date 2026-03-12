@@ -65,6 +65,8 @@ export class TandemPilotDetailComponent implements OnChanges {
   displayedFlightColumns: string[] = ['date', 'start', 'landing', 'time', 'description', 'paymentState', 'paymentAmount', 'paymentButtons'];
   displayedPassengerColumns: string[] = ['date', 'name', 'place', 'phone', 'email', 'canUseData'];
 
+  // Expose enum for template access
+  TandemSchoolPaymentState = TandemSchoolPaymentState;
 
   get isMobile(): Signal<boolean> {
     return this.deviceSize.isMobile;
@@ -75,10 +77,10 @@ export class TandemPilotDetailComponent implements OnChanges {
     private schoolService: SchoolService,
     private translate: TranslateService,
     private dialog: MatDialog
-  ) {}
+  ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['tandemPilot']  && changes['tandemPilot'].currentValue) {
+    if (changes['tandemPilot'] && changes['tandemPilot'].currentValue) {
       this.loadFlights();
       this.loadPassengerConfirmations(changes['tandemPilot'].currentValue.id);
     }
@@ -90,7 +92,7 @@ export class TandemPilotDetailComponent implements OnChanges {
     if (!offset && this.flightsPaginator) {
       this.flightsPaginator.pageIndex = 0;
     }
-    
+
     this.schoolService.getTandemPilotFlightsBySchoolIdAndTandemPilotId({ limit, offset }, this.school!.id!, this.tandemPilot.id)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((pagerEntity) => {
@@ -103,7 +105,7 @@ export class TandemPilotDetailComponent implements OnChanges {
     if (!offset && this.passengerConfirmationsPaginator) {
       this.passengerConfirmationsPaginator.pageIndex = 0;
     }
-    
+
     this.schoolService.getPassengerConfirmationsBySchoolIdAndTandemPilotId({ limit, offset }, this.school!.id!, tandemPilotId)
       .pipe(takeUntil(this.unsubscribe$))
       .subscribe((pagerEntity) => {
@@ -147,18 +149,20 @@ export class TandemPilotDetailComponent implements OnChanges {
     this.removeUserButtonClick.emit("deleted");
   }
 
-  payFlight(flight: Flight) {
+  managePaymentModal(flight: Flight, paymentState: TandemSchoolPaymentState) {
     const dialogRef = this.dialog.open(PaymentFormDialogComponent, {
       width: '500px',
-      data: { flight }
+      data: { 
+        paymentState
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && this.school?.id && this.tandemPilot?.id) {
         flight.tandemSchoolData = {
-          paymentState: TandemSchoolPaymentState.PAID,
-          paymentAmount: result.amount,
-          paymentComment: result.comment
+          paymentState: paymentState,
+          paymentAmount: result.amount == undefined ? null : result.amount,
+          paymentComment: result.comment == '' ? null : result.comment
         };
 
         this.schoolService.validateTandemPilotFlightSchoolIdAndStudentId(
@@ -166,14 +170,10 @@ export class TandemPilotDetailComponent implements OnChanges {
           this.tandemPilot,
           flight
         ).pipe(takeUntil(this.unsubscribe$))
-        .subscribe(() => {
-          this.loadFlights();
-        });
+          .subscribe(() => {
+            this.loadFlights();
+          });
       }
     });
-  }
-
-  rejectPaymentFlight(flight: Flight) {
-    // open reject payment modal
   }
 }

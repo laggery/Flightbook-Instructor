@@ -38,7 +38,7 @@ export class PaymentFormDialogComponent {
 
   constructor(
     public dialogRef: MatDialogRef<PaymentFormDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: PaymentDialogData
+    @Inject(MAT_DIALOG_DATA) public data: { paymentState: string }
   ) {}
 
   onCancel(): void {
