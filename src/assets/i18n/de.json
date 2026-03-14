@@ -4,6 +4,7 @@
     "menu": {
         "students": "Schüler",
         "appointments": "Termine",
+        "tandemPilots": "Tandempiloten",
         "team": "Team",
         "configuration": "Konfiguration"
     },
@@ -68,8 +69,11 @@
         "wrongToken": "Dieses Token gibt es nicht oder ist ungültig",
         "payment": "Zahlung",
         "paymentInformation": "Das Flugbuch kostet pro Jahr 12.- <br>Damit das Flugbuch mit einer Flugschule geteilt werden kann, musst du diese Zahlung begleichen.",
+        "tandemPaymentInformation": "Sie können bis zu 25 Flüge kostenlos registrieren. <br>Für die uneingeschränkte Nutzung beträgt die Jahresgebühr CHF 12.–. <br>Eine Zahlung ist aktuell nicht erforderlich.",
         "paymentResilation": "Eine Kündigung ist jeweils per Ende Jahr möglich, worüber du jeweils 30 Tage zuvor per Mail informiert wirst.",
-        "paymentButton": "Bezahlen"
+        "paymentButton": "Bezahlen",
+        "accessTandemFlights": "möchte Zugriff auf deine Tandemflüge haben welche mit der Flugschule verknüpft sind.",
+        "hasTandemAccess": "hat nun Einsicht in deine Tandemflüge"
     },
     "error": {
         "title": "Fehler"
@@ -109,8 +113,17 @@
                 "REJECTED": "Abgelehnt",
                 "PENDING": "Angefragt"
             },
+            "paymentState": {
+                "label": "Zahlungsstatus",
+                "amount": "Betrag",
+                "comment": "Kommentar",
+                "PAID": "Ausbezahlt",
+                "REJECTED": "Abgelehnt",
+                "PENDING": "Angefragt"
+            },
             "validationActions": "Aktionen",
-            "validateAll": "Alle Flüge im Status \"Angefragt\" validieren"
+            "validateAll": "Alle Flüge im Status \"Angefragt\" validieren",
+            "noData": "Keine Daten"
         },
         "phone": "Tel",
         "emergencyContact": "Notfallkontakt",
@@ -124,6 +137,25 @@
             "nbFlightsAsc": "Anzahl Flüge (aufsteigend)",
             "nbFlightsDesc": "Anzahl Flüge (absteigend)"
         }
+    },
+    "tandemPilot": {
+        "addTandemPilot": "Tandempilot hinzufügen",
+        "archiveTandemPilotMessage": "Möchtest du $REPLACE_NAME wirklich archivieren?",
+        "actif": "Aktiv",
+        "archived": "Archiviert",
+        "noTandemPilotSelected": "Kein Tandempilot wurde ausgewählt.",
+        "passengerConfirmations": "Passagierbestätigungen"
+    },
+    "passengerConfirmation" : {
+        "date": "Datum",
+        "name": "Name",
+        "email": "E-Mail",
+        "phone": "Telefon",
+        "place": "Ort",
+        "canUseData": "Werbung",
+        "noData": "Keine Daten",
+        "yes": "Ja",
+        "no": "Nein"
     },
     "studentList": {
         "date": "Datum",
@@ -285,7 +317,8 @@
         "yes": "Ja",
         "no": "Nein",
         "change_password": "Passwort ändern",
-        "export": "Exportieren"
+        "export": "Exportieren",
+        "skip": "Überspringen"
     },
     "appointment": {
         "appointment": "Termin",

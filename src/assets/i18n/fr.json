@@ -4,6 +4,7 @@
     "menu" : {
         "students": "Élèves",
         "appointments": "Rendez-vous",
+        "tandemPilots": "Pilote biplace",
         "team": "Équipe",
         "configuration": "Configuration"
     },
@@ -68,8 +69,11 @@
         "wrongToken": "Ce token n'existe pas ou n'est pas valide",
         "payment": "Paiement",
         "paymentInformation": "Le carnet de vol coûte 12.- par an <br>Pour que le carnet de vol puisse être partagé avec une école, tu dois régler ce paiement.",
+        "tandemPaymentInformation": "Vous pouvez enregistrer jusqu’à 25 vols gratuitement. <br>Pour une utilisation illimitée, la cotisation annuelle s’élève à CHF 12.–. <br>Le paiement n’est actuellement pas requis.",
         "paymentResilation": "Une résiliation est possible à la fin de chaque année. Tu en seras informé(e) par e-mail 30 jours avant.",
-        "paymentButton": "Payer"
+        "paymentButton": "Payer",
+        "accessTandemFlights": "souhaite avoir accès aux vols biplaces qui sont liés à l'école.",
+        "hasTandemAccess": "a désormais accès aux vols biplaces"
     },
     "error": {
         "title": "Erreur"
@@ -109,8 +113,17 @@
                 "REJECTED": "Refusé",
                 "PENDING": "En attente"
             },
+            "paymentState": {
+                "label": "Statut",
+                "amount": "Montant",
+                "comment": "Commentaire",
+                "PAID": "Payé",
+                "REJECTED": "Refusé",
+                "PENDING": "En attente"
+            },
             "validationActions": "Actions",
-            "validateAll": "Valide tous les vols avec le statut \"En attente\""
+            "validateAll": "Valide tous les vols avec le statut \"En attente\"",
+            "noData": "Pas de données"
         },
         "phone": "Tél",
         "emergencyContact": "No. d'urgence",
@@ -124,6 +137,25 @@
             "nbFlightsAsc": "Nombre de vols (ascendant)",
             "nbFlightsDesc": "Nombre de vols (descendant)"
         }
+    },
+    "tandemPilot": {
+        "addTandemPilot": "Ajouter un pilote biplace",
+        "archiveTandemPilotMessage": "Veux-tu vraiment archiver $REPLACE_NAME?",
+        "actif": "Actif",
+        "archived": "Archivé",
+        "noTandemPilotSelected": "Aucun pilote biplace n'a été sélectionné.",
+        "passengerConfirmations": "Confirmations des passagers"
+    },
+    "passengerConfirmation" : {
+        "date": "Date",
+        "name": "Nom",
+        "email": "E-Mail",
+        "phone": "Téléphone",
+        "place": "Lieu",
+        "canUseData": "Publicité",
+        "noData": "Pas de données",
+        "yes": "Oui",
+        "no": "Non"
     },
     "studentList": {
         "date": "Date",
@@ -285,7 +317,8 @@
         "yes": "Oui",
         "no": "Non",
         "change_password": "Changer le mot de passe",
-        "export": "Exporter"
+        "export": "Exporter",
+        "skip": "Passer"
     },
     "appointment": {
         "appointment": "Rendez-vous",
