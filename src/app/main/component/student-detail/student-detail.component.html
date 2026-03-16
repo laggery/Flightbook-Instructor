@@ -95,7 +95,7 @@
           <!-- Time Column -->
           <ng-container matColumnDef="time">
             <th mat-header-cell *matHeaderCellDef>{{ 'student.flight.time'| translate }}</th>
-            <td mat-cell *matCellDef="let element"> {{element.time}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.time?.split(':').slice(0, 2).join(':')}} </td>
           </ng-container>
 
           <!-- Km Column -->
