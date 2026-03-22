@@ -130,6 +130,7 @@
         "actif": "Actif",
         "archived": "Archivé",
         "tandem": "Biplace",
+        "isAppointmentActive": "Rendez-vous toujours visible?",
         "sort": {
             "sortBy": "Trier par",
             "firstname": "Prénom",

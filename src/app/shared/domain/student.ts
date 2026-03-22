@@ -12,6 +12,7 @@ export class Student {
     public lastFlight: Flight | undefined;
     public isArchived: boolean | undefined;
     public isTandem: boolean | undefined;
+    public isAppointmentActive: boolean | undefined;
     public lastNote: Note | undefined;
     public controlSheet: ControlSheet | undefined;
     public emergencyContacts: EmergencyContact[] | undefined;

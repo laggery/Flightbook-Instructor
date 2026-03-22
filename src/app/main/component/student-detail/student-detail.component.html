@@ -7,6 +7,9 @@
     }
     <h2>{{ student.user?.firstname }} {{ student.user?.lastname }}
       <div class="icon-list ">
+        @if (student.isArchived) {
+          <mat-slide-toggle class="isAppointmentActive" color="primary" (change)="changeStudentIsAppointmentActive($event)" [checked]="student.isAppointmentActive" labelPosition="before">{{ 'student.isAppointmentActive'| translate }}</mat-slide-toggle>
+        }
         <mat-slide-toggle class="tandem" color="primary" (change)="changeStudentIsTandem($event)" [disabled]="student.isArchived" [checked]="student.isTandem" labelPosition="before">{{ 'student.tandem'| translate }}</mat-slide-toggle>
         <mat-icon class="print-flights" (click)="printFlightbook()">print</mat-icon>
         @if (!student.isArchived) {

@@ -74,6 +74,10 @@ export class StudentService {
     return this.http.delete(`${environment.baseUrl}/instructor/students/${id}`);
   }
 
+  changeStudentAppointmentAccess(student: Student, active: boolean) {
+    return this.http.patch(`${environment.baseUrl}/instructor/students/${student.id}/appointment-access`, { isAppointmentActive: active });
+  }
+
   tandemStudent(student: Student) {
     return this.http.put(`${environment.baseUrl}/instructor/students/${student.id}/tandem`, {});
   }

@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnIni
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { firstValueFrom, Subject, takeUntil } from 'rxjs';
 import { DeviceSizeService } from 'src/app/core/services/device-size.service';
@@ -14,6 +15,7 @@ import { FlightValidationState } from 'src/app/shared/domain/flight-validation-s
 import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 import { School } from 'src/app/shared/domain/school';
 import { Student } from 'src/app/shared/domain/student';
+import { ArchiveStudentDialogComponent } from '../archive-student-dialog/archive-student-dialog.component';
 
 @Component({
   selector: 'fb-student-detail',
@@ -56,7 +58,8 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
     private deviceSize: DeviceSizeService,
     private translate: TranslateService,
     private pdfExportService: PdfExportService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog
   ) {
     this.flights = [];
   }
@@ -125,18 +128,25 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
   }
 
   async archiveStudent() {
-    const confirmationMessage = this.translate.instant('student.archiveStudentMessage').replace("$REPLACE_NAME", `${this.student?.user?.firstname} ${this.student?.user?.lastname}`);
-    if (!confirm(confirmationMessage)) {
-      return;
-    }
-
     if (!this.student?.id) {
       return;
     }
 
-    await firstValueFrom(this.studentService.archiveStudent(this.student?.id));
+    const studentName = `${this.student?.user?.firstname} ${this.student?.user?.lastname}`;
+    const dialogRef = this.dialog.open(ArchiveStudentDialogComponent, {
+      data: {
+        studentName: studentName
+      },
+      width: "500px"
+    });
 
-    this.removeUserButtonClick.emit("deleted");
+    dialogRef.afterClosed().subscribe(async (response) => {
+      if (response?.event === "confirm" && this.student?.id) {
+        await firstValueFrom(this.studentService.archiveStudent(this.student.id));
+        await firstValueFrom(this.studentService.changeStudentAppointmentAccess(this.student, response.isAppointmentActive));
+        this.removeUserButtonClick.emit("deleted");
+      }
+    });
   }
 
   async printFlightbook() {
@@ -251,6 +261,12 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
     if (this.student) {
       this.student.isTandem = event.checked;
       await firstValueFrom(this.studentService.tandemStudent(this.student));
+    }
+  }
+
+  async changeStudentIsAppointmentActive(event: MatSlideToggleChange) {
+    if (this.student) {
+      await firstValueFrom(this.studentService.changeStudentAppointmentAccess(this.student, event.checked));
     }
   }
 }

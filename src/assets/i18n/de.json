@@ -100,7 +100,7 @@
             "startCountry": "Start Land",
             "landing": "Landung",
             "landingCountry": "Landung Land",
-            "time": "Flugdauer",
+            "time": "Dauer",
             "km": "Km",
             "description": "Beschreibung",
             "diff": "Diff.",
@@ -130,6 +130,7 @@
         "actif": "Aktiv",
         "archived": "Archiviert",
         "tandem": "Tandem",
+        "isAppointmentActive": "Termine weiterhin ersichtlich?",
         "sort": {
             "sortBy": "Sortieren nach",
             "firstname": "Vorname",
