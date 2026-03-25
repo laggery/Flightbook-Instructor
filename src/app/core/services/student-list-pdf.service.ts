@@ -226,12 +226,14 @@ export class StudentListPDFService {
     const rowHeight = [10];
     students.forEach((student: Student) => {
       rowHeight.push(60);
+      const lastFlightDate = student.lastFlight ? this.datePipe.transform(student.lastFlight?.date, 'dd.MM.yyyy') : '';
 
       studentPdfData.push([
         {
           stack: [
             { text: `${student.user?.firstname} ${student.user?.lastname}`, bold: true,  fontSize: 10},
-            { text: `${student.lastFlight?.glider?.brand || ''} ${student.lastFlight?.glider?.name || ''}`},
+            { text: `${student.lastFlight?.glider?.brand || ''} ${student.lastFlight?.glider?.name || ''}${student.lastFlight?.glider?.color ? ' (' + student.lastFlight?.glider?.color + ')' : ''}`},
+            { text: student.statistic ? student.statistic?.nbFlights + " " + this.translate.instant('export.flights') + " - " + lastFlightDate : ""},
             { text: `${student.user?.phone || ''}`},
             { text: `${student.emergencyContacts && student.emergencyContacts.length > 0 ? this.translate.instant('student.emergencyContact') : ''}`, bold: true,  fontSize: 10, margin: [0, 3, 0, 0]},
             { text: `${student.emergencyContacts && student.emergencyContacts.length > 0 ? (student.emergencyContacts[0].firstname || '-') + ' ' + (student.emergencyContacts[0].lastname || '-') : ''}`},
@@ -285,7 +287,7 @@ export class StudentListPDFService {
         { width: 10, image: 'unchecked'},
         { width: 10, image: 'unchecked', fillColor: '#d9d9d9'},
         { stack: [
-          {text:`${student.lastNote ? this.datePipe.transform(student.lastNote?.date, 'dd.MM.yyyy') + " //" :''} ${student.statistic ? student.statistic?.nbFlights + " " + this.translate.instant('export.flights') : ""}`, bold: true },
+          {text:`${student.lastNote ? this.datePipe.transform(student.lastNote?.date, 'dd.MM.yyyy'):''}`, bold: true },
           {text:`${student.lastNote ? student.lastNote?.text :''}`, fontSize: 8},
         ]},
       ]);
