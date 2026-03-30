@@ -87,7 +87,7 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
       this.displayedColumns = ['nb', 'date', 'start', 'landing', 'glider', 'time', 'km', 'description', 'alone'];
       
       // Add validation column if needed
-      if (changes['school'].currentValue.configuration?.validateFlights) {
+      if (changes['school'].currentValue.configuration?.schoolModule?.validateFlights) {
         this.displayedColumns.push('validationState');
         this.displayedColumns.push('validationButton');
       }
