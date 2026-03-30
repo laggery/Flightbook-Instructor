@@ -57,7 +57,7 @@
     <mat-expansion-panel class='card'>
       <mat-expansion-panel-header>
         <mat-panel-title><h3>{{ 'student.flights'| translate }}</h3></mat-panel-title>
-        @if (school?.configuration?.validateFlights) {
+        @if (school?.configuration?.schoolModule?.validateFlights) {
           <mat-panel-description>
             <button [matTooltip]="'student.flight.validateAll'| translate" class="validate-all-button" mat-icon-button (click)="validateAllFlights(); $event.stopPropagation()"><mat-icon>check</mat-icon></button>
           </mat-panel-description>
@@ -120,7 +120,7 @@
           </ng-container>
           
           <!-- Validation Column -->
-          @if (school?.configuration?.validateFlights) {
+          @if (school?.configuration?.schoolModule?.validateFlights) {
             <ng-container matColumnDef="validationState">
               <th class="validation-state" mat-header-cell *matHeaderCellDef>{{ 'student.flight.validationState.label'| translate }}</th>
               <td class="validation-state" mat-cell *matCellDef="let element">
@@ -135,7 +135,7 @@
               </td>
             </ng-container>
           }
-          @if (school?.configuration?.validateFlights) {
+          @if (school?.configuration?.schoolModule?.validateFlights) {
             <ng-container matColumnDef="validationButton">
               <th class="validation-actions" mat-header-cell *matHeaderCellDef>{{ 'student.flight.validationActions'| translate }}</th>
               <td class="validation-actions" mat-cell *matCellDef="let element">
@@ -160,7 +160,7 @@
           }
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-          [ngClass]="{'not-validated-row': school?.configuration?.validateFlights && !isFlightValidated(row)}"></tr>
+          [ngClass]="{'not-validated-row': school?.configuration?.schoolModule?.validateFlights && !isFlightValidated(row)}"></tr>
         </table>
       </div>
       <mat-paginator #paginator [length]="flightPagerEntity.totalItems" [pageSize]="flightPagerEntity.itemsPerPage"

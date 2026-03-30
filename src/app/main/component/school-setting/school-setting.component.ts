@@ -5,7 +5,7 @@ import { DeviceSizeService } from 'src/app/core/services/device-size.service';
 import { SchoolService } from 'src/app/core/services/school.service';
 import { School } from 'src/app/shared/domain/school';
 import { firstValueFrom } from 'rxjs';
-import { SchoolConfiguration } from 'src/app/shared/domain/school-configuration';
+import { SchoolConfig } from 'src/app/shared/domain/school-config';
 
 interface Configuration {
   type: string;
@@ -33,7 +33,7 @@ export class SchoolSettingComponent {
     this.configurationDatasource = [
       {
         type: 'validateFlights',
-        value: this.school?.configuration?.validateFlights || false
+        value: this.school?.configuration?.schoolModule?.validateFlights || false
       }
     ];
   }
@@ -48,10 +48,10 @@ export class SchoolSettingComponent {
 
   async change(event: MatSlideToggleChange, configuration: Configuration) {
     if (!this.school?.configuration) {
-      this.school!.configuration = new SchoolConfiguration();
+      this.school!.configuration = new SchoolConfig();
     }
     if (configuration.type === "validateFlights") {
-      this.school!.configuration.validateFlights = event.checked;
+      this.school!.configuration.schoolModule!.validateFlights = event.checked;
     }
     this.updateConfiguration();
   }

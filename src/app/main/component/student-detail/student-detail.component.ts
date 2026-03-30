@@ -164,7 +164,7 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
 
     const flights = await firstValueFrom(this.studentService.getFlightsByStudentId({ limit: 2000 }, this.student?.id!))
 
-    if (this.school?.configuration?.validateFlights) {
+    if (this.school?.configuration?.schoolModule?.validateFlights) {
       flights.entity = flights.entity!.filter((flight: Flight) => flight.validation?.state == FlightValidationState.VALIDATED);
     }
     this.pdfExportService.generatePdf(flights.entity!, this.student?.user);

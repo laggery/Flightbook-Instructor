@@ -12,10 +12,10 @@ import moment from 'moment';
 import { TeamMember } from 'src/app/shared/domain/team-member';
 import { School } from 'src/app/shared/domain/school';
 import { AppointmentType } from 'src/app/shared/domain/appointment-type-dto';
-import { SchoolConfiguration } from 'src/app/shared/domain/school-configuration';
 import { TandemPilot } from 'src/app/shared/domain/tandem-pilot';
 import { PassengerConfirmation } from 'src/app/shared/domain/passenger-confirmation';
 import { Flight } from 'src/app/shared/domain/flight';
+import { SchoolConfig } from 'src/app/shared/domain/school-config';
 
 @Injectable({
   providedIn: 'root'
@@ -33,7 +33,7 @@ export class SchoolService {
     return this.http.post<School>(`${environment.baseUrl}/schools`, school);
   }
 
-  updateSchoolConfiguration(id: number, configuration: SchoolConfiguration): Observable<School> {
+  updateSchoolConfiguration(id: number, configuration: SchoolConfig): Observable<School> {
     return this.http.put<School>(`${environment.baseUrl}/schools/${id}/configuration`, configuration);
   }
 

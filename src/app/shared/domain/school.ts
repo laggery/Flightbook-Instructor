@@ -1,4 +1,4 @@
-import { SchoolConfiguration } from "./school-configuration";
+import { SchoolConfig } from "./school-config";
 
 export class School {
     id: number | undefined;
@@ -10,5 +10,5 @@ export class School {
     phone: string | undefined;
     email: string | undefined;
     language: string | undefined;
-    configuration: SchoolConfiguration | undefined;
+    configuration: SchoolConfig | undefined;
 }
