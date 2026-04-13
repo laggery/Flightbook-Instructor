@@ -377,7 +377,19 @@
         "option": "Option",
         "value": "Aktiviert",
         "types": {
-            "validateFlights": "Flüge validieren"
+            "validateFlights": "Flüge validieren",
+            "googleCalendar": "Google Kalender"
+        },
+        "googleCalendar": {
+            "connect": "Verbinden",
+            "disconnect": "Trennen",
+            "connected": "Verbunden",
+            "connecting": "Verbinde...",
+            "changeCalendar": "Kalender ändern",
+            "selectCalendar": "Kalender auswählen",
+            "primary": "Primär",
+            "save": "Speichern",
+            "cancel": "Abbrechen"
         }
     },
     "appointmentType": {

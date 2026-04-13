@@ -1,7 +1,10 @@
 import { Component, effect, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Subject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { DeviceSizeService } from 'src/app/core/services/device-size.service';
+import { AccountService } from 'src/app/core/services/account.service';
+import { School } from 'src/app/shared/domain/school';
 
 @Component({
     selector: 'app-configuration',
@@ -16,7 +19,9 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
   unsubscribe$ = new Subject<void>();
 
   constructor(
-    private deviceSize: DeviceSizeService
+    private deviceSize: DeviceSizeService,
+    private route: ActivatedRoute,
+    private accountService: AccountService
   ) {
     effect(() => {
       if ((!this.deviceSize.isMobile())) {
@@ -25,7 +30,24 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.route.queryParams.pipe(takeUntil(this.unsubscribe$)).subscribe(params => {
+      if (params['google_calendar']) {
+        // If school parameter is provided, switch to that school
+        if (params['school']) {
+          const schoolId = parseInt(params['school'], 10);
+          this.accountService.getSchoolsByUserId().pipe(takeUntil(this.unsubscribe$)).subscribe((schools: School[]) => {
+            const school = schools.find(s => s.id === schoolId);
+            if (school) {
+              this.accountService.setCurrentSchool(school);
+            }
+          });
+        }
+        // Open school-setting view
+        this.openDetail('schoolSetting');
+      }
+    });
+  }
 
   ngOnDestroy() {
     this.unsubscribe$.next();
