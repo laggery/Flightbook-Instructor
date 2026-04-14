@@ -8,6 +8,8 @@ import { SchoolService } from 'src/app/core/services/school.service';
 import { School } from 'src/app/shared/domain/school';
 import { firstValueFrom } from 'rxjs';
 import { SchoolConfig } from 'src/app/shared/domain/school-config';
+import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'fb-school-setting',
   templateUrl: './school-setting.component.html',
@@ -23,10 +25,28 @@ export class SchoolSettingComponent implements OnInit {
   selectedCalendarId = 'primary';
   showCalendarSelector = false;
   private destroyRef = inject(DestroyRef);
-  settings = [
-    { type: 'validateFlights' },
-    { type: 'googleCalendar' }
-  ];
+  settings: Array<{ type: string }> = [];
+  // settings = [
+  //   { type: 'validateFlights' },
+  //   { type: 'googleCalendar' }
+  // ];
+
+  // After release google calendar isGoogleCalendarAllowed can be removed
+  get isGoogleCalendarAllowed(): boolean {
+    if (!this.school?.id) return false;
+    const allowedString = environment.allowedSchoolsForGoogleCalendar;
+    if (allowedString === 'all') return true;
+    const allowedIds = allowedString.split(',').map(id => id.trim());
+    return allowedIds.includes(this.school.id.toString());
+  }
+
+  // After release google calendar updateSettings can be removed and commented settings can be used instead
+  private updateSettings(): void {
+    this.settings = [{ type: 'validateFlights' }];
+    if (this.isGoogleCalendarAllowed) {
+      this.settings.push({ type: 'googleCalendar' });
+    }
+  }
 
   constructor(
     private deviceSize: DeviceSizeService,
@@ -35,6 +55,7 @@ export class SchoolSettingComponent implements OnInit {
     private route: ActivatedRoute
   ) {
     this.school = this.accountService.currentSelectedSchool;
+    this.updateSettings();
   }
 
   async ngOnInit() {
@@ -44,6 +65,7 @@ export class SchoolSettingComponent implements OnInit {
     // Subscribe to school changes to refresh status
     this.accountService.changeSelectedSchool$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(async (school: School) => {
       this.school = school;
+      this.updateSettings();
       await this.checkGoogleCalendarStatus();
     });
   }
