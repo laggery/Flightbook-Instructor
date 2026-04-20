@@ -125,8 +125,11 @@ export class SchoolSettingComponent implements OnInit {
           await firstValueFrom(this.schoolService.updateGoogleCalendar(this.school.id, this.selectedCalendarId));
         }
       }
-    } catch (error) {
-      console.error('Failed to load available calendars:', error);
+    } catch (error: any) {
+      if (error?.error?.message === 'GOOGLE_CALENDAR_TOKEN_EXPIRED') {
+        this.googleCalendarConnected = false;
+        this.availableCalendars = [];
+      }
     }
   }
 
