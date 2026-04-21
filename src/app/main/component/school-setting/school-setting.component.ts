@@ -1,4 +1,6 @@
-import { Component, EventEmitter, Output, Signal } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, OnInit, Output, Signal } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ActivatedRoute } from '@angular/router';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { AccountService } from 'src/app/core/services/account.service';
 import { DeviceSizeService } from 'src/app/core/services/device-size.service';
@@ -6,11 +8,7 @@ import { SchoolService } from 'src/app/core/services/school.service';
 import { School } from 'src/app/shared/domain/school';
 import { firstValueFrom } from 'rxjs';
 import { SchoolConfig } from 'src/app/shared/domain/school-config';
-
-interface Configuration {
-  type: string;
-  value: boolean;
-}
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'fb-school-setting',
@@ -18,24 +16,58 @@ interface Configuration {
   styleUrl: './school-setting.component.scss',
   standalone: false
 })
-export class SchoolSettingComponent {
-  displayedColumns: string[] = ['option', 'value'];
+export class SchoolSettingComponent implements OnInit {
   @Output() backButtonClick = new EventEmitter();
   school?: School;
-  configurationDatasource: Configuration[] = [];
+  googleCalendarConnected = false;
+  googleCalendarLoading = false;
+  availableCalendars: Array<{ id: string; summary: string; primary: boolean }> = [];
+  selectedCalendarId = 'primary';
+  showCalendarSelector = false;
+  private destroyRef = inject(DestroyRef);
+  settings: Array<{ type: string }> = [];
+  // settings = [
+  //   { type: 'validateFlights' },
+  //   { type: 'googleCalendar' }
+  // ];
+
+  // After release google calendar isGoogleCalendarAllowed can be removed
+  get isGoogleCalendarAllowed(): boolean {
+    if (!this.school?.id) return false;
+    const allowedString = environment.allowedSchoolsForGoogleCalendar;
+    if (allowedString === 'all') return true;
+    const allowedIds = allowedString.split(',').map(id => id.trim());
+    return allowedIds.includes(this.school.id.toString());
+  }
+
+  // After release google calendar updateSettings can be removed and commented settings can be used instead
+  private updateSettings(): void {
+    this.settings = [{ type: 'validateFlights' }];
+    if (this.isGoogleCalendarAllowed) {
+      this.settings.push({ type: 'googleCalendar' });
+    }
+  }
 
   constructor(
     private deviceSize: DeviceSizeService,
     private schoolService: SchoolService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private route: ActivatedRoute
   ) {
     this.school = this.accountService.currentSelectedSchool;
-    this.configurationDatasource = [
-      {
-        type: 'validateFlights',
-        value: this.school?.configuration?.schoolModule?.validateFlights || false
-      }
-    ];
+    this.updateSettings();
+  }
+
+  async ngOnInit() {
+    await this.checkGoogleCalendarStatus();
+    this.handleOAuthCallback();
+    
+    // Subscribe to school changes to refresh status
+    this.accountService.changeSelectedSchool$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(async (school: School) => {
+      this.school = school;
+      this.updateSettings();
+      await this.checkGoogleCalendarStatus();
+    });
   }
 
   get isMobile(): Signal<boolean> {
@@ -46,13 +78,11 @@ export class SchoolSettingComponent {
     this.backButtonClick.emit();
   }
 
-  async change(event: MatSlideToggleChange, configuration: Configuration) {
+  async changeValidateFlights(event: MatSlideToggleChange) {
     if (!this.school?.configuration) {
       this.school!.configuration = new SchoolConfig();
     }
-    if (configuration.type === "validateFlights") {
-      this.school!.configuration.schoolModule!.validateFlights = event.checked;
-    }
+    this.school!.configuration.schoolModule!.validateFlights = event.checked;
     this.updateConfiguration();
   }
 
@@ -60,5 +90,100 @@ export class SchoolSettingComponent {
     if (this.school?.id) {
       await firstValueFrom(this.schoolService.updateSchoolConfiguration(this.school?.id, this.school!.configuration!));
     }
+  }
+
+  async checkGoogleCalendarStatus() {
+    if (this.school?.id) {
+      try {
+        const status = await firstValueFrom(this.schoolService.getGoogleCalendarStatus(this.school.id));
+        this.googleCalendarConnected = status.connected;
+        
+        if (status.connected) {
+          await this.loadAvailableCalendars();
+        }
+      } catch (error) {
+        console.error('Failed to check Google Calendar status:', error);
+      }
+    }
+  }
+
+  async loadAvailableCalendars() {
+    if (!this.school?.id) return;
+    
+    try {
+      this.availableCalendars = await firstValueFrom(this.schoolService.getAvailableCalendars(this.school.id));
+      
+      const configuredCalendarId = this.school.configuration?.googleCalendar?.calendarId;
+      
+      if (configuredCalendarId && configuredCalendarId !== 'primary') {
+        this.selectedCalendarId = configuredCalendarId;
+      } else {
+        const primaryCalendar = this.availableCalendars.find(cal => cal.primary);
+        this.selectedCalendarId = primaryCalendar?.id || this.availableCalendars[0]?.id || 'primary';
+        
+        if (this.selectedCalendarId && this.selectedCalendarId !== 'primary') {
+          await firstValueFrom(this.schoolService.updateGoogleCalendar(this.school.id, this.selectedCalendarId));
+        }
+      }
+    } catch (error: any) {
+      if (error?.error?.message === 'GOOGLE_CALENDAR_TOKEN_EXPIRED') {
+        this.googleCalendarConnected = false;
+        this.availableCalendars = [];
+      }
+    }
+  }
+
+  async onCalendarChange() {
+    if (!this.school?.id) return;
+    
+    this.googleCalendarLoading = true;
+    try {
+      await firstValueFrom(this.schoolService.updateGoogleCalendar(this.school.id, this.selectedCalendarId));
+    } catch (error) {
+      console.error('Failed to update calendar selection:', error);
+    } finally {
+      this.googleCalendarLoading = false;
+    }
+  }
+
+  async connectGoogleCalendar() {
+    if (!this.school?.id) return;
+    
+    this.googleCalendarLoading = true;
+    try {
+      const response = await firstValueFrom(this.schoolService.getGoogleCalendarAuthUrl(this.school.id));
+      window.location.href = response.authUrl;
+    } catch (error) {
+      console.error('Failed to get Google Calendar auth URL:', error);
+      this.googleCalendarLoading = false;
+    }
+  }
+
+  async disconnectGoogleCalendar() {
+    if (!this.school?.id) return;
+    
+    this.googleCalendarLoading = true;
+    try {
+      await firstValueFrom(this.schoolService.disconnectGoogleCalendar(this.school.id));
+      this.googleCalendarConnected = false;
+    } catch (error) {
+      console.error('Failed to disconnect Google Calendar:', error);
+    } finally {
+      this.googleCalendarLoading = false;
+    }
+  }
+
+  private handleOAuthCallback() {
+    // Check parent route query params (configuration route)
+    this.route.parent?.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(params => {
+      if (params['google_calendar']) {
+        if (params['google_calendar'] === 'success') {
+          // Refresh status after successful OAuth
+          this.checkGoogleCalendarStatus();
+        } else if (params['google_calendar'] === 'error') {
+          console.error('Google Calendar connection failed:', params['message']);
+        }
+      }
+    });
   }
 }

@@ -37,6 +37,26 @@ export class SchoolService {
     return this.http.put<School>(`${environment.baseUrl}/schools/${id}/configuration`, configuration);
   }
 
+  getGoogleCalendarStatus(id: number): Observable<{ connected: boolean }> {
+    return this.http.get<{ connected: boolean }>(`${environment.baseUrl}/schools/${id}/google-calendar/status`);
+  }
+
+  getGoogleCalendarAuthUrl(id: number): Observable<{ authUrl: string }> {
+    return this.http.get<{ authUrl: string }>(`${environment.baseUrl}/schools/${id}/google-calendar/auth`);
+  }
+
+  disconnectGoogleCalendar(id: number): Observable<void> {
+    return this.http.delete<void>(`${environment.baseUrl}/schools/${id}/google-calendar/disconnect`);
+  }
+
+  getAvailableCalendars(id: number): Observable<Array<{ id: string; summary: string; primary: boolean }>> {
+    return this.http.get<Array<{ id: string; summary: string; primary: boolean }>>(`${environment.baseUrl}/schools/${id}/google-calendar/calendars`);
+  }
+
+  updateGoogleCalendar(id: number, calendarId: string): Observable<void> {
+    return this.http.put<void>(`${environment.baseUrl}/schools/${id}/google-calendar/calendar`, { calendarId });
+  }
+
   getStudentsBySchoolId(id: number, archived: boolean): Observable<Student[]> {
     let params = new HttpParams();
     if (archived !== undefined) {
