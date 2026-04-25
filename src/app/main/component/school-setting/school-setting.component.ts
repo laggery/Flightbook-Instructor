@@ -1,4 +1,4 @@
-import { Component, DestroyRef, EventEmitter, inject, OnInit, Output, Signal } from '@angular/core';
+import { ChangeDetectorRef, Component, DestroyRef, EventEmitter, inject, OnInit, Output, Signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
@@ -22,7 +22,7 @@ export class SchoolSettingComponent implements OnInit {
   googleCalendarConnected = false;
   googleCalendarLoading = false;
   availableCalendars: Array<{ id: string; summary: string; primary: boolean }> = [];
-  selectedCalendarId = 'primary';
+  selectedCalendarId = '';
   showCalendarSelector = false;
   private destroyRef = inject(DestroyRef);
   settings: Array<{ type: string }> = [];
@@ -52,7 +52,8 @@ export class SchoolSettingComponent implements OnInit {
     private deviceSize: DeviceSizeService,
     private schoolService: SchoolService,
     private accountService: AccountService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private cdr: ChangeDetectorRef
   ) {
     this.school = this.accountService.currentSelectedSchool;
     this.updateSettings();
@@ -125,6 +126,8 @@ export class SchoolSettingComponent implements OnInit {
           await firstValueFrom(this.schoolService.updateGoogleCalendar(this.school.id, this.selectedCalendarId));
         }
       }
+      
+      this.cdr.detectChanges();
     } catch (error: any) {
       if (error?.error?.message === 'GOOGLE_CALENDAR_TOKEN_EXPIRED') {
         this.googleCalendarConnected = false;
