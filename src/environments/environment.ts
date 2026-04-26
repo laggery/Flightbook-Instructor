@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  baseUrl : 'http://localhost:8282',
-  allowedSchoolsForGoogleCalendar: 'all'
+  baseUrl : 'http://localhost:8282'
 };
 
 /*
