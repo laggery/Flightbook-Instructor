@@ -392,6 +392,30 @@
             "cancel": "Abbrechen"
         }
     },
+    "tandemConfig": {
+        "title": "Tandem Zusatzfelder",
+        "addField": "Feld hinzufügen",
+        "editField": "Feld bearbeiten",
+        "label": "Bezeichnung",
+        "labelRequired": "Bezeichnung ist erforderlich",
+        "fieldType": "Typ",
+        "required": "Erforderlich",
+        "disabled": "Deaktiviert",
+        "edit": "Bearbeiten",
+        "options": "Optionen",
+        "option": "Option",
+        "optionRequired": "Option ist erforderlich",
+        "optionsPlaceholder": "z.B. Option1, Option2, Option3",
+        "optionsHint": "Geben Sie die Optionen durch Kommas getrennt ein",
+        "optionsRequired": "Optionen sind für Dropdown-Felder erforderlich",
+        "types": {
+            "text": "Text",
+            "number": "Zahl",
+            "date": "Datum",
+            "boolean": "Ja/Nein",
+            "dropdown": "Auswahl"
+        }
+    },
     "appointmentType": {
         "title": "Terminart",
         "addType": "Hinzufügen",

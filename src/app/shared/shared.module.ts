@@ -28,6 +28,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatPaginationIntlService } from '../core/services/mat-pagination-intl.service';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 export const MOMENT_DATETIME_FORMAT = 'DD.MM.YYYY HH:mm';
 
@@ -108,7 +109,8 @@ export class CustomDateAdapter extends NativeDateAdapter {
     MatPaginatorModule,
     MatSlideToggleModule,
     MatBadgeModule,
-    MatTooltipModule
+    MatTooltipModule,
+    DragDropModule
   ],
   exports: [
     HoursFormatPipe,
@@ -138,7 +140,8 @@ export class CustomDateAdapter extends NativeDateAdapter {
     MatPaginatorModule,
     MatSlideToggleModule,
     MatBadgeModule,
-    MatTooltipModule
+    MatTooltipModule,
+    DragDropModule
   ],
   providers: [
     // values
