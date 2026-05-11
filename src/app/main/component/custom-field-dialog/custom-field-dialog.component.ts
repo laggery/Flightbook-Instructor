@@ -33,11 +33,11 @@ export class CustomFieldDialogComponent implements OnInit {
     this.customField = data.field;
     this.isNew = data.isNew;
 
-    // Create FormArray from existing options
+    // Create FormArray from existing options only if type is dropdown
     const optionsArray = this.fb.array(
-      this.customField.options && this.customField.options.length > 0
+      this.customField.type === 'dropdown' && this.customField.options && this.customField.options.length > 0
         ? this.customField.options.map(opt => this.fb.control(opt, Validators.required))
-        : [this.fb.control('', Validators.required)]
+        : []
     );
 
     this.form = this.fb.group({
@@ -57,8 +57,18 @@ export class CustomFieldDialogComponent implements OnInit {
         if (this.options.length === 0) {
           this.addOption();
         }
+      } else {
+        // Clear all options when switching away from dropdown
+        while (this.options.length > 0) {
+          this.options.removeAt(0);
+        }
       }
     });
+
+    // Initialize with one option if type is already dropdown
+    if (this.customField.type === 'dropdown' && this.options.length === 0) {
+      this.addOption();
+    }
   }
 
   get options(): FormArray {
