@@ -50,6 +50,16 @@
             <td class="description" mat-cell *matCellDef="let element"> {{element.description}} </td>
           </ng-container>
 
+          <!-- Custom Field Columns -->
+          @for (customField of getActiveCustomFields(); track customField.key) {
+            <ng-container [matColumnDef]="customField.key">
+              <th mat-header-cell *matHeaderCellDef>{{ customField.label }}</th>
+              <td mat-cell *matCellDef="let element">
+                {{ formatCustomFieldValue(getCustomFieldValue(element, customField.key), customField.type) }}
+              </td>
+            </ng-container>
+          }
+
           <!-- Payment State Column -->
           <ng-container matColumnDef="paymentState">
             <th class="payment-state" mat-header-cell *matHeaderCellDef>{{ 'student.flight.paymentState.label'| translate }}</th>
