@@ -5,9 +5,23 @@ export class GoogleCalendarConfig {
   tokenExpiry?: Date;
 }
 
+export interface CustomFieldDefinition {
+  key: string;
+  label: string;
+  type: 'text' | 'number' | 'date' | 'boolean' | 'dropdown';
+  required: boolean;
+  disabled: boolean;
+  options?: string[];
+}
+
+export interface FlightConfig {
+  customFields: CustomFieldDefinition[];
+}
+
 export class TandemModule {
   active?: boolean;
   termsAndConditionsLink?: string;
+  flightConfig?: FlightConfig;
 }
 
 export class SchoolModule {

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnChanges, Output, Signal, SimpleChanges, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -16,6 +16,7 @@ import { PassengerConfirmation } from 'src/app/shared/domain/passenger-confirmat
 import { PagerEntity } from 'src/app/shared/domain/pagerEntity';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { TandemSchoolPaymentState } from 'src/app/shared/domain/tandem-school-payment-state';
+import { CustomFieldDefinition } from 'src/app/shared/domain/school-config';
 import { FormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -40,7 +41,8 @@ import { PaymentFormDialogComponent } from '../payment-form-dialog/payment-form-
     MatDialogModule,
     FormsModule,
     TranslateModule
-  ]
+  ],
+  providers: [DatePipe]
 })
 export class TandemPilotDetailComponent implements OnChanges {
   @Input()
@@ -62,7 +64,7 @@ export class TandemPilotDetailComponent implements OnChanges {
   @ViewChild('passengerConfirmationsPaginator') passengerConfirmationsPaginator: MatPaginator | undefined;
   @ViewChild('flightsPaginator') flightsPaginator: MatPaginator | undefined;
 
-  displayedFlightColumns: string[] = ['date', 'start', 'landing', 'time', 'description', 'paymentState', 'paymentAmount', 'paymentButtons'];
+  displayedFlightColumns: string[] = [];
   displayedPassengerColumns: string[] = ['date', 'name', 'place', 'phone', 'email', 'canUseData'];
 
   // Expose enum for template access
@@ -76,10 +78,15 @@ export class TandemPilotDetailComponent implements OnChanges {
     private deviceSize: DeviceSizeService,
     private schoolService: SchoolService,
     private translate: TranslateService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private datePipe: DatePipe
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
+    if (changes['school'] && changes['school'].currentValue) {
+      this.buildDisplayedFlightColumns();
+    }
+    
     if (changes['tandemPilot'] && changes['tandemPilot'].currentValue) {
       this.loadFlights();
       this.loadPassengerConfirmations(changes['tandemPilot'].currentValue.id);
@@ -127,6 +134,48 @@ export class TandemPilotDetailComponent implements OnChanges {
     let offset = event.pageIndex * event.pageSize;
     if (this.tandemPilot?.id) {
       this.loadFlights(offset, event.pageSize);
+    }
+  }
+
+  getActiveCustomFields(): CustomFieldDefinition[] {
+    if (!this.school?.configuration?.tandemModule?.flightConfig?.customFields) {
+      return [];
+    }
+    return this.school.configuration.tandemModule.flightConfig.customFields.filter(f => !f.disabled);
+  }
+
+  buildDisplayedFlightColumns(): void {
+    const baseColumns = ['date', 'start', 'landing', 'time', 'description'];
+    const customFieldKeys = this.getActiveCustomFields().map(f => f.key);
+    const paymentColumns = ['paymentState', 'paymentAmount', 'paymentButtons'];
+    
+    this.displayedFlightColumns = [...baseColumns, ...customFieldKeys, ...paymentColumns];
+  }
+
+  getCustomFieldValue(flight: Flight, key: string): any {
+    if (!flight.tandemSchoolData?.schoolCustomValues) {
+      return null;
+    }
+    const customValue = flight.tandemSchoolData.schoolCustomValues.find(cv => cv.key === key);
+    return customValue ? customValue.value : null;
+  }
+
+  formatCustomFieldValue(value: any, type: string): string {
+    if (value === null || value === undefined) {
+      return '';
+    }
+    
+    switch (type) {
+      case 'date':
+        return this.datePipe.transform(value, 'dd.MM.yyyy') || '';
+      case 'boolean':
+        return value ? this.translate.instant('buttons.yes') : this.translate.instant('buttons.no');
+      case 'number':
+        return value.toString();
+      case 'text':
+      case 'dropdown':
+      default:
+        return value.toString();
     }
   }
 

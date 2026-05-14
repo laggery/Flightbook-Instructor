@@ -10,6 +10,8 @@ import { AppointmentTypeComponent } from '../../component/appointment-type/appoi
 import { AppointmentTypeDialogComponent } from '../../component/appointment-type-dialog/appointment-type-dialog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SchoolSettingComponent } from '../../component/school-setting/school-setting.component';
+import { TandemConfigComponent } from '../../component/tandem-config/tandem-config.component';
+import { CustomFieldDialogComponent } from '../../component/custom-field-dialog/custom-field-dialog.component';
 
 
 @NgModule({
@@ -18,7 +20,9 @@ import { SchoolSettingComponent } from '../../component/school-setting/school-se
     TeamComponent,
     AppointmentTypeComponent,
     AppointmentTypeDialogComponent,
-    SchoolSettingComponent
+    SchoolSettingComponent,
+    TandemConfigComponent,
+    CustomFieldDialogComponent
   ],
   imports: [
     CommonModule,

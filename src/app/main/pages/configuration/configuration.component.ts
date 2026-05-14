@@ -16,6 +16,7 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatSidenav) sidenav: MatSidenav | undefined;
   type = "team";
+  school?: School;
   unsubscribe$ = new Subject<void>();
 
   constructor(
@@ -31,6 +32,12 @@ export class ConfigurationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.school = this.accountService.currentSelectedSchool;
+    
+    this.accountService.changeSelectedSchool$.pipe(takeUntil(this.unsubscribe$)).subscribe((school: School) => {
+      this.school = school;
+    });
+    
     this.route.queryParams.pipe(takeUntil(this.unsubscribe$)).subscribe(params => {
       if (params['google_calendar']) {
         // If school parameter is provided, switch to that school

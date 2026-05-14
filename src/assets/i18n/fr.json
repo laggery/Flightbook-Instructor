@@ -392,6 +392,30 @@
             "cancel": "Annuler"
         }
     },
+    "tandemConfig": {
+        "title": "Champs personnalisés tandem",
+        "addField": "Ajouter un champ",
+        "editField": "Modifier le champ",
+        "label": "Libellé",
+        "labelRequired": "Le libellé est requis",
+        "fieldType": "Type",
+        "required": "Obligatoire",
+        "disabled": "Désactivé",
+        "edit": "Modifier",
+        "options": "Options",
+        "option": "Option",
+        "optionRequired": "L'option est requise",
+        "optionsPlaceholder": "p.ex. Option1, Option2, Option3",
+        "optionsHint": "Entrez les options séparées par des virgules",
+        "optionsRequired": "Les options sont requises pour les champs de sélection",
+        "types": {
+            "text": "Texte",
+            "number": "Nombre",
+            "date": "Date",
+            "boolean": "Oui/Non",
+            "dropdown": "Sélection"
+        }
+    },
     "appointmentType": {
         "tite": "Type de rdv",
         "addType": "Ajouter",
