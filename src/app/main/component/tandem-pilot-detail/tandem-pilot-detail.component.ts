@@ -22,6 +22,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { PaymentFormDialogComponent } from '../payment-form-dialog/payment-form-dialog.component';
+import { ExportDialogComponent } from '../export-dialog/export-dialog.component';
+import { ExportTandemDataService } from 'src/app/core/services/export-tandem-data.service';
 
 @Component({
   selector: 'fb-tandem-pilot-detail',
@@ -79,7 +81,8 @@ export class TandemPilotDetailComponent implements OnChanges {
     private schoolService: SchoolService,
     private translate: TranslateService,
     private dialog: MatDialog,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private exportService: ExportTandemDataService
   ) { }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -221,6 +224,40 @@ export class TandemPilotDetailComponent implements OnChanges {
         ).pipe(takeUntil(this.unsubscribe$))
           .subscribe(() => {
             this.loadFlights();
+          });
+      }
+    });
+  }
+
+  exportPilotData() {
+    const dialogRef = this.dialog.open(ExportDialogComponent, {
+      width: '500px',
+      data: {
+        title: this.translate.instant('export.exportPilotData')
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && this.school?.id && this.tandemPilot?.id) {
+        const schoolId = this.school.id;
+        const tandemPilotId = this.tandemPilot.id;
+        const tandemPilot = this.tandemPilot;
+        
+        this.schoolService.getAllTandemPilotFlights(schoolId, tandemPilotId)
+          .pipe(takeUntil(this.unsubscribe$))
+          .subscribe(flightsResponse => {
+            this.schoolService.getAllPassengerConfirmations(schoolId, tandemPilotId)
+              .pipe(takeUntil(this.unsubscribe$))
+              .subscribe(passengersResponse => {
+                const customFields = this.getActiveCustomFields();
+                this.exportService.exportTandemPilotData(
+                  tandemPilot,
+                  flightsResponse.entity || [],
+                  passengersResponse.entity || [],
+                  customFields,
+                  result
+                );
+              });
           });
       }
     });

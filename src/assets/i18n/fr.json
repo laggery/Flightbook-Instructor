@@ -145,7 +145,8 @@
         "actif": "Actif",
         "archived": "Archivé",
         "noTandemPilotSelected": "Aucun pilote biplace n'a été sélectionné.",
-        "passengerConfirmations": "Confirmations des passagers"
+        "passengerConfirmations": "Confirmations des passagers",
+        "pilotName": "Nom du pilote"
     },
     "passengerConfirmation" : {
         "date": "Date",
@@ -186,7 +187,16 @@
         "startplaces": "Places de décollages",
         "landingplaces": "Places d'atterissages",
         "firstlastname": "Nom",
-        "school": "Tampon / Signature"
+        "school": "Tampon / Signature",
+        "exportPilotData": "Exporter les données du pilote",
+        "exportAllPilotsData": "Exporter toutes les données des pilotes",
+        "startDate": "Date de début",
+        "endDate": "Date de fin",
+        "startDateRequired": "La date de début est requise",
+        "endDateRequired": "La date de fin est requise",
+        "dateRangeInvalid": "La date de début doit être antérieure à la date de fin",
+        "flightData": "Données de vol",
+        "passengerConfirmations": "Confirmations des passagers"
     },
     "place": {
         "place": "Lieu",

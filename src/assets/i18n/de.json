@@ -145,7 +145,8 @@
         "actif": "Aktiv",
         "archived": "Archiviert",
         "noTandemPilotSelected": "Kein Tandempilot wurde ausgewählt.",
-        "passengerConfirmations": "Passagierbestätigungen"
+        "passengerConfirmations": "Passagierbestätigungen",
+        "pilotName": "Pilotname"
     },
     "passengerConfirmation" : {
         "date": "Datum",
@@ -186,7 +187,16 @@
         "startplaces": "Startplätze",
         "landingplaces": "Landeplätze",
         "firstlastname": "Name",
-        "school": "Stempel / Unterschrift"
+        "school": "Stempel / Unterschrift",
+        "exportPilotData": "Pilotdaten exportieren",
+        "exportAllPilotsData": "Alle Pilotdaten exportieren",
+        "startDate": "Startdatum",
+        "endDate": "Enddatum",
+        "startDateRequired": "Startdatum ist erforderlich",
+        "endDateRequired": "Enddatum ist erforderlich",
+        "dateRangeInvalid": "Startdatum muss vor dem Enddatum liegen",
+        "flightData": "Flugdaten",
+        "passengerConfirmations": "Passagierbestätigungen"
     },
     "place": {
         "place": "Ort",

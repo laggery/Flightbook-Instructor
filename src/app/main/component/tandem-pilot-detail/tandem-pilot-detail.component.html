@@ -7,6 +7,7 @@
     }
     <h2>{{ tandemPilot.user?.firstname }} {{ tandemPilot.user?.lastname }}
       <div class="icon-list">
+        <mat-icon color="primary" class="export-tandem-pilot" (click)="exportPilotData()">download</mat-icon>
         @if (!tandemPilot.isArchived) {
           <mat-icon color="warn" class="archive-tandem-pilot" (click)="archiveTandemPilot()">archive</mat-icon>
         }

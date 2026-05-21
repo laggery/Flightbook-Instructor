@@ -8,6 +8,7 @@ import { MatTabsModule, MatTabChangeEvent, MatTabGroup } from '@angular/material
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Subject, takeUntil } from 'rxjs';
 import { AccountService } from 'src/app/core/services/account.service';
@@ -17,6 +18,11 @@ import { School } from 'src/app/shared/domain/school';
 import { TandemPilot } from 'src/app/shared/domain/tandem-pilot';
 import { TandemPilotDetailComponent } from '../../component/tandem-pilot-detail/tandem-pilot-detail.component';
 import { EmailDialogComponent } from '../../component/email-dialog/email-dialog.component';
+import { ExportDialogComponent } from '../../component/export-dialog/export-dialog.component';
+import { ExportTandemDataService } from 'src/app/core/services/export-tandem-data.service';
+import { Flight } from 'src/app/shared/domain/flight';
+import { PassengerConfirmation } from 'src/app/shared/domain/passenger-confirmation';
+import { forkJoin, of } from 'rxjs';
 
 @Component({
   selector: 'fb-tandem-pilots',
@@ -31,6 +37,7 @@ import { EmailDialogComponent } from '../../component/email-dialog/email-dialog.
     MatIconModule,
     MatTabsModule,
     MatBadgeModule,
+    MatTooltipModule,
     TranslateModule,
     TandemPilotDetailComponent
   ]
@@ -51,7 +58,8 @@ export class TandemPilotsComponent implements OnInit, OnDestroy {
     private accountService: AccountService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
-    private deviceSize: DeviceSizeService
+    private deviceSize: DeviceSizeService,
+    private exportService: ExportTandemDataService
   ) {
     this.tandemPilots = [];
     this.archivedTandemPilots = [];
@@ -147,5 +155,64 @@ export class TandemPilotsComponent implements OnInit, OnDestroy {
     } else {
       this.syncTandemPilotList(true);
     }
+  }
+
+  exportAllPilotsData() {
+    const dialogRef = this.dialog.open(ExportDialogComponent, {
+      width: '500px',
+      data: {
+        title: this.translate.instant('export.exportAllPilotsData')
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && this.school?.id) {
+        forkJoin([
+          this.schoolService.getTandemPilotsBySchoolId(this.school.id, false),
+          this.schoolService.getTandemPilotsBySchoolId(this.school.id, true)
+        ]).pipe(takeUntil(this.unsubscribe$))
+          .subscribe(([activePilots, archivedPilots]) => {
+            const allPilots = [...activePilots, ...archivedPilots];
+            
+            const flightsMap = new Map<number, Flight[]>();
+            const passengersMap = new Map<number, PassengerConfirmation[]>();
+            
+            const requests = allPilots
+              .filter(pilot => pilot.id && this.school?.id)
+              .map(pilot => {
+                const schoolId = this.school!.id!;
+                const pilotId = pilot.id!;
+                
+                return forkJoin({
+                  flights: this.schoolService.getAllTandemPilotFlights(schoolId, pilotId),
+                  passengers: this.schoolService.getAllPassengerConfirmations(schoolId, pilotId),
+                  pilotId: of(pilotId)
+                });
+              });
+
+            if (requests.length === 0) {
+              return;
+            }
+
+            forkJoin(requests).pipe(takeUntil(this.unsubscribe$))
+              .subscribe(results => {
+                results.forEach(data => {
+                  flightsMap.set(data.pilotId, data.flights.entity || []);
+                  passengersMap.set(data.pilotId, data.passengers.entity || []);
+                });
+
+                const customFields = this.school?.configuration?.tandemModule?.flightConfig?.customFields?.filter(f => !f.disabled) || [];
+                
+                this.exportService.exportAllTandemPilotsData(
+                  allPilots,
+                  flightsMap,
+                  passengersMap,
+                  customFields,
+                  result
+                );
+              });
+          });
+      }
+    });
   }
 }

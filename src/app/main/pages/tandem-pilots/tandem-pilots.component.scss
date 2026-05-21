@@ -6,9 +6,22 @@
     min-width: 300px;
 }
 
+.tandem-pilot-list {
+    mat-list-item:first-child {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        justify-content: center;
+        
+        button[mat-icon-button] {
+            vertical-align: middle;
+        }
+    }
+}
+
 .tandem-pilot-list-button {
-    margin:0 auto;
-    display:block;
+    flex: 0 0 auto;
+    vertical-align: middle;
 }
 
 .tandem-pilot-name {

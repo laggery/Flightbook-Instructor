@@ -3,6 +3,9 @@
     <mat-list class="tandem-pilot-list">
       <mat-list-item>
         <button class="tandem-pilot-list-button" mat-raised-button color="primary" (click)=openEmailDialog()>{{'tandemPilot.addTandemPilot'| translate }}</button>
+        <button mat-icon-button color="primary" (click)="exportAllPilotsData()" matTooltip="{{ 'export.exportAllPilotsData' | translate }}">
+          <mat-icon>download</mat-icon>
+        </button>
       </mat-list-item>
       <mat-tab-group mat-align-tabs="start" (selectedTabChange)="tabChange($event)">
         <mat-tab label="{{ 'tandemPilot.actif'| translate }}">

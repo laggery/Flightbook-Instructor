@@ -157,6 +157,14 @@ export class SchoolService {
     return this.http.put<Flight>(`${environment.baseUrl}/schools/${id}/tandem-pilots/${tandemPilot.id}/flights/${flight.id}`, flight.tandemSchoolData);
   }
 
+  getAllTandemPilotFlights(schoolId: number, tandemPilotId: number): Observable<PagerEntity<Flight[]>> {
+    return this.http.get<PagerEntity<Flight[]>>(`${environment.baseUrl}/schools/${schoolId}/tandem-pilots/${tandemPilotId}/flights`);
+  }
+
+  getAllPassengerConfirmations(schoolId: number, tandemPilotId: number): Observable<PagerEntity<PassengerConfirmation[]>> {
+    return this.http.get<PagerEntity<PassengerConfirmation[]>>(`${environment.baseUrl}/schools/${schoolId}/tandem-pilots/${tandemPilotId}/passenger-confirmations`);
+  }
+
   private createFilterParams(limit: Number | undefined, offset: Number | undefined): HttpParams {
     let params = new HttpParams();
     if (this.filter.from && this.filter.from !== null) {
