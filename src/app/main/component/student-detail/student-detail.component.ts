@@ -167,6 +167,8 @@ export class StudentDetailComponent implements OnInit, OnChanges, OnDestroy {
     if (this.school?.configuration?.schoolModule?.validateFlights) {
       flights.entity = flights.entity!.filter((flight: Flight) => flight.validation?.state == FlightValidationState.VALIDATED);
     }
+    // We revert to have the oldest flight at position 1
+    flights.entity = flights.entity?.reverse();
     this.pdfExportService.generatePdf(flights.entity!, this.student?.user);
   }
 
