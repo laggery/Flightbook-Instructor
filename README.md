@@ -2,6 +2,14 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.1.2.
 
+# Important Update
+Flightbook is no longer a one-person project! We're excited to announce that Flightbook has joined vast Switzerland, and the repository has been migrated to the vast organization. You can find the new repository at https://github.com/vast-ch/flightbook.
+
+The project remains fully open source, and we continue to welcome and appreciate every contribution from the community. Join our new [Discord channel](https://discord.gg/XXbWED3fnc) to connect with other contributors and stay updated!
+https://discord.gg/XXbWED3fnc
+
+This transition is part of a long-term strategy to ensure the continued growth and sustainability of Flightbook for years to come.
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
